@@ -1,0 +1,463 @@
+dep,dep_name,gender,year,n_orp
+8,Atlántico,Female,2015,692
+8,Atlántico,Female,2016,727
+8,Atlántico,Female,2017,748
+8,Atlántico,Female,2018,772
+8,Atlántico,Female,2019,794
+8,Atlántico,Female,2020,1030
+8,Atlántico,Female,2021,1264
+8,Atlántico,Male,2015,1814
+8,Atlántico,Male,2016,1769
+8,Atlántico,Male,2017,1867
+8,Atlántico,Male,2018,1914
+8,Atlántico,Male,2019,1849
+8,Atlántico,Male,2020,2683
+8,Atlántico,Male,2021,3432
+13,Bolívar,Female,2015,484
+13,Bolívar,Female,2016,462
+13,Bolívar,Female,2017,559
+13,Bolívar,Female,2018,547
+13,Bolívar,Female,2019,615
+13,Bolívar,Female,2020,737
+13,Bolívar,Female,2021,795
+13,Bolívar,Male,2015,1181
+13,Bolívar,Male,2016,1207
+13,Bolívar,Male,2017,1390
+13,Bolívar,Male,2018,1414
+13,Bolívar,Male,2019,1332
+13,Bolívar,Male,2020,1849
+13,Bolívar,Male,2021,2160
+20,Cesar,Female,2015,356
+20,Cesar,Female,2016,358
+20,Cesar,Female,2017,330
+20,Cesar,Female,2018,440
+20,Cesar,Female,2019,423
+20,Cesar,Female,2020,489
+20,Cesar,Female,2021,646
+20,Cesar,Male,2015,928
+20,Cesar,Male,2016,877
+20,Cesar,Male,2017,928
+20,Cesar,Male,2018,1062
+20,Cesar,Male,2019,987
+20,Cesar,Male,2020,1272
+20,Cesar,Male,2021,1721
+23,Córdoba,Female,2015,424
+23,Córdoba,Female,2016,378
+23,Córdoba,Female,2017,424
+23,Córdoba,Female,2018,450
+23,Córdoba,Female,2019,426
+23,Córdoba,Female,2020,565
+23,Córdoba,Female,2021,603
+23,Córdoba,Male,2015,917
+23,Córdoba,Male,2016,943
+23,Córdoba,Male,2017,1048
+23,Córdoba,Male,2018,1166
+23,Córdoba,Male,2019,1222
+23,Córdoba,Male,2020,1517
+23,Córdoba,Male,2021,1720
+44,La Guajira,Female,2015,203
+44,La Guajira,Female,2016,224
+44,La Guajira,Female,2017,195
+44,La Guajira,Female,2018,309
+44,La Guajira,Female,2019,358
+44,La Guajira,Female,2020,357
+44,La Guajira,Female,2021,513
+44,La Guajira,Male,2015,527
+44,La Guajira,Male,2016,592
+44,La Guajira,Male,2017,572
+44,La Guajira,Male,2018,640
+44,La Guajira,Male,2019,678
+44,La Guajira,Male,2020,903
+44,La Guajira,Male,2021,1142
+47,Magdalena,Female,2015,342
+47,Magdalena,Female,2016,394
+47,Magdalena,Female,2017,376
+47,Magdalena,Female,2018,433
+47,Magdalena,Female,2019,459
+47,Magdalena,Female,2020,571
+47,Magdalena,Female,2021,704
+47,Magdalena,Male,2015,896
+47,Magdalena,Male,2016,861
+47,Magdalena,Male,2017,844
+47,Magdalena,Male,2018,973
+47,Magdalena,Male,2019,991
+47,Magdalena,Male,2020,1382
+47,Magdalena,Male,2021,1818
+70,Sucre,Female,2015,201
+70,Sucre,Female,2016,241
+70,Sucre,Female,2017,264
+70,Sucre,Female,2018,246
+70,Sucre,Female,2019,254
+70,Sucre,Female,2020,301
+70,Sucre,Female,2021,357
+70,Sucre,Male,2015,559
+70,Sucre,Male,2016,560
+70,Sucre,Male,2017,593
+70,Sucre,Male,2018,666
+70,Sucre,Male,2019,630
+70,Sucre,Male,2020,736
+70,Sucre,Male,2021,975
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Female,2015,14
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Female,2016,11
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Female,2017,10
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Female,2018,6
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Female,2019,8
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Female,2020,21
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Female,2021,30
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Male,2015,39
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Male,2016,42
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Male,2017,51
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Male,2018,51
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Male,2019,59
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Male,2020,69
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Male,2021,78
+5,Antioquia,Female,2015,1470
+5,Antioquia,Female,2016,1473
+5,Antioquia,Female,2017,1385
+5,Antioquia,Female,2018,1463
+5,Antioquia,Female,2019,1370
+5,Antioquia,Female,2020,1564
+5,Antioquia,Female,2021,2109
+5,Antioquia,Male,2015,4326
+5,Antioquia,Male,2016,4415
+5,Antioquia,Male,2017,4350
+5,Antioquia,Male,2018,4817
+5,Antioquia,Male,2019,4454
+5,Antioquia,Male,2020,4764
+5,Antioquia,Male,2021,6509
+17,Caldas,Female,2015,228
+17,Caldas,Female,2016,214
+17,Caldas,Female,2017,220
+17,Caldas,Female,2018,222
+17,Caldas,Female,2019,212
+17,Caldas,Female,2020,179
+17,Caldas,Female,2021,248
+17,Caldas,Male,2015,646
+17,Caldas,Male,2016,615
+17,Caldas,Male,2017,561
+17,Caldas,Male,2018,604
+17,Caldas,Male,2019,545
+17,Caldas,Male,2020,553
+17,Caldas,Male,2021,837
+63,Quindío,Female,2015,132
+63,Quindío,Female,2016,147
+63,Quindío,Female,2017,131
+63,Quindío,Female,2018,133
+63,Quindío,Female,2019,121
+63,Quindío,Female,2020,133
+63,Quindío,Female,2021,175
+63,Quindío,Male,2015,505
+63,Quindío,Male,2016,493
+63,Quindío,Male,2017,418
+63,Quindío,Male,2018,427
+63,Quindío,Male,2019,392
+63,Quindío,Male,2020,442
+63,Quindío,Male,2021,535
+66,Risaralda,Female,2015,241
+66,Risaralda,Female,2016,274
+66,Risaralda,Female,2017,226
+66,Risaralda,Female,2018,271
+66,Risaralda,Female,2019,236
+66,Risaralda,Female,2020,274
+66,Risaralda,Female,2021,308
+66,Risaralda,Male,2015,786
+66,Risaralda,Male,2016,795
+66,Risaralda,Male,2017,766
+66,Risaralda,Male,2018,680
+66,Risaralda,Male,2019,674
+66,Risaralda,Male,2020,735
+66,Risaralda,Male,2021,971
+19,Cauca,Female,2015,315
+19,Cauca,Female,2016,293
+19,Cauca,Female,2017,284
+19,Cauca,Female,2018,310
+19,Cauca,Female,2019,313
+19,Cauca,Female,2020,349
+19,Cauca,Female,2021,379
+19,Cauca,Male,2015,925
+19,Cauca,Male,2016,907
+19,Cauca,Male,2017,862
+19,Cauca,Male,2018,985
+19,Cauca,Male,2019,1067
+19,Cauca,Male,2020,1097
+19,Cauca,Male,2021,1355
+27,Chocó,Female,2015,103
+27,Chocó,Female,2016,118
+27,Chocó,Female,2017,120
+27,Chocó,Female,2018,109
+27,Chocó,Female,2019,112
+27,Chocó,Female,2020,129
+27,Chocó,Female,2021,203
+27,Chocó,Male,2015,272
+27,Chocó,Male,2016,265
+27,Chocó,Male,2017,259
+27,Chocó,Male,2018,264
+27,Chocó,Male,2019,326
+27,Chocó,Male,2020,408
+27,Chocó,Male,2021,466
+52,Nariño,Female,2015,306
+52,Nariño,Female,2016,312
+52,Nariño,Female,2017,308
+52,Nariño,Female,2018,347
+52,Nariño,Female,2019,337
+52,Nariño,Female,2020,378
+52,Nariño,Female,2021,494
+52,Nariño,Male,2015,880
+52,Nariño,Male,2016,866
+52,Nariño,Male,2017,870
+52,Nariño,Male,2018,1108
+52,Nariño,Male,2019,1015
+52,Nariño,Male,2020,1197
+52,Nariño,Male,2021,1441
+76,Valle del Cauca,Female,2015,1223
+76,Valle del Cauca,Female,2016,1209
+76,Valle del Cauca,Female,2017,1140
+76,Valle del Cauca,Female,2018,1206
+76,Valle del Cauca,Female,2019,1185
+76,Valle del Cauca,Female,2020,1313
+76,Valle del Cauca,Female,2021,1633
+76,Valle del Cauca,Male,2015,3904
+76,Valle del Cauca,Male,2016,3745
+76,Valle del Cauca,Male,2017,3378
+76,Valle del Cauca,Male,2018,3703
+76,Valle del Cauca,Male,2019,3806
+76,Valle del Cauca,Male,2020,4156
+76,Valle del Cauca,Male,2021,5365
+11,Bogotá,Female,2015,1662
+11,Bogotá,Female,2016,1639
+11,Bogotá,Female,2017,1512
+11,Bogotá,Female,2018,1566
+11,Bogotá,Female,2019,1614
+11,Bogotá,Female,2020,1847
+11,Bogotá,Female,2021,2362
+11,Bogotá,Male,2015,3952
+11,Bogotá,Male,2016,3925
+11,Bogotá,Male,2017,3549
+11,Bogotá,Male,2018,3713
+11,Bogotá,Male,2019,3717
+11,Bogotá,Male,2020,4838
+11,Bogotá,Male,2021,6598
+15,Boyacá,Female,2015,293
+15,Boyacá,Female,2016,297
+15,Boyacá,Female,2017,283
+15,Boyacá,Female,2018,271
+15,Boyacá,Female,2019,233
+15,Boyacá,Female,2020,267
+15,Boyacá,Female,2021,366
+15,Boyacá,Male,2015,745
+15,Boyacá,Male,2016,799
+15,Boyacá,Male,2017,675
+15,Boyacá,Male,2018,713
+15,Boyacá,Male,2019,680
+15,Boyacá,Male,2020,838
+15,Boyacá,Male,2021,1177
+25,Cundinamarca,Female,2015,530
+25,Cundinamarca,Female,2016,554
+25,Cundinamarca,Female,2017,566
+25,Cundinamarca,Female,2018,556
+25,Cundinamarca,Female,2019,548
+25,Cundinamarca,Female,2020,652
+25,Cundinamarca,Female,2021,927
+25,Cundinamarca,Male,2015,1423
+25,Cundinamarca,Male,2016,1413
+25,Cundinamarca,Male,2017,1373
+25,Cundinamarca,Male,2018,1303
+25,Cundinamarca,Male,2019,1306
+25,Cundinamarca,Male,2020,1635
+25,Cundinamarca,Male,2021,2529
+41,Huila,Female,2015,393
+41,Huila,Female,2016,411
+41,Huila,Female,2017,389
+41,Huila,Female,2018,382
+41,Huila,Female,2019,359
+41,Huila,Female,2020,451
+41,Huila,Female,2021,563
+41,Huila,Male,2015,990
+41,Huila,Male,2016,1046
+41,Huila,Male,2017,911
+41,Huila,Male,2018,910
+41,Huila,Male,2019,942
+41,Huila,Male,2020,1122
+41,Huila,Male,2021,1529
+54,Norte de Santander,Female,2015,357
+54,Norte de Santander,Female,2016,347
+54,Norte de Santander,Female,2017,435
+54,Norte de Santander,Female,2018,415
+54,Norte de Santander,Female,2019,466
+54,Norte de Santander,Female,2020,561
+54,Norte de Santander,Female,2021,655
+54,Norte de Santander,Male,2015,1144
+54,Norte de Santander,Male,2016,1302
+54,Norte de Santander,Male,2017,1211
+54,Norte de Santander,Male,2018,1322
+54,Norte de Santander,Male,2019,1390
+54,Norte de Santander,Male,2020,1835
+54,Norte de Santander,Male,2021,2081
+68,Santander,Female,2015,559
+68,Santander,Female,2016,484
+68,Santander,Female,2017,485
+68,Santander,Female,2018,508
+68,Santander,Female,2019,533
+68,Santander,Female,2020,625
+68,Santander,Female,2021,875
+68,Santander,Male,2015,1286
+68,Santander,Male,2016,1275
+68,Santander,Male,2017,1245
+68,Santander,Male,2018,1330
+68,Santander,Male,2019,1338
+68,Santander,Male,2020,1693
+68,Santander,Male,2021,2681
+73,Tolima,Female,2015,417
+73,Tolima,Female,2016,398
+73,Tolima,Female,2017,386
+73,Tolima,Female,2018,379
+73,Tolima,Female,2019,389
+73,Tolima,Female,2020,392
+73,Tolima,Female,2021,509
+73,Tolima,Male,2015,1136
+73,Tolima,Male,2016,1168
+73,Tolima,Male,2017,1024
+73,Tolima,Male,2018,1084
+73,Tolima,Male,2019,1012
+73,Tolima,Male,2020,1108
+73,Tolima,Male,2021,1550
+50,Meta,Female,2015,401
+50,Meta,Female,2016,347
+50,Meta,Female,2017,342
+50,Meta,Female,2018,341
+50,Meta,Female,2019,345
+50,Meta,Female,2020,390
+50,Meta,Female,2021,530
+50,Meta,Male,2015,1043
+50,Meta,Male,2016,996
+50,Meta,Male,2017,861
+50,Meta,Male,2018,845
+50,Meta,Male,2019,854
+50,Meta,Male,2020,1059
+50,Meta,Male,2021,1356
+81,Arauca,Female,2015,164
+81,Arauca,Female,2016,122
+81,Arauca,Female,2017,106
+81,Arauca,Female,2018,152
+81,Arauca,Female,2019,164
+81,Arauca,Female,2020,167
+81,Arauca,Female,2021,147
+81,Arauca,Male,2015,392
+81,Arauca,Male,2016,343
+81,Arauca,Male,2017,318
+81,Arauca,Male,2018,374
+81,Arauca,Male,2019,399
+81,Arauca,Male,2020,353
+81,Arauca,Male,2021,465
+85,Casanare,Female,2015,111
+85,Casanare,Female,2016,136
+85,Casanare,Female,2017,123
+85,Casanare,Female,2018,121
+85,Casanare,Female,2019,159
+85,Casanare,Female,2020,147
+85,Casanare,Female,2021,219
+85,Casanare,Male,2015,295
+85,Casanare,Male,2016,328
+85,Casanare,Male,2017,311
+85,Casanare,Male,2018,305
+85,Casanare,Male,2019,328
+85,Casanare,Male,2020,365
+85,Casanare,Male,2021,651
+99,Vichada,Female,2015,9
+99,Vichada,Female,2016,3
+99,Vichada,Female,2017,13
+99,Vichada,Female,2018,8
+99,Vichada,Female,2019,10
+99,Vichada,Female,2020,22
+99,Vichada,Female,2021,12
+99,Vichada,Male,2015,28
+99,Vichada,Male,2016,23
+99,Vichada,Male,2017,35
+99,Vichada,Male,2018,31
+99,Vichada,Male,2019,37
+99,Vichada,Male,2020,37
+99,Vichada,Male,2021,38
+18,Caquetá,Female,2015,163
+18,Caquetá,Female,2016,164
+18,Caquetá,Female,2017,154
+18,Caquetá,Female,2018,145
+18,Caquetá,Female,2019,147
+18,Caquetá,Female,2020,168
+18,Caquetá,Female,2021,195
+18,Caquetá,Male,2015,443
+18,Caquetá,Male,2016,424
+18,Caquetá,Male,2017,443
+18,Caquetá,Male,2018,457
+18,Caquetá,Male,2019,437
+18,Caquetá,Male,2020,555
+18,Caquetá,Male,2021,571
+86,Putumayo,Female,2015,94
+86,Putumayo,Female,2016,99
+86,Putumayo,Female,2017,175
+86,Putumayo,Female,2018,94
+86,Putumayo,Female,2019,104
+86,Putumayo,Female,2020,117
+86,Putumayo,Female,2021,167
+86,Putumayo,Male,2015,266
+86,Putumayo,Male,2016,266
+86,Putumayo,Male,2017,316
+86,Putumayo,Male,2018,323
+86,Putumayo,Male,2019,290
+86,Putumayo,Male,2020,375
+86,Putumayo,Male,2021,492
+91,Amazonas,Female,2015,30
+91,Amazonas,Female,2016,13
+91,Amazonas,Female,2017,23
+91,Amazonas,Female,2018,10
+91,Amazonas,Female,2019,26
+91,Amazonas,Female,2020,53
+91,Amazonas,Female,2021,55
+91,Amazonas,Male,2015,87
+91,Amazonas,Male,2016,63
+91,Amazonas,Male,2017,52
+91,Amazonas,Male,2018,44
+91,Amazonas,Male,2019,83
+91,Amazonas,Male,2020,124
+91,Amazonas,Male,2021,131
+94,Guainía,Female,2015,23
+94,Guainía,Female,2016,16
+94,Guainía,Female,2017,17
+94,Guainía,Female,2018,14
+94,Guainía,Female,2019,19
+94,Guainía,Female,2020,26
+94,Guainía,Female,2021,23
+94,Guainía,Male,2015,18
+94,Guainía,Male,2016,36
+94,Guainía,Male,2017,24
+94,Guainía,Male,2018,42
+94,Guainía,Male,2019,28
+94,Guainía,Male,2020,42
+94,Guainía,Male,2021,23
+95,Guaviare,Female,2015,26
+95,Guaviare,Female,2016,22
+95,Guaviare,Female,2017,15
+95,Guaviare,Female,2018,22
+95,Guaviare,Female,2019,24
+95,Guaviare,Female,2020,21
+95,Guaviare,Female,2021,24
+95,Guaviare,Male,2015,61
+95,Guaviare,Male,2016,64
+95,Guaviare,Male,2017,73
+95,Guaviare,Male,2018,68
+95,Guaviare,Male,2019,71
+95,Guaviare,Male,2020,60
+95,Guaviare,Male,2021,84
+97,Vaupés,Female,2015,22
+97,Vaupés,Female,2016,17
+97,Vaupés,Female,2017,11
+97,Vaupés,Female,2018,7
+97,Vaupés,Female,2019,10
+97,Vaupés,Female,2020,20
+97,Vaupés,Female,2021,18
+97,Vaupés,Male,2015,20
+97,Vaupés,Male,2016,23
+97,Vaupés,Male,2017,12
+97,Vaupés,Male,2018,29
+97,Vaupés,Male,2019,14
+97,Vaupés,Male,2020,29
+97,Vaupés,Male,2021,32

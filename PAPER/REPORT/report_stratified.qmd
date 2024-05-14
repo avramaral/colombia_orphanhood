@@ -1,0 +1,510 @@
+---
+title: "Orphanhood in Colombia"
+format:
+  html: 
+    toc: true
+    toc-depth: 5
+    css: "style.css"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+library("tidyverse")
+library("DT")
+```
+
+### Overview
+
+The 32 departments and one capital district (Bogotá) can be grouped together into the 6 regions of Colombia (right panel), namely, (1) Caribe, (2) Eje cafetero y Antioquia, (3) Pacífica, (4) Central, (5) Llanos, and (6) Amazonía. 
+
+Colombia can still be divided into 1121 municipalities (this classification varies along the years, and we are using the definition from 2021).
+
+|                    |                     |
+|--------------------|---------------------|
+| ![](images/map1.png){width="60%"} | ![](images/map3.png){width="50%"} |
+
+As a way to exclude unreliable regions, we are not considering the 29 municipalities with the lowest population density. The threshold was set based on the following plot (notice that the `Population density` is in the log-scale). Locations with low population density present, in general, low death rate---indicating that there might be some underreporting issues on these municipalities. Also, we aimed to have at least one municipality in each department.
+
+![](images/pop_density_vs_death_rate.jpeg){width=60%}
+
+
+Aiming to check where these municipalities should be located, we can plot the population density map. As we can see from the following image, almost all low-populated areas are in the south/south-east region (which is known to be a jungle area).
+
+![](images/map_pop_dens.jpeg){width=50%}
+
+---
+
+### Colombia municipalities classification
+
+The Colombia municipalities can be categorized by the [Programas de Desarrollo con Enfoque Territorial](https://portal.renovacionterritorio.gov.co/Publicaciones/municipios_pdet_subregiones), PDET (left map) or based on a multidimensional poverty index (right map), named "Medida de pobreza multidimensional de fuente censal en el total del municipio (MPM)." 
+
+**Remark 1:** the PDET includes 170 municipalities (in our case, 165---after excluding the municipalities with low population density) that were prioritized as the territories most affected by armed conflict, with higher levels of poverty, presence of illicit economies, and institutional weakness.
+
+**Remark 2:** when analyzing the poverty index, in order to have balanced classes, we ordered the municipalities based on the MPM, and divided them into 5 quintiles (namely, `[00%,  20%)`, `[20%,  40%)`, `[60%,  80%)`, and `[80%, 100%]`)---and that is the classification we will use from now on.
+
+**Remark 3:** all maps already exclude the 29 low-populated municipalities.
+
+|                           |                          |
+|---------------------------|--------------------------|
+| ![](images/map_PDET.jpeg) | ![](images/map_MPM.jpeg) |
+
+### Fertility and mortality rates
+
+The first thing we can analyze is the death and fertility rates in 2021 (averaged over gender and age group). The following plots show the death (left map) and fertility (right map) group by quintile; i.e., ordered.
+
+Firstly, let us plot the rates for all locations; i.e., without excluding the municipalities with low population density.
+
+![](images/summ_death_fertility_rate_cat_ref.jpeg) 
+
+From the above maps, we can notice that the death rates seem to be lower in the south/south-east municipalities, while the fertility rates in the same regions are higher. This is **not** what we would expect, as the mortality rates in the Amazonía region are expected to the hightes---indicating there is a problem of underreporting.
+
+Secondly, let us plot the rates for 1092 ($1121 - 29$) municipalities, i.e., after excluding the locations with low population density. It is worth noting that the municipalities had to be re-ordered/re-classified after excluding the 29 locations.
+
+![](images/summ_death_fertility_rate_cat_FALSE.jpeg) 
+
+Now, let us take it one step further and **standardize the rates** based on the population data from 2018 (census year). That is, we will rank the rates based on the reference population, assuming the age-specific rates are as observed. The following maps show such standardized rates in 2021 (based on the quintiles), similarly to before.
+
+![](images/summ_death_fertility_rate_cat_TRUE.jpeg) 
+
+We can also analyze these rates grouped by age and the PDET or MPM classifications. The plots below show these estimates for 2021 considering only the 1092 ($1121 - 29$) municipalities with high population density.
+
+**Remark:** all boxplots are defined based on the $2.5^{\text{th}}$, $25^{\text{th}}$, $50^{\text{th}}$, $75^{\text{th}}$, and $97.5^{\text{th}}$ percentiles (with no outliers). 
+
+
+#### PDET
+
+![](images/RATES/2021_p_mort_PDET.jpeg) ![](images/RATES/2021_p_fert_PDET.jpeg)
+
+#### MPM (or poverty index)
+
+![](images/RATES/2021_p_mort_PVRT.jpeg) ![](images/RATES/2021_p_fert_PVRT.jpeg)
+
+### Orphanhood estimates
+
+#### Main estimates
+
+The following table shows the orphanhood prevalence and incidence estimates in 2021 ("total" and "% of children aged 0-17 years") at the national, regional, and department levels.
+
+**Remark:** the locations flagged with an asterisk symbol $(*)$ have missing municipalities (as discussed before, municipalities with low population density). In these cases, the estimates are lower bounds of the true values.
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+main_table <- read_csv(file = "data/main_table.csv") 
+
+colnames(main_table)[4:7] <- c("Prev.", "Prev. (%)", "Incid.", "Incid. (%)")
+
+datatable(main_table, rownames = FALSE, options = list(pageLength = 10))
+```
+
+<br /> 
+These are the orphanhood prevalence estimates in 2021 (total and %) for all departments, stratified by regions.
+
+![](images/prevalence_2021.jpeg)
+
+These are the orphanhood incidence estimates (in %) in 2021 by municipality (per 1,000 children aged 0-17 years).
+
+![](images/orphans_rate_2021.jpeg)
+
+Similarly, these are the orphanhood incidence estimates (`COUNTS`) in 2021 by municipality.
+
+![](images/orphans_count_2021.jpeg)
+
+------------------------------------------------------------------------
+
+Complementary, the plots below show the estimated orphanhood incidence in 2021 (in %) for all **analyzed** municipalities (i.e., municipalities with population density below the set threshold) grouped by department and classified according to the PDET and MPM.
+
+![](images/MUNICIPALITY/orphans_rate_by_mun_Amazonas.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Antioquia.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Arauca.jpeg)
+![](images/MUNICIPALITY/orphans_rate_by_mun_Archipelago%20de%20San%20Andrés,%20Providencia%20y%20Santa%20Catalina.jpeg)
+![](images/MUNICIPALITY/orphans_rate_by_mun_Atlántico.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Bogotá.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Bolívar.jpeg)
+![](images/MUNICIPALITY/orphans_rate_by_mun_Boyacá.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Caldas.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Caquetá.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Casanare.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Cauca.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Cesar.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Chocó.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Córdoba.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Cundinamarca.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Guainía.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Guaviare.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Huila.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_La%20Guajira.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Magdalena.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Meta.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Nariño.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Norte%20de%20Santander.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Putumayo.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Quindío.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Risaralda.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Santander.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Sucre.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Tolima.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Valle%20del%20Cauca.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Vaupés.jpeg) 
+![](images/MUNICIPALITY/orphans_rate_by_mun_Vichada.jpeg)
+
+------------------------------------------------------------------------
+
+#### Estimates grouped by PDET or MPM
+
+As mentioned before, the municipalities can be grouped based on the PDET and MPM classifications. The following images show the distribution of the orphanhood incidence estimates (in %) by municipalities in 2021 stratified by gender and PDET or MPM. 
+
+**Remark:** As before, all boxplots are defined based on the $2.5^{\text{th}}$, $25^{\text{th}}$, $50^{\text{th}}$, $75^{\text{th}}$, and $97.5^{\text{th}}$ percentiles (with no outliers). The red circle represents the mean.
+
+##### PDET
+
+![](images/boxplot_mun_conflict_rel_PDET_2021_errorbar.jpeg)
+
+##### MPM (or poverty index)
+
+![](images/boxplot_mun_conflict_rel_2021_errorbar.jpeg)
+
+### Complementary tables
+
+#### Department, Region, and National
+
+The following table shows the orphanhood prevalence and incidence estimates in 2021 ("total" and "% of children aged 0-17 years") of children who lost their mother, father, or both, at the national, regional, and department levels.
+
+**Remark:** as before, the locations flagged with an asterisk symbol $(*)$ have missing municipalities. In these cases, the estimates are lower bounds of the true values.
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+
+secondary_table <- read_csv(file = "data/table_appendix.csv")
+
+colnames(secondary_table)[4:15] <- c("Prev. Both",
+                                     "Prev. Both (%)",
+                                     "Incid. Both",
+                                     "Incid. Both (%)",
+                                     "Prev. Mother",
+                                     "Prev. Mother (%)",
+                                     "Incid. Mother",
+                                     "Incid. Mother (%)",
+                                     "Prev. Father",
+                                     "Prev. Father (%)",
+                                     "Incid. Father",
+                                     "Incid. Father (%)")
+
+datatable(secondary_table, rownames = FALSE, options = list(pageLength = 10))
+
+```
+
+
+------------------------------------------------------------------------
+
+#### Municipality
+
+The following tables show the orphanhood and incidence estimates in 2021 ("total" and "% of children aged 0-17 years") of children who lost their mother, father, or both, at the municipality level.
+
+###### Amazonas
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab1 <- read_csv(file = "data/MUN_PER_DEP/mun_in_amazonas.csv") 
+
+# Check it
+change_col_name <- function (tab) {
+  colnames(tab)[2:7] <- c("Incid. Both",
+                          "Incid. Both (%)",
+                          "Incid. Mother",
+                          "Incid. Mother (%)",
+                          "Incid. Father",
+                          "Incid. Father (%)")
+  
+  tab
+}
+
+datatable(change_col_name(tab1), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Antioquia 
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab2 <- read_csv(file = "data/MUN_PER_DEP/mun_in_antioquia.csv") 
+datatable(change_col_name(tab2), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Arauca    
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab3 <- read_csv(file = "data/MUN_PER_DEP/mun_in_arauca.csv") 
+datatable(change_col_name(tab3), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Archipelago de San Andrés, Providencia y Santa Catalina
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab4 <- read_csv(file = "data/MUN_PER_DEP/mun_in_archipelago_de_san_andrs_providencia_y_santa_catalina.csv") 
+datatable(change_col_name(tab4), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Atlántico 
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab5 <- read_csv(file = "data/MUN_PER_DEP/mun_in_atlntico.csv") 
+datatable(change_col_name(tab5), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Bogotá       
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab6 <- read_csv(file = "data/MUN_PER_DEP/mun_in_bogot.csv") 
+datatable(change_col_name(tab6), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Bolívar    
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab7 <- read_csv(file = "data/MUN_PER_DEP/mun_in_bolvar.csv") 
+datatable(change_col_name(tab7), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Boyacá
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab8 <- read_csv(file = "data/MUN_PER_DEP/mun_in_boyac.csv") 
+datatable(change_col_name(tab8), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Caldas                
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab9 <- read_csv(file = "data/MUN_PER_DEP/mun_in_caldas.csv") 
+datatable(change_col_name(tab9), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Caquetá   
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab10 <- read_csv(file = "data/MUN_PER_DEP/mun_in_caquet.csv") 
+datatable(change_col_name(tab10), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Casanare     
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab11 <- read_csv(file = "data/MUN_PER_DEP/mun_in_casanare.csv") 
+datatable(change_col_name(tab11), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Cauca               
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab12 <- read_csv(file = "data/MUN_PER_DEP/mun_in_cauca.csv") 
+datatable(change_col_name(tab12), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Cesar             
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab13 <- read_csv(file = "data/MUN_PER_DEP/mun_in_cesar.csv") 
+datatable(change_col_name(tab13), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Chocó  
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab14 <- read_csv(file = "data/MUN_PER_DEP/mun_in_choc.csv") 
+datatable(change_col_name(tab14), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Córdoba     
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab15 <- read_csv(file = "data/MUN_PER_DEP/mun_in_crdoba.csv") 
+datatable(change_col_name(tab15), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Cundinamarca 
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab16 <- read_csv(file = "data/MUN_PER_DEP/mun_in_cundinamarca.csv") 
+datatable(change_col_name(tab16), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Guainía            
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab17 <- read_csv(file = "data/MUN_PER_DEP/mun_in_guaina.csv") 
+datatable(change_col_name(tab17), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Guaviare    
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab18 <- read_csv(file = "data/MUN_PER_DEP/mun_in_guaviare.csv") 
+datatable(change_col_name(tab18), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Huila     
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab19 <- read_csv(file = "data/MUN_PER_DEP/mun_in_huila.csv") 
+datatable(change_col_name(tab19), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### La Guajira
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab20 <- read_csv(file = "data/MUN_PER_DEP/mun_in_la_guajira.csv") 
+datatable(change_col_name(tab20), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Magdalena 
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab21 <- read_csv(file = "data/MUN_PER_DEP/mun_in_magdalena.csv") 
+datatable(change_col_name(tab21), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Meta    
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab22 <- read_csv(file = "data/MUN_PER_DEP/mun_in_meta.csv") 
+datatable(change_col_name(tab22), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Nariño           
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab23 <- read_csv(file = "data/MUN_PER_DEP/mun_in_nario.csv") 
+datatable(change_col_name(tab23), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Norte de Santander
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab24 <- read_csv(file = "data/MUN_PER_DEP/mun_in_norte_de_santander.csv") 
+datatable(change_col_name(tab24), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Putumayo               
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab25 <- read_csv(file = "data/MUN_PER_DEP/mun_in_putumayo.csv") 
+datatable(change_col_name(tab25), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Quindío                
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab26 <- read_csv(file = "data/MUN_PER_DEP/mun_in_quindo.csv") 
+datatable(change_col_name(tab26), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Risaralda        
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab27 <- read_csv(file = "data/MUN_PER_DEP/mun_in_risaralda.csv") 
+datatable(change_col_name(tab27), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Santander                   
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab28 <- read_csv(file = "data/MUN_PER_DEP/mun_in_santander.csv") 
+datatable(change_col_name(tab28), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Sucre               
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab29 <- read_csv(file = "data/MUN_PER_DEP/mun_in_sucre.csv") 
+datatable(change_col_name(tab29), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Tolima            
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab30 <- read_csv(file = "data/MUN_PER_DEP/mun_in_tolima.csv") 
+datatable(change_col_name(tab30), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Valle del Cauca                
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab31 <- read_csv(file = "data/MUN_PER_DEP/mun_in_valle_del_cauca.csv") 
+datatable(change_col_name(tab31), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Vaupés                     
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab32 <- read_csv(file = "data/MUN_PER_DEP/mun_in_vaups.csv") 
+datatable(change_col_name(tab32), rownames = FALSE, options = list(pageLength = 5))
+```
+
+<br />
+
+###### Vichada    
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+tab33 <- read_csv(file = "data/MUN_PER_DEP/mun_in_vichada.csv") 
+datatable(change_col_name(tab33), rownames = FALSE, options = list(pageLength = 5))
+```

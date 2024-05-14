@@ -1,0 +1,67 @@
+dep,dep_name,gender,n_orp
+5,Antioquia,Female,910.49
+8,Atlántico,Female,964.1
+11,Bogotá,Female,940.73
+13,Bolívar,Female,770.13
+15,Boyacá,Female,851.9399999999999
+17,Caldas,Female,874.5
+18,Caquetá,Female,1273
+19,Cauca,Female,772.54
+20,Cesar,Female,880.95
+23,Córdoba,Female,760.87
+25,Cundinamarca,Female,668.95
+27,Chocó,Female,484.92
+41,Huila,Female,1170.05
+44,La Guajira,Female,591.24
+47,Magdalena,Female,877.35
+50,Meta,Female,1141.04
+52,Nariño,Female,931.6
+54,Norte de Santander,Female,930.29
+63,Quindío,Female,1092.43
+66,Risaralda,Female,1186.72
+68,Santander,Female,908.3100000000001
+70,Sucre,Female,779.33
+73,Tolima,Female,1144.19
+76,Valle del Cauca,Female,1360.35
+81,Arauca,Female,1289.37
+85,Casanare,Female,937.4399999999999
+86,Putumayo,Female,1025.31
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Female,176.78
+91,Amazonas,Female,566.31
+94,Guainía,Female,298.94
+95,Guaviare,Female,449.3
+97,Vaupés,Female,179.78
+99,Vichada,Female,75.12
+5,Antioquia,Male,3313.73
+8,Atlántico,Male,2630.83
+11,Bogotá,Male,2594.12
+13,Bolívar,Male,2031.81
+15,Boyacá,Male,2531.8
+17,Caldas,Male,2946.3
+18,Caquetá,Male,4200.79
+19,Cauca,Male,2606.95
+20,Cesar,Male,2487.12
+23,Córdoba,Male,2177.88
+25,Cundinamarca,Male,1820.49
+27,Chocó,Male,1231.79
+41,Huila,Male,3401.92
+44,La Guajira,Male,1474.64
+47,Magdalena,Male,2286.02
+50,Meta,Male,3315.56
+52,Nariño,Male,2908.07
+54,Norte de Santander,Male,3293.95
+63,Quindío,Male,3971.93
+66,Risaralda,Male,4019.52
+68,Santander,Male,2668.49
+70,Sucre,Male,2057.73
+73,Tolima,Male,3592.83
+76,Valle del Cauca,Male,5167.56
+81,Arauca,Male,4130.92
+85,Casanare,Male,2638.16
+86,Putumayo,Male,3209.48
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Male,3265.75
+91,Amazonas,Male,2520.54
+94,Guainía,Male,320.32
+95,Guaviare,Male,3819.1
+97,Vaupés,Male,318.06
+99,Vichada,Male,837.0799999999999

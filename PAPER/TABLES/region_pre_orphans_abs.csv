@@ -1,0 +1,13 @@
+reg,reg_name,gender,n_orp
+1,Caribe,Female,26265
+1,Caribe,Male,71235
+2,Eje cafetero y Antioquia,Female,17342
+2,Eje cafetero y Antioquia,Male,62098
+3,Pacífica,Female,17409
+3,Pacífica,Male,61775
+4,Central,Female,36264
+4,Central,Male,105858
+5,Llanos,Female,5415
+5,Llanos,Male,16011
+6,Amazonía,Female,2728
+6,Amazonía,Male,9226

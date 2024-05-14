@@ -1,0 +1,67 @@
+dep,dep_name,gender,n_orp
+5,Antioquia,Female,12336
+8,Atlántico,Female,6446
+11,Bogotá,Female,13904
+13,Bolívar,Female,4614
+15,Boyacá,Female,2400
+17,Caldas,Female,1726
+18,Caquetá,Female,1474
+19,Cauca,Female,2743
+20,Cesar,Female,3486
+23,Córdoba,Female,3707
+25,Cundinamarca,Female,4906
+27,Chocó,Female,922
+41,Huila,Female,3395
+44,La Guajira,Female,2096
+47,Magdalena,Female,3764
+50,Meta,Female,3162
+52,Nariño,Female,3002
+54,Norte de Santander,Female,3680
+63,Quindío,Female,1115
+66,Risaralda,Female,2165
+68,Santander,Female,4559
+70,Sucre,Female,2133
+73,Tolima,Female,3420
+76,Valle del Cauca,Female,10742
+81,Arauca,Female,1089
+85,Casanare,Female,1157
+86,Putumayo,Female,990
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Female,19
+91,Amazonas,Female,122
+94,Guainía,Female,42
+95,Guaviare,Female,74
+97,Vaupés,Female,26
+99,Vichada,Female,7
+5,Antioquia,Male,44896
+8,Atlántico,Male,17590
+11,Bogotá,Male,38341
+13,Bolívar,Male,12173
+15,Boyacá,Male,7132
+17,Caldas,Male,5815
+18,Caquetá,Male,4864
+19,Cauca,Male,9256
+20,Cesar,Male,9842
+23,Córdoba,Male,10611
+25,Cundinamarca,Male,13351
+27,Chocó,Male,2342
+41,Huila,Male,9871
+44,La Guajira,Male,5228
+47,Magdalena,Male,9808
+50,Meta,Male,9188
+52,Nariño,Male,9371
+54,Norte de Santander,Male,13030
+63,Quindío,Male,4054
+66,Risaralda,Male,7333
+68,Santander,Male,13394
+70,Sucre,Male,5632
+73,Tolima,Male,10739
+76,Valle del Cauca,Male,40806
+81,Arauca,Male,3489
+85,Casanare,Male,3256
+86,Putumayo,Male,3099
+88,"Archipelago de San Andrés, Providencia y Santa Catalina",Male,351
+91,Amazonas,Male,543
+94,Guainía,Male,45
+95,Guaviare,Male,629
+97,Vaupés,Male,46
+99,Vichada,Male,78

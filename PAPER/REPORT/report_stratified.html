@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Orphanhood in Colombia</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="report_stratified_files/libs/clipboard/clipboard.min.js"></script>
+<script src="report_stratified_files/libs/quarto-html/quarto.js"></script>
+<script src="report_stratified_files/libs/quarto-html/popper.min.js"></script>
+<script src="report_stratified_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="report_stratified_files/libs/quarto-html/anchor.min.js"></script>
+<link href="report_stratified_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="report_stratified_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="report_stratified_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="report_stratified_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="report_stratified_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="report_stratified_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="report_stratified_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="report_stratified_files/libs/datatables-binding-0.31/datatables.js"></script>
+<script src="report_stratified_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="report_stratified_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="report_stratified_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="report_stratified_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="report_stratified_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="report_stratified_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#colombia-municipalities-classification" id="toc-colombia-municipalities-classification" class="nav-link" data-scroll-target="#colombia-municipalities-classification">Colombia municipalities classification</a></li>
+  <li><a href="#fertility-and-mortality-rates" id="toc-fertility-and-mortality-rates" class="nav-link" data-scroll-target="#fertility-and-mortality-rates">Fertility and mortality rates</a>
+  <ul>
+  <li><a href="#pdet" id="toc-pdet" class="nav-link" data-scroll-target="#pdet">PDET</a></li>
+  <li><a href="#mpm-or-poverty-index" id="toc-mpm-or-poverty-index" class="nav-link" data-scroll-target="#mpm-or-poverty-index">MPM (or poverty index)</a></li>
+  </ul></li>
+  <li><a href="#orphanhood-estimates" id="toc-orphanhood-estimates" class="nav-link" data-scroll-target="#orphanhood-estimates">Orphanhood estimates</a>
+  <ul>
+  <li><a href="#main-estimates" id="toc-main-estimates" class="nav-link" data-scroll-target="#main-estimates">Main estimates</a></li>
+  <li><a href="#estimates-grouped-by-pdet-or-mpm" id="toc-estimates-grouped-by-pdet-or-mpm" class="nav-link" data-scroll-target="#estimates-grouped-by-pdet-or-mpm">Estimates grouped by PDET or MPM</a>
+  <ul>
+  <li><a href="#pdet-1" id="toc-pdet-1" class="nav-link" data-scroll-target="#pdet-1">PDET</a></li>
+  <li><a href="#mpm-or-poverty-index-1" id="toc-mpm-or-poverty-index-1" class="nav-link" data-scroll-target="#mpm-or-poverty-index-1">MPM (or poverty index)</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#complementary-tables" id="toc-complementary-tables" class="nav-link" data-scroll-target="#complementary-tables">Complementary tables</a>
+  <ul>
+  <li><a href="#department-region-and-national" id="toc-department-region-and-national" class="nav-link" data-scroll-target="#department-region-and-national">Department, Region, and National</a></li>
+  <li><a href="#municipality" id="toc-municipality" class="nav-link" data-scroll-target="#municipality">Municipality</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Orphanhood in Colombia</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="overview" class="level3">
+<h3 class="anchored" data-anchor-id="overview">Overview</h3>
+<p>The 32 departments and one capital district (Bogotá) can be grouped together into the 6 regions of Colombia (right panel), namely, (1) Caribe, (2) Eje cafetero y Antioquia, (3) Pacífica, (4) Central, (5) Llanos, and (6) Amazonía.</p>
+<p>Colombia can still be divided into 1121 municipalities (this classification varies along the years, and we are using the definition from 2021).</p>
+<table class="table">
+<colgroup>
+<col style="width: 48%">
+<col style="width: 51%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><img src="images/map1.png" class="img-fluid" style="width:60.0%"></td>
+<td><img src="images/map3.png" class="img-fluid" style="width:50.0%"></td>
+</tr>
+</tbody>
+</table>
+<p>As a way to exclude unreliable regions, we are not considering the 29 municipalities with the lowest population density. The threshold was set based on the following plot (notice that the <code>Population density</code> is in the log-scale). Locations with low population density present, in general, low death rate—indicating that there might be some underreporting issues on these municipalities. Also, we aimed to have at least one municipality in each department.</p>
+<p><img src="images/pop_density_vs_death_rate.jpeg" class="img-fluid" style="width:60.0%"></p>
+<p>Aiming to check where these municipalities should be located, we can plot the population density map. As we can see from the following image, almost all low-populated areas are in the south/south-east region (which is known to be a jungle area).</p>
+<p><img src="images/map_pop_dens.jpeg" class="img-fluid" style="width:50.0%"></p>
+<hr>
+</section>
+<section id="colombia-municipalities-classification" class="level3">
+<h3 class="anchored" data-anchor-id="colombia-municipalities-classification">Colombia municipalities classification</h3>
+<p>The Colombia municipalities can be categorized by the <a href="https://portal.renovacionterritorio.gov.co/Publicaciones/municipios_pdet_subregiones">Programas de Desarrollo con Enfoque Territorial</a>, PDET (left map) or based on a multidimensional poverty index (right map), named “Medida de pobreza multidimensional de fuente censal en el total del municipio (MPM).”</p>
+<p><strong>Remark 1:</strong> the PDET includes 170 municipalities (in our case, 165—after excluding the municipalities with low population density) that were prioritized as the territories most affected by armed conflict, with higher levels of poverty, presence of illicit economies, and institutional weakness.</p>
+<p><strong>Remark 2:</strong> when analyzing the poverty index, in order to have balanced classes, we ordered the municipalities based on the MPM, and divided them into 5 quintiles (namely, <code>[00%,  20%)</code>, <code>[20%,  40%)</code>, <code>[60%,  80%)</code>, and <code>[80%, 100%]</code>)—and that is the classification we will use from now on.</p>
+<p><strong>Remark 3:</strong> all maps already exclude the 29 low-populated municipalities.</p>
+<table class="table">
+<tbody>
+<tr class="odd">
+<td><img src="images/map_PDET.jpeg" class="img-fluid"></td>
+<td><img src="images/map_MPM.jpeg" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fertility-and-mortality-rates" class="level3">
+<h3 class="anchored" data-anchor-id="fertility-and-mortality-rates">Fertility and mortality rates</h3>
+<p>The first thing we can analyze is the death and fertility rates in 2021 (averaged over gender and age group). The following plots show the death (left map) and fertility (right map) group by quintile; i.e., ordered.</p>
+<p>Firstly, let us plot the rates for all locations; i.e., without excluding the municipalities with low population density.</p>
+<p><img src="images/summ_death_fertility_rate_cat_ref.jpeg" class="img-fluid"></p>
+<p>From the above maps, we can notice that the death rates seem to be lower in the south/south-east municipalities, while the fertility rates in the same regions are higher. This is <strong>not</strong> what we would expect, as the mortality rates in the Amazonía region are expected to the hightes—indicating there is a problem of underreporting.</p>
+<p>Secondly, let us plot the rates for 1092 (<span class="math inline">\(1121 - 29\)</span>) municipalities, i.e., after excluding the locations with low population density. It is worth noting that the municipalities had to be re-ordered/re-classified after excluding the 29 locations.</p>
+<p><img src="images/summ_death_fertility_rate_cat_FALSE.jpeg" class="img-fluid"></p>
+<p>Now, let us take it one step further and <strong>standardize the rates</strong> based on the population data from 2018 (census year). That is, we will rank the rates based on the reference population, assuming the age-specific rates are as observed. The following maps show such standardized rates in 2021 (based on the quintiles), similarly to before.</p>
+<p><img src="images/summ_death_fertility_rate_cat_TRUE.jpeg" class="img-fluid"></p>
+<p>We can also analyze these rates grouped by age and the PDET or MPM classifications. The plots below show these estimates for 2021 considering only the 1092 (<span class="math inline">\(1121 - 29\)</span>) municipalities with high population density.</p>
+<p><strong>Remark:</strong> all boxplots are defined based on the <span class="math inline">\(2.5^{\text{th}}\)</span>, <span class="math inline">\(25^{\text{th}}\)</span>, <span class="math inline">\(50^{\text{th}}\)</span>, <span class="math inline">\(75^{\text{th}}\)</span>, and <span class="math inline">\(97.5^{\text{th}}\)</span> percentiles (with no outliers).</p>
+<section id="pdet" class="level4">
+<h4 class="anchored" data-anchor-id="pdet">PDET</h4>
+<p><img src="images/RATES/2021_p_mort_PDET.jpeg" class="img-fluid"> <img src="images/RATES/2021_p_fert_PDET.jpeg" class="img-fluid"></p>
+</section>
+<section id="mpm-or-poverty-index" class="level4">
+<h4 class="anchored" data-anchor-id="mpm-or-poverty-index">MPM (or poverty index)</h4>
+<p><img src="images/RATES/2021_p_mort_PVRT.jpeg" class="img-fluid"> <img src="images/RATES/2021_p_fert_PVRT.jpeg" class="img-fluid"></p>
+</section>
+</section>
+<section id="orphanhood-estimates" class="level3">
+<h3 class="anchored" data-anchor-id="orphanhood-estimates">Orphanhood estimates</h3>
+<section id="main-estimates" class="level4">
+<h4 class="anchored" data-anchor-id="main-estimates">Main estimates</h4>
+<p>The following table shows the orphanhood prevalence and incidence estimates in 2021 (“total” and “% of children aged 0-17 years”) at the national, regional, and department levels.</p>
+<p><strong>Remark:</strong> the locations flagged with an asterisk symbol <span class="math inline">\((*)\)</span> have missing municipalities (as discussed before, municipalities with low population density). In these cases, the estimates are lower bounds of the true values.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-240a9f754e8b4b3052e3" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-240a9f754e8b4b3052e3">{"x":{"filter":"none","vertical":false,"data":[["Colombia*",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,"Amazonía*",null,null,null,null,null,null,"Caribe",null,null,null,null,null,null,null,null,"Central",null,null,null,null,null,null,null,"Eje cafetero y Antioquia",null,null,null,null,"Llanos*",null,null,null,null,"Pacífica",null,null,null,null],[null,null,"Caquetá*","Putumayo","Amazonas*","Guainía*","Guaviare*","Vaupés*",null,"Atlántico","Bolívar","Cesar","Córdoba","La Guajira","Magdalena","Sucre","Archipelago de San Andrés, Providencia y Santa Catalina",null,"Bogotá","Boyacá","Cundinamarca","Huila","Norte de Santander","Santander","Tolima",null,"Antioquia","Caldas","Quindío","Risaralda",null,"Meta*","Arauca*","Casanare","Vichada*",null,"Cauca","Chocó","Nariño","Valle del Cauca"],[435786,11966,6347,4090,667,87,703,72,98512,24299,16918,13540,18534,7350,13771,7787,370,143924,52571,9774,14477,13457,16934,18223,14431,80204,57676,7689,5184,9655,21619,12527,4587,4420,85,79561,12021,3266,12402,51872],["3.801%","4.291%","5.482%","4.236%","3.096%","0.619%","4.268%","0.498%","3.061%","3.634%","2.824%","3.422%","2.527%","2.073%","3.21%","2.845%","3.443%","3.616%","3.557%","3.47%","2.971%","4.638%","4.281%","3.631%","4.828%","4.367%","4.257%","3.896%","5.079%","5.292%","4.374%","4.52%","5.431%","3.581%","0.912%","4.801%","3.386%","1.718%","3.849%","6.569%"],[71008,1824,770,661,187,47,108,51,18053,4717,2968,2385,3477,1663,2535,1339,108,24541,9004,1552,2338,2104,2753,3573,2078,11764,8664,1094,714,1292,3440,1900,617,873,50,11386,1736,671,1941,7038],["0.619%","0.654%","0.665%","0.685%","0.868%","0.335%","0.656%","0.353%","0.561%","0.705%","0.495%","0.603%","0.474%","0.469%","0.591%","0.489%","1.005%","0.617%","0.609%","0.551%","0.48%","0.725%","0.696%","0.712%","0.695%","0.64%","0.639%","0.554%","0.7%","0.708%","0.696%","0.686%","0.731%","0.707%","0.537%","0.687%","0.489%","0.353%","0.602%","0.891%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Country<\/th>\n      <th>Region<\/th>\n      <th>Department<\/th>\n      <th>Prev.<\/th>\n      <th>Prev. (%)<\/th>\n      <th>Incid.<\/th>\n      <th>Incid. (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"columnDefs":[{"className":"dt-right","targets":[3,5]},{"name":"Country","targets":0},{"name":"Region","targets":1},{"name":"Department","targets":2},{"name":"Prev.","targets":3},{"name":"Prev. (%)","targets":4},{"name":"Incid.","targets":5},{"name":"Incid. (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br> These are the orphanhood prevalence estimates in 2021 (total and %) for all departments, stratified by regions.</p>
+<p><img src="images/prevalence_2021.jpeg" class="img-fluid"></p>
+<p>These are the orphanhood incidence estimates (in %) in 2021 by municipality (per 1,000 children aged 0-17 years).</p>
+<p><img src="images/orphans_rate_2021.jpeg" class="img-fluid"></p>
+<p>Similarly, these are the orphanhood incidence estimates (<code>COUNTS</code>) in 2021 by municipality.</p>
+<p><img src="images/orphans_count_2021.jpeg" class="img-fluid"></p>
+<hr>
+<p>Complementary, the plots below show the estimated orphanhood incidence in 2021 (in %) for all <strong>analyzed</strong> municipalities (i.e., municipalities with population density below the set threshold) grouped by department and classified according to the PDET and MPM.</p>
+<p><img src="images/MUNICIPALITY/orphans_rate_by_mun_Amazonas.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Antioquia.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Arauca.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Archipelago%20de%20San%20Andrés,%20Providencia%20y%20Santa%20Catalina.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Atlántico.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Bogotá.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Bolívar.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Boyacá.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Caldas.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Caquetá.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Casanare.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Cauca.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Cesar.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Chocó.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Córdoba.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Cundinamarca.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Guainía.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Guaviare.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Huila.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_La%20Guajira.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Magdalena.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Meta.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Nariño.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Norte%20de%20Santander.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Putumayo.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Quindío.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Risaralda.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Santander.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Sucre.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Tolima.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Valle%20del%20Cauca.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Vaupés.jpeg" class="img-fluid"> <img src="images/MUNICIPALITY/orphans_rate_by_mun_Vichada.jpeg" class="img-fluid"></p>
+<hr>
+</section>
+<section id="estimates-grouped-by-pdet-or-mpm" class="level4">
+<h4 class="anchored" data-anchor-id="estimates-grouped-by-pdet-or-mpm">Estimates grouped by PDET or MPM</h4>
+<p>As mentioned before, the municipalities can be grouped based on the PDET and MPM classifications. The following images show the distribution of the orphanhood incidence estimates (in %) by municipalities in 2021 stratified by gender and PDET or MPM.</p>
+<p><strong>Remark:</strong> As before, all boxplots are defined based on the <span class="math inline">\(2.5^{\text{th}}\)</span>, <span class="math inline">\(25^{\text{th}}\)</span>, <span class="math inline">\(50^{\text{th}}\)</span>, <span class="math inline">\(75^{\text{th}}\)</span>, and <span class="math inline">\(97.5^{\text{th}}\)</span> percentiles (with no outliers). The red circle represents the mean.</p>
+<section id="pdet-1" class="level5">
+<h5 class="anchored" data-anchor-id="pdet-1">PDET</h5>
+<p><img src="images/boxplot_mun_conflict_rel_PDET_2021_errorbar.jpeg" class="img-fluid"></p>
+</section>
+<section id="mpm-or-poverty-index-1" class="level5">
+<h5 class="anchored" data-anchor-id="mpm-or-poverty-index-1">MPM (or poverty index)</h5>
+<p><img src="images/boxplot_mun_conflict_rel_2021_errorbar.jpeg" class="img-fluid"></p>
+</section>
+</section>
+</section>
+<section id="complementary-tables" class="level3">
+<h3 class="anchored" data-anchor-id="complementary-tables">Complementary tables</h3>
+<section id="department-region-and-national" class="level4">
+<h4 class="anchored" data-anchor-id="department-region-and-national">Department, Region, and National</h4>
+<p>The following table shows the orphanhood prevalence and incidence estimates in 2021 (“total” and “% of children aged 0-17 years”) of children who lost their mother, father, or both, at the national, regional, and department levels.</p>
+<p><strong>Remark:</strong> as before, the locations flagged with an asterisk symbol <span class="math inline">\((*)\)</span> have missing municipalities. In these cases, the estimates are lower bounds of the true values.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-cb4adc4cf62eb4feb15c" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-cb4adc4cf62eb4feb15c">{"x":{"filter":"none","vertical":false,"data":[["Colombia*",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,"Amazonía*",null,null,null,null,null,null,"Caribe",null,null,null,null,null,null,null,null,"Central",null,null,null,null,null,null,null,"Eje cafetero y Antioquia",null,null,null,null,"Llanos*",null,null,null,null,"Pacífica",null,null,null,null],[null,null,"Caquetá*","Putumayo","Amazonas*","Guainía*","Guaviare*","Vaupés*",null,"Atlántico","Bolívar","Cesar","Córdoba","La Guajira","Magdalena","Sucre","Archipelago de San Andrés, Providencia y Santa Catalina",null,"Bogotá","Boyacá","Cundinamarca","Huila","Norte de Santander","Santander","Tolima",null,"Antioquia","Caldas","Quindío","Risaralda",null,"Meta*","Arauca*","Casanare","Vichada*",null,"Cauca","Chocó","Nariño","Valle del Cauca"],[435786,11966,6347,4090,667,87,703,72,98512,24299,16918,13540,18534,7350,13771,7787,370,143924,52571,9774,14477,13457,16934,18223,14431,80204,57676,7689,5184,9655,21619,12527,4587,4420,85,79561,12021,3266,12402,51872],["3.801%","4.291%","5.482%","4.236%","3.096%","0.619%","4.268%","0.498%","3.061%","3.634%","2.824%","3.422%","2.527%","2.073%","3.21%","2.845%","3.443%","3.616%","3.557%","3.47%","2.971%","4.638%","4.281%","3.631%","4.828%","4.367%","4.257%","3.896%","5.079%","5.292%","4.374%","4.52%","5.431%","3.581%","0.912%","4.801%","3.386%","1.718%","3.849%","6.569%"],[71008,1824,770,661,187,47,108,51,18053,4717,2968,2385,3477,1663,2535,1339,108,24541,9004,1552,2338,2104,2753,3573,2078,11764,8664,1094,714,1292,3440,1900,617,873,50,11386,1736,671,1941,7038],["0.619%","0.654%","0.665%","0.685%","0.868%","0.335%","0.656%","0.353%","0.561%","0.705%","0.495%","0.603%","0.474%","0.469%","0.591%","0.489%","1.005%","0.617%","0.609%","0.551%","0.48%","0.725%","0.696%","0.712%","0.695%","0.64%","0.639%","0.554%","0.7%","0.708%","0.696%","0.686%","0.731%","0.707%","0.537%","0.687%","0.489%","0.353%","0.602%","0.891%"],[105423,2728,1474,990,122,42,74,26,26265,6446,4614,3486,4906,2096,3764,2133,19,36264,13904,2400,3707,3395,3680,4559,3420,17342,12336,1726,1115,2165,5415,3162,1089,1157,7,17409,2743,922,3002,10742],["0.919%","0.978%","1.273%","1.025%","0.566%","0.299%","0.449%","0.18%","0.816%","0.964%","0.77%","0.881%","0.669%","0.591%","0.877%","0.779%","0.177%","0.911%","0.941%","0.852%","0.761%","1.17%","0.93%","0.908%","1.144%","0.944%","0.91%","0.874%","1.092%","1.187%","1.095%","1.141%","1.289%","0.937%","0.075%","1.051%","0.773%","0.485%","0.932%","1.36%"],[18108,482,195,167,55,23,24,18,4912,1264,795,646,927,513,704,357,30,6257,2362,366,603,563,655,875,509,2840,2109,248,175,308,908,530,147,219,12,2709,379,203,494,1633],["0.158%","0.173%","0.168%","0.173%","0.255%","0.164%","0.146%","0.124%","0.153%","0.189%","0.133%","0.163%","0.126%","0.145%","0.164%","0.13%","0.279%","0.157%","0.16%","0.13%","0.124%","0.194%","0.166%","0.174%","0.17%","0.155%","0.156%","0.126%","0.171%","0.169%","0.184%","0.191%","0.174%","0.177%","0.129%","0.163%","0.107%","0.107%","0.153%","0.207%"],[330363,9238,4873,3100,545,45,629,46,72247,17853,12304,10054,13628,5254,10007,5654,351,107660,38667,7374,10770,10062,13254,13664,11011,62862,45340,5963,4069,7490,16204,9365,3498,3263,78,62152,9278,2344,9400,41130],["2.881%","3.313%","4.209%","3.211%","2.53%","0.32%","3.819%","0.318%","2.245%","2.67%","2.054%","2.541%","1.858%","1.482%","2.332%","2.066%","3.266%","2.705%","2.616%","2.618%","2.211%","3.468%","3.351%","2.722%","3.684%","3.423%","3.346%","3.021%","3.987%","4.106%","3.278%","3.379%","4.142%","2.644%","0.837%","3.751%","2.613%","1.233%","2.917%","5.209%"],[52900,1342,575,494,132,24,84,33,13141,3453,2173,1739,2550,1150,1831,982,78,18284,6642,1186,1735,1541,2098,2698,1569,8924,6555,846,539,984,2532,1370,470,654,38,8677,1357,468,1447,5405],["0.461%","0.481%","0.497%","0.512%","0.613%","0.171%","0.51%","0.228%","0.408%","0.516%","0.363%","0.439%","0.348%","0.324%","0.427%","0.359%","0.726%","0.459%","0.449%","0.421%","0.356%","0.531%","0.53%","0.538%","0.525%","0.486%","0.484%","0.429%","0.528%","0.539%","0.512%","0.494%","0.556%","0.53%","0.408%","0.524%","0.382%","0.246%","0.449%","0.684%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Country<\/th>\n      <th>Region<\/th>\n      <th>Department<\/th>\n      <th>Prev. Both<\/th>\n      <th>Prev. Both (%)<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Prev. Mother<\/th>\n      <th>Prev. Mother (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Prev. Father<\/th>\n      <th>Prev. Father (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"columnDefs":[{"className":"dt-right","targets":[3,5,7,9,11,13]},{"name":"Country","targets":0},{"name":"Region","targets":1},{"name":"Department","targets":2},{"name":"Prev. Both","targets":3},{"name":"Prev. Both (%)","targets":4},{"name":"Incid. Both","targets":5},{"name":"Incid. Both (%)","targets":6},{"name":"Prev. Mother","targets":7},{"name":"Prev. Mother (%)","targets":8},{"name":"Incid. Mother","targets":9},{"name":"Incid. Mother (%)","targets":10},{"name":"Prev. Father","targets":11},{"name":"Prev. Father (%)","targets":12},{"name":"Incid. Father","targets":13},{"name":"Incid. Father (%)","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<hr>
+</section>
+<section id="municipality" class="level4">
+<h4 class="anchored" data-anchor-id="municipality">Municipality</h4>
+<p>The following tables show the orphanhood and incidence estimates in 2021 (“total” and “% of children aged 0-17 years”) of children who lost their mother, father, or both, at the municipality level.</p>
+<section id="amazonas" class="level6">
+<h6 class="anchored" data-anchor-id="amazonas">Amazonas</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-fa14ada7b6ba75545a13" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-fa14ada7b6ba75545a13">{"x":{"filter":"none","vertical":false,"data":[["Leticia","Puerto Nariño"],[183,4],["1.039%","0.102%"],[53,2],["0.301%","0.051%"],[130,2],["0.738%","0.051%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="antioquia" class="level6">
+<h6 class="anchored" data-anchor-id="antioquia">Antioquia</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-e40c0f5749dfb7e3c8be" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e40c0f5749dfb7e3c8be">{"x":{"filter":"none","vertical":false,"data":[["Abejorral","Abriaquí","Alejandría","Amagá","Amalfi","Andes","Angelópolis","Angostura","Anorí","Anzá","Apartadó","Arboletes","Argelia","Armenia","Barbosa","Bello","Belmira","Betania","Betulia","Briceño","Buriticá","Cáceres","Caicedo","Caldas","Campamento","Cañasgordas","Caracolí","Caramanta","Carepa","Carolina","Caucasia","Chigorodó","Cisneros","Ciudad Bolívar","Cocorná","Concepción","Concordia","Copacabana","Dabeiba","Donmatías","Ebéjico","El Bagre","El Carmen De Viboral","El Santuario","Entrerríos","Envigado","Fredonia","Frontino","Giraldo","Girardota","Gómez Plata","Granada","Guadalupe","Guarne","Guatapé","Heliconia","Hispania","Itagüí","Ituango","Jardín","Jericó","La Ceja","La Estrella","La Pintada","La Unión","Liborina","Maceo","Marinilla","Medellín","Montebello","Murindó","Mutatá","Nariño","Nechí","Necoclí","Olaya","Peñol","Peque","Pueblorrico","Puerto Berrío","Puerto Nare","Puerto Triunfo","Remedios","Retiro","Rionegro","Sabanalarga","Sabaneta","Salgar","San Andrés De Cuerquía","San Carlos","San Francisco","San Jerónimo","San José De La Montaña","San Juan De Urabá","San Luis","San Pedro De Los Milagros","San Pedro De Urabá","San Rafael","San Roque","San Vicente Ferrer","Santa Bárbara","Santa Fé De Antioquia","Santa Rosa De Osos","Santo Domingo","Segovia","Sonsón","Sopetrán","Támesis","Tarazá","Tarso","Titiribí","Toledo","Turbo","Uramita","Urrao","Valdivia","Valparaíso","Vegachí","Venecia","Vigía Del Fuerte","Yalí","Yarumal","Yolombó","Yondó","Zaragoza"],[16,0,2,33,50,71,7,20,48,8,230,45,6,3,52,498,6,12,20,5,17,7,99,8,5,6,99,3,274,20,139,11,56,18,1,24,71,63,44,27,10,137,61,65,7,128,23,32,9,47,11,4,59,9,5,4,4,228,21,27,11,72,63,13,31,10,17,63,2947,7,7,98,18,55,109,0,10,39,7,103,11,40,63,14,146,9,73,29,11,22,10,14,1,30,35,39,50,16,27,10,23,48,54,5,101,52,19,115,3,7,13,456,17,14,54,38,3,34,26,4,16,89,40,36,52],["0.412%","0%","0.207%","0.59%","0.872%","0.832%","0.713%","0.753%","0.924%","0.474%","0.727%","0.525%","0.303%","0.481%","0.57%","0.462%","0.413%","0.544%","0.474%","0.28%","0.668%","0.355%","0.701%","0.293%","0.631%","0.708%","0.643%","0.543%","1.012%","0.632%","0.783%","0.526%","1.058%","0.458%","0.111%","0.714%","0.471%","0.633%","0.499%","0.805%","0.449%","0.726%","0.442%","0.736%","0.306%","0.387%","0.68%","0.467%","0.625%","0.47%","0.409%","0.308%","0.676%","0.571%","0.346%","0.516%","0.336%","0.467%","0.369%","0.929%","0.542%","0.56%","0.469%","0.68%","0.563%","0.525%","0.864%","0.448%","0.638%","0.633%","0.297%","1.288%","0.745%","0.553%","0.82%","0%","0.461%","0.924%","0.419%","1.127%","0.392%","0.891%","0.843%","0.342%","0.635%","0.396%","0.505%","0.777%","0.531%","0.552%","0.635%","0.445%","0.111%","0.395%","1.021%","1.041%","0.468%","0.552%","0.59%","0.225%","0.377%","0.854%","0.654%","0.235%","0.994%","0.686%","0.64%","1.507%","0.267%","0.547%","0.883%","1.134%","0.586%","0.737%","0.626%","1.293%","0.301%","1.084%","1.512%","0.105%","0.988%","0.854%","0.813%","0.576%","0.587%"],[6,0,0,7,14,11,1,4,15,3,64,8,3,2,8,136,0,1,2,0,3,1,26,2,2,1,22,1,49,3,35,1,8,5,0,2,16,15,12,6,0,31,16,20,3,28,5,10,2,15,2,1,14,1,0,0,1,64,3,5,1,24,21,4,7,2,1,16,723,1,3,38,3,18,24,0,6,5,0,24,4,9,18,4,38,3,19,8,3,8,1,2,0,8,4,7,15,1,7,3,7,12,10,1,20,12,6,14,1,1,8,126,3,2,16,5,1,5,5,2,3,14,10,13,13],["0.155%","0%","0%","0.125%","0.244%","0.129%","0.102%","0.151%","0.289%","0.178%","0.202%","0.093%","0.152%","0.321%","0.088%","0.126%","0%","0.045%","0.047%","0%","0.118%","0.051%","0.184%","0.073%","0.252%","0.118%","0.143%","0.181%","0.181%","0.095%","0.197%","0.048%","0.151%","0.127%","0%","0.059%","0.106%","0.151%","0.136%","0.179%","0%","0.164%","0.116%","0.226%","0.131%","0.085%","0.148%","0.146%","0.139%","0.15%","0.074%","0.077%","0.16%","0.063%","0%","0%","0.084%","0.131%","0.053%","0.172%","0.049%","0.187%","0.156%","0.209%","0.127%","0.105%","0.051%","0.114%","0.157%","0.09%","0.127%","0.499%","0.124%","0.181%","0.181%","0%","0.277%","0.119%","0%","0.263%","0.143%","0.201%","0.241%","0.098%","0.165%","0.132%","0.131%","0.214%","0.145%","0.201%","0.064%","0.064%","0%","0.105%","0.117%","0.187%","0.141%","0.035%","0.153%","0.068%","0.115%","0.213%","0.121%","0.047%","0.197%","0.158%","0.202%","0.184%","0.089%","0.078%","0.543%","0.313%","0.103%","0.105%","0.185%","0.17%","0.1%","0.159%","0.291%","0.053%","0.185%","0.134%","0.203%","0.208%","0.147%"],[10,0,2,26,36,60,6,16,33,5,166,37,3,1,44,362,6,11,18,5,14,6,73,6,3,5,77,2,225,17,104,10,48,13,1,22,55,48,32,21,10,106,45,45,4,100,18,22,7,32,9,3,45,8,5,4,3,164,18,22,10,48,42,9,24,8,16,47,2224,6,4,60,15,37,85,0,4,34,7,79,7,31,45,10,108,6,54,21,8,14,9,12,1,22,31,32,35,15,20,7,16,36,44,4,81,40,13,101,2,6,5,330,14,12,38,33,2,29,21,2,13,75,30,23,39],["0.258%","0%","0.207%","0.465%","0.628%","0.703%","0.611%","0.602%","0.635%","0.297%","0.525%","0.432%","0.152%","0.16%","0.482%","0.336%","0.413%","0.499%","0.427%","0.28%","0.551%","0.304%","0.517%","0.22%","0.379%","0.59%","0.5%","0.362%","0.831%","0.537%","0.586%","0.478%","0.906%","0.331%","0.111%","0.654%","0.365%","0.482%","0.363%","0.626%","0.449%","0.561%","0.326%","0.51%","0.175%","0.303%","0.532%","0.321%","0.486%","0.32%","0.334%","0.231%","0.516%","0.507%","0.346%","0.516%","0.252%","0.336%","0.316%","0.757%","0.492%","0.373%","0.313%","0.471%","0.436%","0.42%","0.813%","0.334%","0.482%","0.542%","0.17%","0.789%","0.621%","0.372%","0.64%","0%","0.185%","0.806%","0.419%","0.865%","0.249%","0.691%","0.602%","0.244%","0.47%","0.264%","0.373%","0.563%","0.386%","0.351%","0.572%","0.381%","0.111%","0.29%","0.904%","0.854%","0.328%","0.518%","0.437%","0.158%","0.262%","0.64%","0.533%","0.188%","0.797%","0.527%","0.438%","1.324%","0.178%","0.469%","0.34%","0.821%","0.483%","0.631%","0.44%","1.123%","0.2%","0.925%","1.221%","0.053%","0.802%","0.719%","0.61%","0.368%","0.44%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="arauca" class="level6">
+<h6 class="anchored" data-anchor-id="arauca">Arauca</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-0a5b38b66a30fd1c0002" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0a5b38b66a30fd1c0002">{"x":{"filter":"none","vertical":false,"data":[["Arauca","Arauquita","Fortul","Puerto Rondón","Saravena","Tame"],[201,96,62,7,102,149],["0.882%","0.524%","0.82%","0.487%","0.542%","0.959%"],[49,16,23,1,16,42],["0.215%","0.087%","0.304%","0.07%","0.085%","0.27%"],[152,80,39,6,86,107],["0.667%","0.437%","0.516%","0.417%","0.457%","0.688%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="archipelago-de-san-andrés-providencia-y-santa-catalina" class="level6">
+<h6 class="anchored" data-anchor-id="archipelago-de-san-andrés-providencia-y-santa-catalina">Archipelago de San Andrés, Providencia y Santa Catalina</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-867f27c7fd13c4f6cc02" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-867f27c7fd13c4f6cc02">{"x":{"filter":"none","vertical":false,"data":[["Providencia","San Andrés"],[3,105],["0.255%","1.097%"],[0,30],["0%","0.313%"],[3,75],["0.255%","0.784%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="atlántico" class="level6">
+<h6 class="anchored" data-anchor-id="atlántico">Atlántico</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-cee84ff93c46047889d1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-cee84ff93c46047889d1">{"x":{"filter":"none","vertical":false,"data":[["Baranoa","Barranquilla","Campo De La Cruz","Candelaria","Galapa","Juan De Acosta","Luruaco","Malambo","Manatí","Palmar De Varela","Piojó","Polonuevo","Ponedera","Puerto Colombia","Repelón","Sabanagrande","Sabanalarga","Santa Lucía","Santo Tomás","Soledad","Suan","Tubará","Usiacurí"],[87,2944,27,12,67,26,42,174,16,29,3,25,20,83,22,35,153,9,31,889,6,10,7],["0.475%","1.012%","0.35%","0.218%","0.35%","0.456%","0.439%","0.446%","0.225%","0.358%","0.174%","0.483%","0.245%","0.588%","0.255%","0.352%","0.533%","0.206%","0.384%","0.562%","0.151%","0.265%","0.268%"],[23,780,10,3,23,6,19,50,3,9,1,6,2,18,5,9,47,2,16,228,2,1,1],["0.126%","0.268%","0.13%","0.054%","0.12%","0.105%","0.198%","0.128%","0.042%","0.111%","0.058%","0.116%","0.025%","0.127%","0.058%","0.091%","0.164%","0.046%","0.198%","0.144%","0.05%","0.026%","0.038%"],[64,2164,17,9,44,20,23,124,13,20,2,19,18,65,17,26,106,7,15,661,4,9,6],["0.349%","0.744%","0.22%","0.163%","0.23%","0.351%","0.24%","0.318%","0.183%","0.247%","0.116%","0.367%","0.221%","0.46%","0.197%","0.262%","0.369%","0.16%","0.186%","0.418%","0.101%","0.238%","0.23%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="bogotá" class="level6">
+<h6 class="anchored" data-anchor-id="bogotá">Bogotá</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-c924ebc552c059c7c5a5" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c924ebc552c059c7c5a5">{"x":{"filter":"none","vertical":false,"data":[["Bogotá, D.C."],[9004],["0.609%"],[2362],["0.16%"],[6642],["0.449%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="bolívar" class="level6">
+<h6 class="anchored" data-anchor-id="bolívar">Bolívar</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-fad8e1e533355becf49b" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-fad8e1e533355becf49b">{"x":{"filter":"none","vertical":false,"data":[["Achí","Altos Del Rosario","Arenal","Arjona","Arroyohondo","Barranco De Loba","Calamar","Cantagallo","Cartagena De Indias","Cicuco","Clemencia","Córdoba","El Carmen De Bolívar","El Guamo","El Peñón","Hatillo De Loba","Magangué","Mahates","Margarita","María La Baja","Mompós","Montecristo","Morales","Norosí","Pinillos","Regidor","Río Viejo","San Cristóbal","San Estanislao","San Fernando","San Jacinto","San Jacinto Del Cauca","San Juan Nepomuceno","San Martín De Loba","San Pablo","Santa Catalina","Santa Rosa","Santa Rosa Del Sur","Simití","Soplaviento","Talaigua Nuevo","Tiquisio","Turbaco","Turbaná","Villanueva","Zambrano"],[27,16,34,59,1,17,13,12,1888,15,7,8,107,0,5,5,185,26,7,61,54,5,11,2,6,2,3,0,4,5,17,8,19,18,42,17,32,77,21,2,13,9,71,10,19,8],["0.408%","0.461%","1.306%","0.276%","0.038%","0.302%","0.171%","0.497%","0.76%","0.292%","0.145%","0.152%","0.483%","0%","0.187%","0.106%","0.43%","0.279%","0.219%","0.378%","0.342%","0.09%","0.15%","0.062%","0.067%","0.094%","0.146%","0%","0.076%","0.151%","0.232%","0.26%","0.184%","0.328%","0.441%","0.352%","0.557%","0.762%","0.418%","0.077%","0.267%","0.12%","0.225%","0.208%","0.254%","0.218%"],[4,3,7,19,0,6,7,6,494,3,0,3,28,0,3,1,53,10,2,13,14,2,2,1,1,1,1,0,3,2,7,2,8,4,10,2,11,18,8,0,3,4,17,5,6,1],["0.06%","0.086%","0.269%","0.089%","0%","0.106%","0.092%","0.249%","0.199%","0.058%","0%","0.057%","0.126%","0%","0.112%","0.021%","0.123%","0.107%","0.062%","0.081%","0.089%","0.036%","0.027%","0.031%","0.011%","0.047%","0.049%","0%","0.057%","0.06%","0.095%","0.065%","0.077%","0.073%","0.105%","0.041%","0.191%","0.178%","0.159%","0%","0.062%","0.053%","0.054%","0.104%","0.08%","0.027%"],[23,13,27,40,1,11,6,6,1394,12,7,5,79,0,2,4,132,16,5,48,40,3,9,1,5,1,2,0,1,3,10,6,11,14,32,15,21,59,13,2,10,5,54,5,13,7],["0.347%","0.374%","1.037%","0.187%","0.038%","0.195%","0.079%","0.249%","0.562%","0.234%","0.145%","0.095%","0.356%","0%","0.075%","0.085%","0.307%","0.172%","0.156%","0.298%","0.254%","0.054%","0.123%","0.031%","0.056%","0.047%","0.097%","0%","0.019%","0.091%","0.136%","0.195%","0.106%","0.255%","0.336%","0.311%","0.365%","0.584%","0.259%","0.077%","0.205%","0.067%","0.171%","0.104%","0.174%","0.19%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="boyacá" class="level6">
+<h6 class="anchored" data-anchor-id="boyacá">Boyacá</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-6fe730abb40e185e6af3" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-6fe730abb40e185e6af3">{"x":{"filter":"none","vertical":false,"data":[["Almeida","Aquitania","Arcabuco","Belén","Berbeo","Betéitiva","Boavita","Boyacá","Briceño","Buenavista","Busbanzá","Caldas","Campohermoso","Cerinza","Chinavita","Chiquinquirá","Chíquiza","Chiscas","Chita","Chitaraque","Chivatá","Chivor","Ciénega","Cómbita","Coper","Corrales","Covarachía","Cubará","Cucaita","Cuítiva","Duitama","El Cocuy","El Espino","Firavitoba","Floresta","Gachantivá","Gámeza","Garagoa","Guacamayas","Guateque","Guayatá","Güicán De La Sierra","Iza","Jenesano","Jericó","La Capilla","La Uvita","La Victoria","Labranzagrande","Macanal","Maripí","Miraflores","Mongua","Monguí","Moniquirá","Motavita","Muzo","Nobsa","Nuevo Colón","Oicatá","Otanche","Pachavita","Páez","Paipa","Pajarito","Panqueba","Pauna","Paya","Paz De Río","Pesca","Pisba","Puerto Boyacá","Quípama","Ramiriquí","Ráquira","Rondón","Saboyá","Sáchica","Samacá","San Eduardo","San José De Pare","San Luis De Gaceno","San Mateo","San Miguel De Sema","San Pablo De Borbur","Santa María","Santa Rosa De Viterbo","Santa Sofía","Santana","Sativanorte","Sativasur","Siachoque","Soatá","Socha","Socotá","Sogamoso","Somondoco","Sora","Soracá","Sotaquirá","Susacón","Sutamarchán","Sutatenza","Tasco","Tenza","Tibaná","Tibasosa","Tinjacá","Tipacoque","Toca","Togüí","Tópaga","Tota","Tunja","Tununguá","Turmequé","Tuta","Tutazá","Úmbita","Ventaquemada","Villa De Leyva","Viracachá","Zetaquira"],[1,18,8,7,0,1,5,11,0,7,2,1,2,3,5,94,0,12,15,0,0,2,2,2,1,6,10,8,3,8,181,2,2,4,1,4,28,1,11,2,7,2,2,5,3,2,2,2,1,3,3,10,3,8,39,4,12,21,3,3,6,0,54,4,0,7,0,4,5,3,91,2,2,15,2,7,7,38,0,3,4,2,2,4,1,7,1,12,5,2,3,4,16,8,190,1,0,9,17,3,8,3,11,11,3,5,6,0,2,13,11,9,254,2,7,9,2,8,17,16,3,2,4],["0.404%","0.461%","0.521%","0.384%","0%","0.325%","0.489%","0.942%","0%","0.79%","0.777%","0.14%","0.334%","0.404%","0.904%","0.674%","0%","0.512%","1.236%","0%","0%","0.201%","0.169%","0.304%","0.165%","0.935%","0.209%","0.951%","0.726%","0.337%","0.637%","0.192%","0.325%","0.255%","0.155%","0.559%","0.875%","0.252%","0.665%","0.411%","0.55%","0.179%","0.394%","0.308%","0.336%","0.473%","0.347%","1.387%","0.218%","0.42%","0.265%","0.572%","0.242%","0.875%","0.774%","0.273%","0.59%","0.607%","0.241%","0.445%","0.358%","0%","0.662%","0.967%","0%","0.588%","0%","0.452%","0.29%","0.659%","0.732%","0.289%","0.291%","0.637%","0.401%","0.542%","0.238%","0.668%","0%","0.316%","0.386%","0.291%","0.277%","0.331%","0.162%","0.282%","0.138%","0.704%","1.302%","0.778%","0.148%","0.179%","0.726%","0.436%","0.655%","0.299%","0%","0.492%","0.738%","0.737%","0.533%","0.442%","0.726%","0.868%","0.499%","0.264%","0.239%","0%","0.274%","0.49%","0.921%","0.74%","0.625%","0.488%","0.504%","0.416%","0.473%","0.816%","0.431%","0.418%","0.53%","0.168%","0.272%"],[1,4,0,1,0,0,0,6,0,1,1,0,0,2,0,13,0,3,2,0,0,1,2,0,0,3,6,0,0,2,48,1,0,0,1,2,4,0,2,0,1,2,1,0,0,0,2,0,1,1,0,7,2,4,13,0,1,6,0,0,2,0,14,0,0,1,0,2,1,1,27,0,1,3,1,0,1,11,0,2,0,0,0,2,0,1,0,1,2,1,0,2,2,0,41,0,0,3,6,0,1,0,5,2,0,3,1,0,0,3,0,3,60,0,1,1,0,0,5,4,1,1,0],["0.404%","0.102%","0%","0.055%","0%","0%","0%","0.514%","0%","0.113%","0.388%","0%","0%","0.269%","0%","0.093%","0%","0.128%","0.165%","0%","0%","0.101%","0.169%","0%","0%","0.468%","0.125%","0%","0%","0.084%","0.169%","0.096%","0%","0%","0.155%","0.28%","0.125%","0%","0.121%","0%","0.079%","0.179%","0.197%","0%","0%","0%","0.347%","0%","0.218%","0.14%","0%","0.4%","0.162%","0.437%","0.258%","0%","0.049%","0.173%","0%","0%","0.119%","0%","0.172%","0%","0%","0.084%","0%","0.226%","0.058%","0.22%","0.217%","0%","0.145%","0.127%","0.201%","0%","0.034%","0.193%","0%","0.211%","0%","0%","0%","0.165%","0%","0.04%","0%","0.059%","0.521%","0.389%","0%","0.09%","0.091%","0%","0.141%","0%","0%","0.164%","0.26%","0%","0.067%","0%","0.33%","0.158%","0%","0.158%","0.04%","0%","0%","0.113%","0%","0.247%","0.148%","0%","0.072%","0.046%","0%","0%","0.127%","0.105%","0.177%","0.084%","0%"],[0,14,8,6,0,1,5,5,0,6,1,1,2,1,5,81,0,9,13,0,0,1,0,2,1,3,4,8,3,6,133,1,2,4,0,2,24,1,9,2,6,0,1,5,3,2,0,2,0,2,3,3,1,4,26,4,11,15,3,3,4,0,40,4,0,6,0,2,4,2,64,2,1,12,1,7,6,27,0,1,4,2,2,2,1,6,1,11,3,1,3,2,14,8,149,1,0,6,11,3,7,3,6,9,3,2,5,0,2,10,11,6,194,2,6,8,2,8,12,12,2,1,4],["0%","0.358%","0.521%","0.329%","0%","0.325%","0.489%","0.428%","0%","0.677%","0.388%","0.14%","0.334%","0.135%","0.904%","0.581%","0%","0.384%","1.071%","0%","0%","0.101%","0%","0.304%","0.165%","0.468%","0.083%","0.951%","0.726%","0.253%","0.468%","0.096%","0.325%","0.255%","0%","0.28%","0.75%","0.252%","0.544%","0.411%","0.471%","0%","0.197%","0.308%","0.336%","0.473%","0%","1.387%","0%","0.28%","0.265%","0.171%","0.081%","0.437%","0.516%","0.273%","0.541%","0.433%","0.241%","0.445%","0.239%","0%","0.49%","0.967%","0%","0.504%","0%","0.226%","0.232%","0.439%","0.515%","0.289%","0.145%","0.509%","0.201%","0.542%","0.204%","0.475%","0%","0.105%","0.386%","0.291%","0.277%","0.165%","0.162%","0.242%","0.138%","0.646%","0.781%","0.389%","0.148%","0.09%","0.636%","0.436%","0.513%","0.299%","0%","0.328%","0.477%","0.737%","0.467%","0.442%","0.396%","0.71%","0.499%","0.106%","0.199%","0%","0.274%","0.377%","0.921%","0.493%","0.477%","0.488%","0.432%","0.37%","0.473%","0.816%","0.304%","0.314%","0.354%","0.084%","0.272%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="caldas" class="level6">
+<h6 class="anchored" data-anchor-id="caldas">Caldas</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-e40a567e1c7bc15eb829" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e40a567e1c7bc15eb829">{"x":{"filter":"none","vertical":false,"data":[["Aguadas","Anserma","Aranzazu","Belalcázar","Chinchiná","Filadelfia","La Dorada","La Merced","Manizales","Manzanares","Marmato","Marquetalia","Marulanda","Neira","Norcasia","Pácora","Palestina","Pensilvania","Riosucio","Risaralda","Salamina","Samaná","San José","Supía","Victoria","Villamaría","Viterbo"],[30,33,20,15,82,7,160,5,345,15,11,21,2,21,13,34,17,10,86,9,15,16,3,41,10,46,27],["0.655%","0.493%","0.895%","0.619%","0.813%","0.368%","0.885%","0.483%","0.454%","0.391%","0.457%","0.705%","0.476%","0.483%","0.783%","1.229%","0.438%","0.401%","0.698%","0.405%","0.423%","0.355%","0.338%","0.63%","0.499%","0.309%","1.019%"],[3,8,6,6,19,0,33,0,80,3,2,3,1,6,2,8,6,3,18,2,4,4,0,10,5,11,5],["0.065%","0.119%","0.268%","0.248%","0.188%","0%","0.183%","0%","0.105%","0.078%","0.083%","0.101%","0.238%","0.138%","0.12%","0.289%","0.154%","0.12%","0.146%","0.09%","0.113%","0.089%","0%","0.154%","0.249%","0.074%","0.189%"],[27,25,14,9,63,7,127,5,265,12,9,18,1,15,11,26,11,7,68,7,11,12,3,31,5,35,22],["0.589%","0.373%","0.626%","0.372%","0.625%","0.368%","0.703%","0.483%","0.349%","0.313%","0.374%","0.605%","0.238%","0.345%","0.663%","0.94%","0.283%","0.281%","0.552%","0.315%","0.31%","0.266%","0.338%","0.476%","0.249%","0.235%","0.83%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="caquetá" class="level6">
+<h6 class="anchored" data-anchor-id="caquetá">Caquetá</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-53c938a81b7dfe681a24" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-53c938a81b7dfe681a24">{"x":{"filter":"none","vertical":false,"data":[["Albania","Belén De Los Andaquíes","Cartagena Del Chairá","Curillo","El Doncello","El Paujíl","Florencia","La Montañita","Milán","Morelia","Puerto Rico","San José Del Fragua","San Vicente Del Caguán","Solita","Valparaíso"],[5,13,56,15,31,20,386,16,9,11,34,38,125,7,4],["0.382%","0.431%","0.475%","0.575%","0.589%","0.48%","0.829%","0.387%","0.284%","1.092%","0.357%","0.844%","0.838%","0.397%","0.194%"],[1,7,13,2,14,5,90,3,3,0,9,10,34,3,1],["0.076%","0.232%","0.11%","0.077%","0.266%","0.12%","0.193%","0.073%","0.095%","0%","0.095%","0.222%","0.228%","0.17%","0.049%"],[4,6,43,13,17,15,296,13,6,11,25,28,91,4,3],["0.306%","0.199%","0.365%","0.498%","0.323%","0.36%","0.636%","0.314%","0.189%","1.092%","0.263%","0.622%","0.61%","0.227%","0.146%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="casanare" class="level6">
+<h6 class="anchored" data-anchor-id="casanare">Casanare</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-fe65f0e14776b866688c" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-fe65f0e14776b866688c">{"x":{"filter":"none","vertical":false,"data":[["Aguazul","Chámeza","Hato Corozal","La Salina","Maní","Monterrey","Nunchía","Orocué","Paz De Ariporo","Pore","Recetor","Sabanalarga","Sácama","San Luis De Palenque","Támara","Tauramena","Trinidad","Villanueva","Yopal"],[56,0,11,0,28,27,5,18,56,22,0,3,16,1,51,23,5,48,503],["0.547%","0%","0.242%","0%","0.632%","0.595%","0.194%","0.576%","0.456%","0.531%","0%","0.354%","0.655%","0.185%","0.698%","0.558%","0.222%","0.457%","1.043%"],[17,0,6,0,7,4,2,1,17,4,0,1,2,1,19,4,0,10,124],["0.166%","0%","0.132%","0%","0.158%","0.088%","0.077%","0.032%","0.138%","0.097%","0%","0.118%","0.082%","0.185%","0.26%","0.097%","0%","0.095%","0.257%"],[39,0,5,0,21,23,3,17,39,18,0,2,14,0,32,19,5,38,379],["0.381%","0%","0.11%","0%","0.474%","0.507%","0.116%","0.544%","0.317%","0.434%","0%","0.236%","0.573%","0%","0.438%","0.461%","0.222%","0.362%","0.786%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="cauca" class="level6">
+<h6 class="anchored" data-anchor-id="cauca">Cauca</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-0d81ab4a64ed423ef38a" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0d81ab4a64ed423ef38a">{"x":{"filter":"none","vertical":false,"data":[["Almaguer","Argelia","Balboa","Bolívar","Buenos Aires","Cajibío","Caldono","Caloto","Corinto","El Tambo","Florencia","Guachené","Guapi","Inzá","Jambaló","La Sierra","La Vega","López De Micay","Mercaderes","Miranda","Morales","Padilla","Páez","Patía","Piamonte","Piendamó - Tunía","Popayán","Puerto Tejada","Puracé","Rosas","San Sebastián","Santa Rosa","Santander De Quilichao","Silvia","Sotará - Paispamba","Suárez","Sucre","Timbío","Timbiquí","Toribío","Totoró","Villa Rica"],[6,46,24,24,34,37,32,37,67,79,7,17,30,21,8,4,9,2,22,48,26,14,82,6,52,431,89,7,56,7,2,1,206,24,3,2,43,6,45,40,18,22],["0.146%","0.504%","0.51%","0.305%","0.401%","0.401%","0.224%","0.58%","1.145%","0.725%","0.558%","0.306%","0.347%","0.224%","0.136%","0.173%","0.236%","0.028%","0.63%","0.698%","0.255%","0.608%","0.963%","0.184%","0.597%","0.7%","0.872%","0.155%","0.351%","0.353%","0.096%","0.07%","0.762%","0.222%","0.113%","0.146%","0.687%","0.062%","0.558%","0.383%","0.241%","0.409%"],[2,3,6,3,7,8,9,5,12,17,2,4,13,3,4,2,3,1,4,7,6,3,11,0,13,83,22,2,12,1,0,0,54,10,2,1,8,2,9,13,5,7],["0.049%","0.033%","0.128%","0.038%","0.083%","0.087%","0.063%","0.078%","0.205%","0.156%","0.159%","0.072%","0.15%","0.032%","0.068%","0.086%","0.079%","0.014%","0.115%","0.102%","0.059%","0.13%","0.129%","0%","0.149%","0.135%","0.216%","0.044%","0.075%","0.05%","0%","0%","0.2%","0.093%","0.075%","0.073%","0.128%","0.021%","0.112%","0.125%","0.067%","0.13%"],[4,43,18,21,27,29,23,32,55,62,5,13,17,18,4,2,6,1,18,41,20,11,71,6,39,348,67,5,44,6,2,1,152,14,1,1,35,4,36,27,13,15],["0.097%","0.471%","0.383%","0.267%","0.319%","0.314%","0.161%","0.501%","0.94%","0.569%","0.398%","0.234%","0.196%","0.192%","0.068%","0.086%","0.158%","0.014%","0.516%","0.597%","0.196%","0.478%","0.834%","0.184%","0.448%","0.565%","0.656%","0.111%","0.276%","0.302%","0.096%","0.07%","0.562%","0.13%","0.038%","0.073%","0.56%","0.041%","0.447%","0.259%","0.174%","0.279%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="cesar" class="level6">
+<h6 class="anchored" data-anchor-id="cesar">Cesar</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-a1811e03d1ed7faa2432" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a1811e03d1ed7faa2432">{"x":{"filter":"none","vertical":false,"data":[["Aguachica","Agustín Codazzi","Astrea","Becerril","Bosconia","Chimichagua","Chiriguaná","Curumaní","El Copey","El Paso","Gamarra","González","La Gloria","La Jagua De Ibirico","La Paz","Manaure Balcón Del Cesar","Pailitas","Pelaya","Pueblo Bello","Río De Oro","San Alberto","San Diego","San Martín","Tamalameque","Valledupar"],[236,99,29,31,102,29,65,79,58,69,16,4,12,64,35,10,58,53,13,16,44,30,43,22,1168],["0.75%","0.469%","0.418%","0.353%","0.702%","0.247%","0.63%","0.597%","0.538%","0.45%","0.436%","0.593%","0.233%","0.411%","0.356%","0.305%","0.984%","0.758%","0.114%","0.382%","0.549%","0.44%","0.595%","0.413%","0.742%"],[56,28,5,12,23,7,16,15,11,16,3,1,5,17,10,4,10,12,4,5,16,6,10,5,349],["0.178%","0.133%","0.072%","0.137%","0.158%","0.06%","0.155%","0.113%","0.102%","0.104%","0.082%","0.148%","0.097%","0.109%","0.102%","0.122%","0.17%","0.172%","0.035%","0.12%","0.199%","0.088%","0.138%","0.094%","0.222%"],[180,71,24,19,79,22,49,64,47,53,13,3,7,47,25,6,48,41,9,11,28,24,33,17,819],["0.572%","0.336%","0.346%","0.216%","0.543%","0.187%","0.475%","0.483%","0.436%","0.346%","0.354%","0.445%","0.136%","0.302%","0.254%","0.183%","0.814%","0.586%","0.079%","0.263%","0.349%","0.352%","0.456%","0.319%","0.52%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="chocó" class="level6">
+<h6 class="anchored" data-anchor-id="chocó">Chocó</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-359666a025b211be6aba" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-359666a025b211be6aba">{"x":{"filter":"none","vertical":false,"data":[["Acandí","Alto Baudó","Atrato","Bagadó","Bahía Solano","Bajo Baudó","Bojayá","Carmen Del Darién","Cértegui","Condoto","El Cantón Del San Pablo","El Carmen De Atrato","El Litoral Del San Juan","Istmina","Juradó","Lloró","Medio Atrato","Medio Baudó","Medio San Juan","Nóvita","Nuquí","Quibdó","Río Iró","Río Quito","Riosucio","San José Del Palmar","Sipí","Tadó","Unguía","Unión Panamericana"],[26,1,8,2,14,3,4,2,21,2,3,14,0,38,1,6,1,0,2,7,3,422,26,2,3,7,2,34,12,5],["0.538%","0.007%","0.412%","0.037%","0.4%","0.032%","0.062%","0.029%","0.486%","0.134%","0.125%","0.505%","0%","0.36%","0.05%","0.129%","0.024%","0%","0.055%","0.465%","0.089%","1.012%","0.129%","0.113%","0.083%","0.361%","0.166%","0.522%","0.227%","0.21%"],[16,0,4,1,5,2,3,1,6,1,0,5,0,15,0,4,0,0,1,1,0,114,3,0,2,2,1,10,3,3],["0.331%","0%","0.206%","0.019%","0.143%","0.021%","0.046%","0.014%","0.139%","0.067%","0%","0.181%","0%","0.142%","0%","0.086%","0%","0%","0.027%","0.066%","0%","0.273%","0.015%","0%","0.055%","0.103%","0.083%","0.153%","0.057%","0.126%"],[10,1,4,1,9,1,1,1,15,1,3,9,0,23,1,2,1,0,1,6,3,308,23,2,1,5,1,24,9,2],["0.207%","0.007%","0.206%","0.019%","0.257%","0.011%","0.015%","0.014%","0.347%","0.067%","0.125%","0.325%","0%","0.218%","0.05%","0.043%","0.024%","0%","0.027%","0.398%","0.089%","0.739%","0.114%","0.113%","0.028%","0.258%","0.083%","0.368%","0.17%","0.084%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="córdoba" class="level6">
+<h6 class="anchored" data-anchor-id="córdoba">Córdoba</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-3a641ed3c4b631676395" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-3a641ed3c4b631676395">{"x":{"filter":"none","vertical":false,"data":[["Ayapel","Buenavista","Canalete","Cereté","Chimá","Chinú","Ciénaga De Oro","Cotorra","La Apartada","Lorica","Los Córdobas","Momil","Moñitos","Montelíbano","Montería","Planeta Rica","Pueblo Nuevo","Puerto Escondido","Puerto Libertador","Purísima De La Concepción","Sahagún","San Andrés De Sotavento","San Antero","San Bernardo Del Viento","San Carlos","San José De Uré","San Pelayo","Tierralta","Tuchín","Valencia"],[64,25,17,128,5,42,58,16,25,190,13,17,124,854,20,101,24,24,54,12,142,30,26,45,25,1,29,179,11,37],["0.47%","0.404%","0.33%","0.467%","0.133%","0.367%","0.346%","0.356%","0.54%","0.688%","0.257%","0.346%","0.488%","0.666%","0.226%","0.534%","0.299%","0.368%","0.392%","0.274%","0.519%","0.25%","0.272%","0.477%","0.345%","0.021%","0.264%","0.521%","0.067%","0.372%"],[23,7,9,24,1,12,12,3,3,55,3,8,27,232,4,24,8,8,14,3,34,6,3,10,8,0,6,40,3,13],["0.169%","0.113%","0.175%","0.088%","0.027%","0.105%","0.072%","0.067%","0.065%","0.199%","0.059%","0.163%","0.106%","0.181%","0.045%","0.127%","0.1%","0.123%","0.102%","0.069%","0.124%","0.05%","0.031%","0.106%","0.11%","0%","0.055%","0.116%","0.018%","0.131%"],[41,18,8,104,4,30,46,13,22,135,10,9,97,622,16,77,16,16,40,9,108,24,23,35,17,1,23,139,8,24],["0.301%","0.291%","0.155%","0.379%","0.106%","0.262%","0.275%","0.29%","0.475%","0.489%","0.197%","0.183%","0.381%","0.485%","0.181%","0.407%","0.2%","0.245%","0.291%","0.206%","0.394%","0.2%","0.241%","0.371%","0.234%","0.021%","0.209%","0.405%","0.049%","0.241%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="cundinamarca" class="level6">
+<h6 class="anchored" data-anchor-id="cundinamarca">Cundinamarca</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-840a0bf3b6ab0985bd66" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-840a0bf3b6ab0985bd66">{"x":{"filter":"none","vertical":false,"data":[["Agua De Dios","Albán","Anapoima","Anolaima","Apulo","Arbeláez","Beltrán","Bituima","Bojacá","Cabrera","Cachipay","Cajicá","Caparrapí","Cáqueza","Carmen De Carupa","Chaguaní","Chía","Chipaque","Choachí","Chocontá","Cogua","Cota","Cucunubá","El Colegio","El Peñón","El Rosal","Facatativá","Fómeque","Fosca","Funza","Fúquene","Fusagasugá","Gachalá","Gachancipá","Gachetá","Gama","Girardot","Granada","Guachetá","Guaduas","Guasca","Guataquí","Guatavita","Guayabal De Síquima","Guayabetal","Gutiérrez","Jerusalén","Junín","La Calera","La Mesa","La Palma","La Peña","La Vega","Lenguazaque","Machetá","Madrid","Manta","Medina","Mosquera","Nariño","Nemocón","Nilo","Nimaima","Nocaima","Pacho","Paime","Pandi","Paratebueno","Pasca","Puerto Salgar","Pulí","Quebradanegra","Quetame","Quipile","Ricaurte","San Antonio Del Tequendama","San Bernardo","San Cayetano","San Francisco","San Juan De Rioseco","Sasaima","Sesquilé","Sibaté","Silvania","Simijaca","Soacha","Sopó","Subachoque","Suesca","Supatá","Susa","Sutatausa","Tabio","Tausa","Tena","Tenjo","Tibacuy","Tibirita","Tocaima","Tocancipá","Topaipí","Ubalá","Ubaque","Une","Útica","Venecia","Vergara","Vianí","Villa De San Diego De Ubaté","Villagómez","Villapinzón","Villeta","Viotá","Yacopí","Zipacón","Zipaquirá"],[16,5,13,16,3,7,1,1,12,4,5,81,6,3,1,5,5,42,128,18,29,11,25,22,3,24,204,6,123,229,10,5,5,17,14,2,243,5,35,21,17,1,6,5,9,1,4,6,32,59,4,2,14,11,6,129,0,11,136,4,37,3,0,6,27,0,1,10,4,22,1,3,8,2,10,5,9,2,7,11,16,10,57,26,13,755,23,13,18,1,9,7,15,15,5,21,2,2,24,51,2,6,10,8,1,3,1,64,2,21,28,18,2,3,195,0],["0.778%","0.338%","0.466%","0.603%","0.169%","0.331%","0.239%","0.209%","0.444%","0.302%","0.242%","0.358%","0.295%","0.15%","0.167%","0.224%","0.209%","0.731%","0.413%","0.323%","0.317%","0.503%","0.643%","0.425%","0.427%","0.345%","0.567%","0.398%","0.504%","0.745%","0.373%","0.4%","0.583%","0.336%","0.883%","0.301%","1.232%","0.255%","0.865%","0.425%","0.427%","0.254%","0.378%","0.651%","0.493%","0.114%","0.955%","0.714%","0.466%","0.91%","0.269%","0.202%","0.455%","0.391%","0.495%","0.391%","0%","0.572%","0.359%","0.82%","1.014%","0.175%","0%","0.551%","0.489%","0%","0.095%","0.376%","0.196%","0.581%","0.199%","0.333%","0.618%","0.172%","0.356%","0.254%","0.501%","0.215%","0.305%","0.677%","0.737%","0.331%","0.641%","0.527%","0.378%","0.404%","0.374%","0.354%","0.428%","0.093%","0.62%","0.412%","0.306%","0.768%","0.269%","0.408%","0.246%","0.488%","0.86%","0.409%","0.269%","0.389%","0.669%","0.501%","0.087%","0.258%","0.118%","0.536%","0.487%","0.442%","0.452%","0.589%","0.093%","0.317%","0.575%","0%"],[3,0,7,4,1,0,0,0,4,2,1,16,1,3,0,1,1,10,31,10,9,0,6,2,2,7,52,2,34,49,3,0,1,4,3,0,55,3,6,3,5,0,3,5,3,0,4,2,7,14,0,0,4,3,2,44,0,1,39,0,11,1,0,1,14,0,0,5,1,12,0,2,1,0,3,1,1,0,2,1,5,1,16,8,3,216,4,2,4,0,0,5,4,4,0,4,1,0,10,16,0,2,4,2,1,2,0,15,0,4,6,3,0,1,56,0],["0.146%","0%","0.251%","0.151%","0.056%","0%","0%","0%","0.148%","0.151%","0.048%","0.071%","0.049%","0.15%","0%","0.045%","0.042%","0.174%","0.1%","0.18%","0.098%","0%","0.154%","0.039%","0.284%","0.101%","0.145%","0.133%","0.139%","0.16%","0.112%","0%","0.117%","0.079%","0.189%","0%","0.279%","0.153%","0.148%","0.061%","0.126%","0%","0.189%","0.651%","0.164%","0%","0.955%","0.238%","0.102%","0.216%","0%","0%","0.13%","0.107%","0.165%","0.134%","0%","0.052%","0.103%","0%","0.301%","0.058%","0%","0.092%","0.254%","0%","0%","0.188%","0.049%","0.317%","0%","0.222%","0.077%","0%","0.107%","0.051%","0.056%","0%","0.087%","0.062%","0.23%","0.033%","0.18%","0.162%","0.087%","0.116%","0.065%","0.054%","0.095%","0%","0%","0.294%","0.082%","0.205%","0%","0.078%","0.123%","0%","0.358%","0.128%","0%","0.13%","0.268%","0.125%","0.087%","0.172%","0%","0.126%","0%","0.084%","0.097%","0.098%","0%","0.106%","0.165%","0%"],[13,5,6,12,2,7,1,1,8,2,4,65,5,0,1,4,4,32,97,8,20,11,19,20,1,17,152,4,89,180,7,5,4,13,11,2,188,2,29,18,12,1,3,0,6,1,0,4,25,45,4,2,10,8,4,85,0,10,97,4,26,2,0,5,13,0,1,5,3,10,1,1,7,2,7,4,8,2,5,10,11,9,41,18,10,539,19,11,14,1,9,2,11,11,5,17,1,2,14,35,2,4,6,6,0,1,1,49,2,17,22,15,2,2,139,0],["0.632%","0.338%","0.215%","0.452%","0.113%","0.331%","0.239%","0.209%","0.296%","0.151%","0.193%","0.287%","0.246%","0%","0.167%","0.179%","0.167%","0.557%","0.313%","0.144%","0.219%","0.503%","0.489%","0.386%","0.142%","0.245%","0.423%","0.266%","0.365%","0.586%","0.261%","0.4%","0.467%","0.257%","0.694%","0.301%","0.953%","0.102%","0.716%","0.364%","0.302%","0.254%","0.189%","0%","0.329%","0.114%","0%","0.476%","0.364%","0.694%","0.269%","0.202%","0.325%","0.284%","0.33%","0.258%","0%","0.52%","0.256%","0.82%","0.713%","0.117%","0%","0.459%","0.236%","0%","0.095%","0.188%","0.147%","0.264%","0.199%","0.111%","0.54%","0.172%","0.249%","0.203%","0.445%","0.215%","0.218%","0.615%","0.507%","0.298%","0.461%","0.365%","0.291%","0.289%","0.309%","0.3%","0.333%","0.093%","0.62%","0.118%","0.224%","0.563%","0.269%","0.331%","0.123%","0.488%","0.501%","0.28%","0.269%","0.259%","0.401%","0.376%","0%","0.086%","0.118%","0.41%","0.487%","0.358%","0.356%","0.491%","0.093%","0.211%","0.41%","0%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="guainía" class="level6">
+<h6 class="anchored" data-anchor-id="guainía">Guainía</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-aa674cd641e1194b7398" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-aa674cd641e1194b7398">{"x":{"filter":"none","vertical":false,"data":[["Inírida"],[47],["0.335%"],[23],["0.164%"],[24],["0.171%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="guaviare" class="level6">
+<h6 class="anchored" data-anchor-id="guaviare">Guaviare</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-b82173b68f6148d91e53" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b82173b68f6148d91e53">{"x":{"filter":"none","vertical":false,"data":[["San José Del Guaviare"],[108],["0.656%"],[24],["0.146%"],[84],["0.51%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="huila" class="level6">
+<h6 class="anchored" data-anchor-id="huila">Huila</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-533251f35897eff60ecd" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-533251f35897eff60ecd">{"x":{"filter":"none","vertical":false,"data":[["Acevedo","Agrado","Aipe","Algeciras","Altamira","Baraya","Campoalegre","Colombia","Elías","Garzón","Gigante","Guadalupe","Hobo","Íquira","Isnos","La Argentina","La Plata","Nátaga","Neiva","Oporapa","Paicol","Palermo","Palestina","Pital","Pitalito","Rivera","Saladoblanco","San Agustín","Santa María","Suaza","Tarqui","Tello","Teruel","Tesalia","Timaná","Villavieja","Yaguará"],[66,14,19,54,2,11,47,5,3,134,28,19,14,37,14,112,865,11,9,10,27,15,18,321,33,16,33,14,40,19,14,13,15,27,7,6,12],["0.766%","0.52%","0.482%","0.885%","0.189%","0.534%","0.589%","0.265%","0.27%","0.685%","0.451%","0.366%","0.689%","0.512%","0.316%","0.618%","1.088%","0.518%","0.215%","0.482%","0.426%","0.44%","0.397%","0.894%","0.507%","0.448%","0.364%","0.429%","0.673%","0.364%","0.534%","0.614%","0.501%","0.436%","0.398%","0.352%","0.41%"],[18,5,9,18,2,4,12,0,1,46,7,3,5,10,5,30,210,2,3,5,7,6,6,77,8,7,10,5,13,3,5,4,3,11,2,1,0],["0.209%","0.186%","0.228%","0.295%","0.189%","0.194%","0.15%","0%","0.09%","0.235%","0.113%","0.058%","0.246%","0.138%","0.113%","0.166%","0.264%","0.094%","0.072%","0.241%","0.11%","0.176%","0.132%","0.215%","0.123%","0.196%","0.11%","0.153%","0.219%","0.058%","0.191%","0.189%","0.1%","0.178%","0.114%","0.059%","0%"],[48,9,10,36,0,7,35,5,2,88,21,16,9,27,9,82,655,9,6,5,20,9,12,244,25,9,23,9,27,16,9,9,12,16,5,5,12],["0.557%","0.334%","0.254%","0.59%","0%","0.34%","0.438%","0.265%","0.18%","0.45%","0.338%","0.309%","0.443%","0.373%","0.203%","0.453%","0.824%","0.424%","0.143%","0.241%","0.316%","0.264%","0.265%","0.68%","0.384%","0.252%","0.254%","0.276%","0.454%","0.307%","0.343%","0.425%","0.401%","0.258%","0.284%","0.293%","0.41%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="la-guajira" class="level6">
+<h6 class="anchored" data-anchor-id="la-guajira">La Guajira</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-e13447949b6b0f61fe54" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e13447949b6b0f61fe54">{"x":{"filter":"none","vertical":false,"data":[["Albania","Barrancas","Dibulla","Distracción","El Molino","Fonseca","Hatonuevo","La Jagua Del Pilar","Maicao","Manaure","Riohacha","San Juan Del Cesar","Uribia","Urumita","Villanueva"],[20,54,29,15,10,100,24,1,728,26,478,71,71,8,28],["0.172%","0.52%","0.165%","0.369%","0.53%","0.651%","0.347%","0.1%","1.069%","0.066%","0.665%","0.437%","0.09%","0.315%","0.342%"],[6,11,11,3,3,30,6,0,223,10,143,20,34,4,9],["0.052%","0.106%","0.063%","0.074%","0.159%","0.195%","0.087%","0%","0.327%","0.025%","0.199%","0.123%","0.043%","0.158%","0.11%"],[14,43,18,12,7,70,18,1,505,16,335,51,37,4,19],["0.12%","0.414%","0.102%","0.295%","0.371%","0.456%","0.26%","0.1%","0.741%","0.041%","0.466%","0.314%","0.047%","0.158%","0.232%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="magdalena" class="level6">
+<h6 class="anchored" data-anchor-id="magdalena">Magdalena</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-645e1701c72163c3d7c0" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-645e1701c72163c3d7c0">{"x":{"filter":"none","vertical":false,"data":[["Algarrobo","Aracataca","Ariguaní","Cerro De San Antonio","Chivolo","Ciénaga","Concordia","El Banco","El Piñón","El Retén","Fundación","Guamal","Nueva Granada","Pedraza","Pijiño Del Carmen","Pivijay","Plato","Puebloviejo","Remolino","Sabanas De San Ángel","Salamina","San Sebastián De Buenavista","San Zenón","Santa Ana","Santa Bárbara De Pinto","Santa Marta","Sitionuevo","Tenerife","Zapayán","Zona Bananera"],[28,51,36,7,22,307,5,144,10,35,169,31,14,6,5,59,66,28,4,3,7,28,9,24,4,1286,16,11,3,117],["0.47%","0.361%","0.361%","0.216%","0.321%","0.751%","0.165%","0.658%","0.178%","0.469%","0.69%","0.333%","0.195%","0.224%","0.126%","0.527%","0.319%","0.293%","0.129%","0.054%","0.249%","0.399%","0.19%","0.289%","0.126%","0.902%","0.169%","0.246%","0.096%","0.439%"],[12,10,7,3,6,82,3,44,6,14,50,13,1,3,2,13,18,4,1,1,2,6,6,9,1,343,6,5,1,32],["0.202%","0.071%","0.07%","0.093%","0.087%","0.201%","0.099%","0.201%","0.107%","0.188%","0.204%","0.139%","0.014%","0.112%","0.05%","0.116%","0.087%","0.042%","0.032%","0.018%","0.071%","0.086%","0.126%","0.108%","0.032%","0.241%","0.063%","0.112%","0.032%","0.12%"],[16,41,29,4,16,225,2,100,4,21,119,18,13,3,3,46,48,24,3,2,5,22,3,15,3,943,10,6,2,85],["0.269%","0.29%","0.291%","0.124%","0.233%","0.55%","0.066%","0.457%","0.071%","0.281%","0.486%","0.193%","0.181%","0.112%","0.076%","0.411%","0.232%","0.251%","0.096%","0.036%","0.178%","0.314%","0.063%","0.181%","0.095%","0.662%","0.106%","0.134%","0.064%","0.319%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="meta" class="level6">
+<h6 class="anchored" data-anchor-id="meta">Meta</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-72d9115ebbd7782ea71c" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-72d9115ebbd7782ea71c">{"x":{"filter":"none","vertical":false,"data":[["Acacías","Barranca De Upía","Cabuyaro","Castilla La Nueva","Cubarral","Cumaral","El Calvario","El Castillo","El Dorado","Fuente De Oro","Granada","Guamal","La Macarena","Lejanías","Mesetas","Puerto Concordia","Puerto Gaitán","Puerto Lleras","Puerto López","Puerto Rico","Restrepo","San Carlos De Guaroa","San Juan De Arama","San Juanito","San Martín","Uribe","Villavicencio","Vistahermosa"],[136,15,5,14,11,14,1,6,11,19,185,21,21,14,17,14,80,4,60,33,20,17,11,2,40,6,1079,44],["0.602%","0.63%","0.269%","0.304%","0.582%","0.214%","0.215%","0.236%","0.913%","0.54%","0.875%","0.488%","0.187%","0.41%","0.477%","0.445%","0.439%","0.142%","0.672%","0.815%","0.373%","0.395%","0.448%","0.612%","0.584%","0.205%","0.894%","0.751%"],[34,2,2,3,3,3,0,4,4,4,48,4,4,6,7,3,30,2,15,7,5,4,4,2,7,2,310,11],["0.15%","0.084%","0.107%","0.065%","0.159%","0.046%","0%","0.157%","0.332%","0.114%","0.227%","0.093%","0.036%","0.176%","0.196%","0.095%","0.165%","0.071%","0.168%","0.173%","0.093%","0.093%","0.163%","0.612%","0.102%","0.068%","0.257%","0.188%"],[102,13,3,11,8,11,1,2,7,15,137,17,17,8,10,11,50,2,45,26,15,13,7,0,33,4,769,33],["0.451%","0.546%","0.161%","0.239%","0.424%","0.168%","0.215%","0.079%","0.581%","0.426%","0.648%","0.395%","0.152%","0.234%","0.281%","0.349%","0.275%","0.071%","0.504%","0.642%","0.279%","0.302%","0.285%","0%","0.482%","0.137%","0.637%","0.563%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="nariño" class="level6">
+<h6 class="anchored" data-anchor-id="nariño">Nariño</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-d687e064af803b4d7007" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-d687e064af803b4d7007">{"x":{"filter":"none","vertical":false,"data":[["Albán","Aldana","Ancuya","Arboleda","Barbacoas","Belén","Buesaco","Chachagüí","Colón","Consacá","Contadero","Córdoba","Cuaspud Carlosama","Cumbal","Cumbitara","El Charco","El Peñol","El Rosario","El Tablón De Gómez","El Tambo","Francisco Pizarro","Funes","Guachucal","Guaitarilla","Gualmatán","Iles","Imués","Ipiales","La Cruz","La Florida","La Llanada","La Tola","La Unión","Leiva","Linares","Los Andes","Magüí","Mallama","Mosquera","Nariño","Olaya Herrera","Ospina","Pasto","Policarpa","Potosí","Providencia","Puerres","Pupiales","Ricaurte","Roberto Payán","Samaniego","San Andrés De Tumaco","San Bernardo","San Lorenzo","San Pablo","San Pedro De Cartago","Sandoná","Santa Bárbara","Santacruz","Sapuyes","Taminango","Tangua","Túquerres","Yacuanquer"],[1,10,3,6,57,0,19,8,6,3,5,6,31,21,12,28,4,9,5,10,5,5,11,4,7,3,5,206,9,0,3,6,40,17,8,6,4,14,3,3,26,3,491,40,9,4,3,14,35,8,36,539,1,7,14,3,12,5,7,3,21,8,41,8],["0.11%","0.634%","0.224%","0.311%","0.396%","0%","0.403%","0.282%","0.392%","0.141%","0.353%","0.253%","0.322%","1.767%","0.296%","0.337%","0.326%","0.852%","0.159%","0.391%","0.209%","0.359%","0.272%","0.197%","0.512%","0.183%","0.439%","0.792%","0.268%","0%","0.191%","0.304%","0.627%","0.903%","0.468%","0.468%","0.048%","0.739%","0.104%","0.354%","0.304%","0.232%","0.746%","1.945%","0.395%","1.013%","0.151%","0.409%","0.475%","0.236%","1.167%","1.23%","0.058%","0.187%","0.54%","0.196%","0.35%","0.143%","0.359%","0.202%","0.644%","0.355%","0.431%","0.329%"],[0,2,1,1,11,0,6,1,1,1,0,0,10,6,2,6,1,2,2,2,0,1,3,2,3,0,1,50,3,0,1,2,11,2,2,1,0,3,0,0,2,1,145,7,4,1,0,2,7,5,9,139,0,2,4,0,3,0,2,0,4,1,14,2],["0%","0.127%","0.075%","0.052%","0.076%","0%","0.127%","0.035%","0.065%","0.047%","0%","0%","0.104%","0.505%","0.049%","0.072%","0.081%","0.189%","0.063%","0.078%","0%","0.072%","0.074%","0.099%","0.219%","0%","0.088%","0.192%","0.089%","0%","0.064%","0.101%","0.172%","0.106%","0.117%","0.078%","0%","0.158%","0%","0%","0.023%","0.077%","0.22%","0.34%","0.176%","0.253%","0%","0.058%","0.095%","0.147%","0.292%","0.317%","0%","0.053%","0.154%","0%","0.087%","0%","0.103%","0%","0.123%","0.044%","0.147%","0.082%"],[1,8,2,5,46,0,13,7,5,2,5,6,21,15,10,22,3,7,3,8,5,4,8,2,4,3,4,156,6,0,2,4,29,15,6,5,4,11,3,3,24,2,346,33,5,3,3,12,28,3,27,400,1,5,10,3,9,5,5,3,17,7,27,6],["0.11%","0.507%","0.149%","0.259%","0.32%","0%","0.276%","0.246%","0.326%","0.094%","0.353%","0.253%","0.218%","1.262%","0.247%","0.265%","0.244%","0.662%","0.095%","0.313%","0.209%","0.287%","0.198%","0.099%","0.292%","0.183%","0.351%","0.6%","0.179%","0%","0.127%","0.203%","0.455%","0.797%","0.351%","0.39%","0.048%","0.581%","0.104%","0.354%","0.281%","0.155%","0.526%","1.604%","0.22%","0.759%","0.151%","0.35%","0.38%","0.088%","0.875%","0.913%","0.058%","0.134%","0.386%","0.196%","0.262%","0.143%","0.256%","0.202%","0.521%","0.311%","0.284%","0.246%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="norte-de-santander" class="level6">
+<h6 class="anchored" data-anchor-id="norte-de-santander">Norte de Santander</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-b8745e6ee433ebd75105" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b8745e6ee433ebd75105">{"x":{"filter":"none","vertical":false,"data":[["Ábrego","Arboledas","Bochalema","Bucarasica","Cáchira","Cácota","Chinácota","Chitagá","Convención","Cucutilla","Durania","El Carmen","El Tarra","El Zulia","Gramalote","Hacarí","Herrán","La Esperanza","La Playa","Labateca","Los Patios","Lourdes","Mutiscua","Ocaña","Pamplona","Pamplonita","Puerto Santander","Ragonvalia","Salazar","San Calixto","San Cayetano","San José De Cúcuta","Santiago","Sardinata","Silos","Teorama","Tibú","Toledo","Villa Caro","Villa Del Rosario"],[9,5,4,15,9,24,4,9,2,3,9,22,53,6,6,0,5,9,5,106,2,2,238,62,6,74,2,9,3,7,1631,0,52,1,14,164,20,2,115,44],["0.392%","0.258%","0.242%","0.353%","0.277%","0.35%","0.203%","0.356%","0.052%","0.276%","0.2%","0.258%","0.603%","0.399%","0.149%","0%","0.125%","0.354%","0.329%","0.479%","0.183%","0.184%","0.752%","0.597%","0.465%","2.722%","0.147%","0.358%","0.081%","0.326%","0.962%","0%","0.719%","0.058%","0.312%","0.692%","0.466%","0.134%","0.434%","0.47%"],[5,0,1,1,0,3,0,1,0,1,1,5,14,3,2,0,2,3,2,24,0,0,50,15,2,13,0,3,1,3,397,0,16,0,2,40,5,2,27,11],["0.218%","0%","0.061%","0.024%","0%","0.044%","0%","0.04%","0%","0.092%","0.022%","0.059%","0.159%","0.199%","0.05%","0%","0.05%","0.118%","0.132%","0.108%","0%","0%","0.158%","0.145%","0.155%","0.478%","0%","0.119%","0.027%","0.14%","0.234%","0%","0.221%","0%","0.045%","0.169%","0.116%","0.134%","0.102%","0.117%"],[4,5,3,14,9,21,4,8,2,2,8,17,39,3,4,0,3,6,3,82,2,2,188,47,4,61,2,6,2,4,1234,0,36,1,12,124,15,0,88,33],["0.174%","0.258%","0.182%","0.33%","0.277%","0.307%","0.203%","0.317%","0.052%","0.184%","0.178%","0.199%","0.444%","0.199%","0.099%","0%","0.075%","0.236%","0.197%","0.37%","0.183%","0.184%","0.594%","0.453%","0.31%","2.244%","0.147%","0.239%","0.054%","0.187%","0.728%","0%","0.498%","0.058%","0.267%","0.523%","0.349%","0%","0.332%","0.352%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="putumayo" class="level6">
+<h6 class="anchored" data-anchor-id="putumayo">Putumayo</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-cf4e59c2189e3a3fad88" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-cf4e59c2189e3a3fad88">{"x":{"filter":"none","vertical":false,"data":[["Colón","Mocoa","Orito","Puerto Asís","Puerto Caicedo","Puerto Guzmán","Puerto Leguízamo","San Francisco","San Miguel","Santiago","Sibundoy","Valle Del Guamuez","Villagarzón"],[11,116,55,197,23,37,59,5,19,8,20,61,50],["0.732%","0.826%","0.548%","1.044%","0.684%","0.444%","0.488%","0.328%","0.405%","0.371%","0.504%","0.782%","0.613%"],[4,38,9,54,4,7,16,3,5,1,5,10,11],["0.266%","0.271%","0.09%","0.286%","0.119%","0.084%","0.132%","0.197%","0.107%","0.046%","0.126%","0.128%","0.135%"],[7,78,46,143,19,30,43,2,14,7,15,51,39],["0.466%","0.556%","0.458%","0.758%","0.565%","0.36%","0.355%","0.131%","0.299%","0.325%","0.378%","0.654%","0.478%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="quindío" class="level6">
+<h6 class="anchored" data-anchor-id="quindío">Quindío</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-f4b19f504a3dac5cfad7" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-f4b19f504a3dac5cfad7">{"x":{"filter":"none","vertical":false,"data":[["Armenia","Buenavista","Calarcá","Circasia","Córdoba","Filandia","Génova","La Tebaida","Montenegro","Pijao","Quimbaya","Salento"],[434,1,84,24,4,11,8,51,55,6,33,3],["0.832%","0.152%","0.583%","0.431%","0.316%","0.505%","0.571%","0.572%","0.744%","0.628%","0.587%","0.195%"],[99,1,23,7,2,5,3,9,16,2,7,1],["0.19%","0.152%","0.16%","0.126%","0.158%","0.229%","0.214%","0.101%","0.216%","0.209%","0.125%","0.065%"],[335,0,61,17,2,6,5,42,39,4,26,2],["0.642%","0%","0.423%","0.305%","0.158%","0.275%","0.357%","0.471%","0.527%","0.419%","0.463%","0.13%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="risaralda" class="level6">
+<h6 class="anchored" data-anchor-id="risaralda">Risaralda</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-a6c0f76b6834a954dacf" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a6c0f76b6834a954dacf">{"x":{"filter":"none","vertical":false,"data":[["Apía","Balboa","Belén De Umbría","Dosquebradas","Guática","La Celia","La Virginia","Marsella","Mistrató","Pereira","Pueblo Rico","Quinchía","Santa Rosa De Cabal","Santuario"],[13,4,33,259,10,15,52,12,19,708,39,27,83,18],["0.57%","0.381%","0.681%","0.623%","0.369%","1.214%","0.955%","0.371%","0.268%","0.867%","0.56%","0.428%","0.541%","0.686%"],[5,0,14,72,3,8,14,1,4,145,12,4,23,3],["0.219%","0%","0.289%","0.173%","0.111%","0.648%","0.257%","0.031%","0.057%","0.177%","0.172%","0.063%","0.15%","0.114%"],[8,4,19,187,7,7,38,11,15,563,27,23,60,15],["0.351%","0.381%","0.392%","0.449%","0.258%","0.567%","0.698%","0.34%","0.212%","0.689%","0.388%","0.364%","0.391%","0.571%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="santander" class="level6">
+<h6 class="anchored" data-anchor-id="santander">Santander</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-651480f866c84c4ad60a" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-651480f866c84c4ad60a">{"x":{"filter":"none","vertical":false,"data":[["Aguada","Albania","Aratoca","Barbosa","Barichara","Barrancabermeja","Betulia","Bolívar","Bucaramanga","Cabrera","California","Capitanejo","Carcasí","Cepitá","Cerrito","Charalá","Charta","Chima","Chipatá","Cimitarra","Concepción","Confines","Contratación","Coromoro","Curití","El Carmen De Chucuri","El Guacamayo","El Peñón","El Playón","Encino","Enciso","Florián","Floridablanca","Galán","Gámbita","Girón","Guaca","Guadalupe","Guapotá","Guavatá","Güepsa","Hato","Jesús María","Jordán","La Belleza","La Paz","Landázuri","Lebrija","Los Santos","Macaravita","Málaga","Matanza","Mogotes","Molagavita","Ocamonte","Oiba","Onzaga","Palmar","Palmas Del Socorro","Páramo","Piedecuesta","Pinchote","Puente Nacional","Puerto Parra","Puerto Wilches","Rionegro","Sabana De Torres","San Andrés","San Benito","San Gil","San Joaquín","San José De Miranda","San Miguel","San Vicente De Chucurí","Santa Bárbara","Santa Helena Del Opón","Simacota","Socorro","Suaita","Sucre","Suratá","Tona","Valle De San José","Vélez","Vetas","Villanueva","Zapatoca"],[7,4,12,36,6,603,3,7,1270,1,2,8,5,1,5,15,2,1,3,49,6,3,5,4,10,13,0,2,22,2,2,427,3,3,211,3,5,0,2,7,5,0,3,0,10,2,15,51,14,1,4,21,2,20,1,10,4,0,2,210,1,16,5,37,7,27,68,7,0,109,1,3,2,36,0,2,3,36,11,4,0,9,9,0,11,14,10],["2.284%","0.582%","0.6%","0.468%","0.327%","1.049%","0.202%","0.297%","1.095%","0.279%","0.401%","0.666%","0.464%","0.213%","0.275%","0.517%","0.328%","0.2%","0.331%","0.701%","0.444%","0.357%","0.681%","0.334%","0.332%","0.242%","0%","0.159%","0.577%","0.352%","0.255%","0.684%","0.285%","0.454%","0.539%","0.209%","0.621%","0%","0.282%","0.676%","0.464%","0%","0.474%","0%","0.72%","0.275%","0.575%","0.486%","0.384%","0.195%","0.403%","0.704%","0.243%","0.387%","0.084%","0.405%","0.497%","0%","0.351%","0.504%","0.091%","0.582%","0.216%","0.35%","0.578%","0.398%","0.68%","0.359%","0%","0.763%","0.199%","0.328%","0.338%","0.44%","0%","0.244%","0.143%","0.508%","0.482%","0.311%","0%","0.482%","0.595%","0%","0.662%","0.343%","0.38%"],[3,2,5,6,1,161,1,1,300,0,1,1,2,1,1,3,0,0,0,11,1,0,0,1,2,4,0,0,7,1,0,108,0,0,46,1,3,0,0,1,2,0,1,0,2,0,5,11,4,0,1,3,0,4,0,1,0,0,0,52,1,6,3,8,1,8,15,2,0,30,0,1,1,8,0,0,1,5,1,1,0,4,5,0,2,6,5],["0.979%","0.291%","0.25%","0.078%","0.055%","0.28%","0.067%","0.042%","0.259%","0%","0.2%","0.083%","0.186%","0.213%","0.055%","0.103%","0%","0%","0%","0.157%","0.074%","0%","0%","0.084%","0.066%","0.074%","0%","0%","0.184%","0.176%","0%","0.173%","0%","0%","0.117%","0.07%","0.372%","0%","0%","0.097%","0.186%","0%","0.158%","0%","0.144%","0%","0.192%","0.105%","0.11%","0%","0.101%","0.101%","0%","0.077%","0%","0.04%","0%","0%","0%","0.125%","0.091%","0.218%","0.129%","0.076%","0.083%","0.118%","0.15%","0.103%","0%","0.21%","0%","0.109%","0.169%","0.098%","0%","0%","0.048%","0.071%","0.044%","0.078%","0%","0.214%","0.331%","0%","0.12%","0.147%","0.19%"],[4,2,7,30,5,442,2,6,970,1,1,7,3,0,4,12,2,1,3,38,5,3,5,3,8,9,0,2,15,1,2,319,3,3,165,2,2,0,2,6,3,0,2,0,8,2,10,40,10,1,3,18,2,16,1,9,4,0,2,158,0,10,2,29,6,19,53,5,0,79,1,2,1,28,0,2,2,31,10,3,0,5,4,0,9,8,5],["1.305%","0.291%","0.35%","0.39%","0.273%","0.769%","0.135%","0.255%","0.836%","0.279%","0.2%","0.583%","0.278%","0%","0.22%","0.414%","0.328%","0.2%","0.331%","0.543%","0.37%","0.357%","0.681%","0.251%","0.266%","0.168%","0%","0.159%","0.393%","0.176%","0.255%","0.511%","0.285%","0.454%","0.421%","0.139%","0.248%","0%","0.282%","0.58%","0.279%","0%","0.316%","0%","0.576%","0.275%","0.383%","0.381%","0.274%","0.195%","0.302%","0.603%","0.243%","0.309%","0.084%","0.364%","0.497%","0%","0.351%","0.379%","0%","0.364%","0.086%","0.274%","0.495%","0.28%","0.53%","0.256%","0%","0.553%","0.199%","0.218%","0.169%","0.343%","0%","0.244%","0.096%","0.437%","0.438%","0.233%","0%","0.268%","0.265%","0%","0.542%","0.196%","0.19%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="sucre" class="level6">
+<h6 class="anchored" data-anchor-id="sucre">Sucre</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-01f1aed62bd90f4d61a6" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-01f1aed62bd90f4d61a6">{"x":{"filter":"none","vertical":false,"data":[["Buenavista","Caimito","Chalán","Colosó","Corozal","Coveñas","El Roble","Galeras","Guaranda","La Unión","Los Palmitos","Majagual","Morroa","Ovejas","Palmito","Sampués","San Benito Abad","San José De Toluviejo","San Juan De Betulia","San Luis De Sincé","San Marcos","San Onofre","San Pedro","Santiago De Tolú","Sincelejo","Sucre"],[18,9,5,5,85,31,7,23,20,7,25,42,11,34,20,63,24,36,8,42,90,89,33,42,552,18],["0.555%","0.194%","0.374%","0.196%","0.438%","0.617%","0.22%","0.333%","0.355%","0.196%","0.369%","0.378%","0.241%","0.503%","0.451%","0.415%","0.269%","0.575%","0.212%","0.492%","0.492%","0.5%","0.588%","0.383%","0.68%","0.223%"],[8,2,0,0,22,8,3,6,9,2,9,15,0,10,6,17,6,7,1,13,28,16,7,9,146,7],["0.247%","0.043%","0%","0%","0.113%","0.159%","0.094%","0.087%","0.16%","0.056%","0.133%","0.135%","0%","0.148%","0.135%","0.112%","0.067%","0.112%","0.026%","0.152%","0.153%","0.09%","0.125%","0.082%","0.18%","0.087%"],[10,7,5,5,63,23,4,17,11,5,16,27,11,24,14,46,18,29,7,29,62,73,26,33,406,11],["0.308%","0.151%","0.374%","0.196%","0.324%","0.458%","0.126%","0.246%","0.195%","0.14%","0.236%","0.243%","0.241%","0.355%","0.316%","0.303%","0.201%","0.463%","0.185%","0.34%","0.339%","0.41%","0.463%","0.301%","0.5%","0.136%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="tolima" class="level6">
+<h6 class="anchored" data-anchor-id="tolima">Tolima</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-a4a606c7858035bca484" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a4a606c7858035bca484">{"x":{"filter":"none","vertical":false,"data":[["Alpujarra","Alvarado","Ambalema","Anzoátegui","Armero","Ataco","Cajamarca","Carmen De Apicalá","Casabianca","Chaparral","Coello","Coyaima","Cunday","Dolores","Espinal","Falan","Flandes","Fresno","Guamo","Herveo","Honda","Ibagué","Icononzo","Lérida","Líbano","Melgar","Murillo","Natagaima","Ortega","Palocabildo","Piedras","Planadas","Prado","Purificación","Rioblanco","Roncesvalles","Rovira","Saldaña","San Antonio","San Luis","San Sebastián De Mariquita","Santa Isabel","Suárez","Valle De San Juan","Venadillo","Villahermosa","Villarrica"],[3,3,7,9,18,22,27,17,4,101,9,49,21,13,181,9,51,42,55,4,50,741,10,27,87,61,0,32,40,10,4,47,17,28,31,5,49,22,29,15,78,7,1,1,18,15,8],["0.337%","0.197%","0.47%","0.396%","0.697%","0.336%","0.591%","0.703%","0.276%","0.779%","0.522%","1.025%","1.028%","0.647%","1.21%","0.562%","0.754%","0.557%","0.765%","0.273%","0.981%","0.67%","0.4%","0.658%","1.164%","0.691%","0%","1.087%","0.451%","0.372%","0.313%","0.648%","0.817%","0.511%","0.471%","0.32%","0.803%","0.607%","0.868%","0.526%","0.884%","0.499%","0.149%","0.098%","0.679%","0.666%","0.649%"],[1,2,0,1,5,5,10,3,0,23,2,11,6,3,54,2,8,12,11,0,12,182,2,6,15,15,0,5,10,3,0,16,9,4,8,2,15,4,10,5,16,1,0,0,3,5,2],["0.112%","0.131%","0%","0.044%","0.194%","0.076%","0.219%","0.124%","0%","0.177%","0.116%","0.23%","0.294%","0.149%","0.361%","0.125%","0.118%","0.159%","0.153%","0%","0.235%","0.165%","0.08%","0.146%","0.201%","0.17%","0%","0.17%","0.113%","0.112%","0%","0.221%","0.432%","0.073%","0.121%","0.128%","0.246%","0.11%","0.299%","0.175%","0.181%","0.071%","0%","0%","0.113%","0.222%","0.162%"],[2,1,7,8,13,17,17,14,4,78,7,38,15,10,127,7,43,30,44,4,38,559,8,21,72,46,0,27,30,7,4,31,8,24,23,3,34,18,19,10,62,6,1,1,15,10,6],["0.225%","0.066%","0.47%","0.352%","0.503%","0.26%","0.372%","0.579%","0.276%","0.601%","0.406%","0.795%","0.735%","0.498%","0.849%","0.437%","0.636%","0.398%","0.612%","0.273%","0.745%","0.506%","0.32%","0.512%","0.963%","0.521%","0%","0.917%","0.338%","0.26%","0.313%","0.427%","0.384%","0.438%","0.349%","0.192%","0.557%","0.497%","0.569%","0.351%","0.702%","0.427%","0.149%","0.098%","0.565%","0.444%","0.487%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="valle-del-cauca" class="level6">
+<h6 class="anchored" data-anchor-id="valle-del-cauca">Valle del Cauca</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-90900007ca3dc30296a4" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-90900007ca3dc30296a4">{"x":{"filter":"none","vertical":false,"data":[["Alcalá","Andalucía","Ansermanuevo","Argelia","Bolívar","Buenaventura","Bugalagrande","Caicedonia","Cali","Calima","Candelaria","Cartago","Dagua","El Águila","El Cairo","El Cerrito","El Dovio","Florida","Ginebra","Guacarí","Guadalajara De Buga","Jamundí","La Cumbre","La Unión","La Victoria","Obando","Palmira","Pradera","Restrepo","Riofrío","Roldanillo","San Pedro","Sevilla","Toro","Trujillo","Tuluá","Ulloa","Versalles","Vijes","Yotoco","Yumbo","Zarzal"],[34,34,35,6,14,634,35,33,3527,22,123,240,52,7,57,25,14,93,15,49,184,198,11,64,20,15,467,72,26,31,51,21,67,31,26,434,8,8,8,24,165,58],["1.197%","0.865%","0.968%","0.509%","0.397%","0.807%","0.717%","0.625%","1.071%","0.603%","0.57%","1.014%","0.531%","0.593%","0.467%","1.072%","0.801%","0.725%","0.351%","0.656%","0.74%","0.614%","0.427%","0.996%","1.012%","0.683%","0.728%","0.688%","0.951%","0.981%","0.783%","0.588%","0.923%","1.153%","0.632%","1.042%","0.733%","0.611%","0.322%","0.694%","0.758%","0.647%"],[8,7,7,2,2,145,6,8,800,3,25,56,14,1,12,8,3,37,3,19,47,45,3,17,3,1,120,13,5,7,11,5,16,4,4,102,1,0,2,6,41,14],["0.282%","0.178%","0.194%","0.17%","0.057%","0.185%","0.123%","0.152%","0.243%","0.082%","0.116%","0.237%","0.143%","0.085%","0.098%","0.343%","0.172%","0.288%","0.07%","0.254%","0.189%","0.139%","0.116%","0.265%","0.152%","0.046%","0.187%","0.124%","0.183%","0.221%","0.169%","0.14%","0.22%","0.149%","0.097%","0.245%","0.092%","0%","0.08%","0.174%","0.188%","0.156%"],[26,27,28,4,12,489,29,25,2727,19,98,184,38,6,45,17,11,56,12,30,137,153,8,47,17,14,347,59,21,24,40,16,51,27,22,332,7,8,6,18,124,44],["0.915%","0.687%","0.774%","0.339%","0.341%","0.622%","0.594%","0.474%","0.828%","0.52%","0.454%","0.778%","0.388%","0.509%","0.369%","0.729%","0.629%","0.437%","0.281%","0.401%","0.551%","0.474%","0.31%","0.731%","0.86%","0.637%","0.541%","0.564%","0.768%","0.759%","0.614%","0.448%","0.703%","1.005%","0.534%","0.797%","0.642%","0.611%","0.241%","0.521%","0.569%","0.49%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="vaupés" class="level6">
+<h6 class="anchored" data-anchor-id="vaupés">Vaupés</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-75291df4073407d103a1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-75291df4073407d103a1">{"x":{"filter":"none","vertical":false,"data":[["Mitú"],[51],["0.353%"],[18],["0.124%"],[33],["0.228%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="vichada" class="level6">
+<h6 class="anchored" data-anchor-id="vichada">Vichada</h6>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-5edb70a24cbc3575ec6d" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-5edb70a24cbc3575ec6d">{"x":{"filter":"none","vertical":false,"data":[["Puerto Carreño","Santa Rosalía"],[49,1],["0.641%","0.06%"],[11,1],["0.144%","0.06%"],[38,0],["0.497%","0%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Municipality<\/th>\n      <th>Incid. Both<\/th>\n      <th>Incid. Both (%)<\/th>\n      <th>Incid. Mother<\/th>\n      <th>Incid. Mother (%)<\/th>\n      <th>Incid. Father<\/th>\n      <th>Incid. Father (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,5]},{"name":"Municipality","targets":0},{"name":"Incid. Both","targets":1},{"name":"Incid. Both (%)","targets":2},{"name":"Incid. Mother","targets":3},{"name":"Incid. Mother (%)","targets":4},{"name":"Incid. Father","targets":5},{"name":"Incid. Father (%)","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

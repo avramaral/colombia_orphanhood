@@ -1,0 +1,85 @@
+reg,reg_name,gender,year,n_orp
+1,Caribe,Female,2015,2716
+1,Caribe,Female,2016,2795
+1,Caribe,Female,2017,2906
+1,Caribe,Female,2018,3203
+1,Caribe,Female,2019,3337
+1,Caribe,Female,2020,4071
+1,Caribe,Female,2021,4912
+1,Caribe,Male,2015,6861
+1,Caribe,Male,2016,6851
+1,Caribe,Male,2017,7293
+1,Caribe,Male,2018,7886
+1,Caribe,Male,2019,7748
+1,Caribe,Male,2020,10411
+1,Caribe,Male,2021,13046
+2,Eje cafetero y Antioquia,Female,2015,2071
+2,Eje cafetero y Antioquia,Female,2016,2108
+2,Eje cafetero y Antioquia,Female,2017,1962
+2,Eje cafetero y Antioquia,Female,2018,2089
+2,Eje cafetero y Antioquia,Female,2019,1939
+2,Eje cafetero y Antioquia,Female,2020,2150
+2,Eje cafetero y Antioquia,Female,2021,2840
+2,Eje cafetero y Antioquia,Male,2015,6263
+2,Eje cafetero y Antioquia,Male,2016,6318
+2,Eje cafetero y Antioquia,Male,2017,6095
+2,Eje cafetero y Antioquia,Male,2018,6528
+2,Eje cafetero y Antioquia,Male,2019,6065
+2,Eje cafetero y Antioquia,Male,2020,6494
+2,Eje cafetero y Antioquia,Male,2021,8852
+3,Pacífica,Female,2015,1947
+3,Pacífica,Female,2016,1932
+3,Pacífica,Female,2017,1852
+3,Pacífica,Female,2018,1972
+3,Pacífica,Female,2019,1947
+3,Pacífica,Female,2020,2169
+3,Pacífica,Female,2021,2709
+3,Pacífica,Male,2015,5981
+3,Pacífica,Male,2016,5783
+3,Pacífica,Male,2017,5369
+3,Pacífica,Male,2018,6060
+3,Pacífica,Male,2019,6214
+3,Pacífica,Male,2020,6858
+3,Pacífica,Male,2021,8627
+4,Central,Female,2015,4211
+4,Central,Female,2016,4130
+4,Central,Female,2017,4056
+4,Central,Female,2018,4077
+4,Central,Female,2019,4142
+4,Central,Female,2020,4795
+4,Central,Female,2021,6257
+4,Central,Male,2015,10676
+4,Central,Male,2016,10928
+4,Central,Male,2017,9988
+4,Central,Male,2018,10375
+4,Central,Male,2019,10385
+4,Central,Male,2020,13069
+4,Central,Male,2021,18145
+5,Llanos,Female,2015,685
+5,Llanos,Female,2016,608
+5,Llanos,Female,2017,584
+5,Llanos,Female,2018,622
+5,Llanos,Female,2019,678
+5,Llanos,Female,2020,726
+5,Llanos,Female,2021,908
+5,Llanos,Male,2015,1758
+5,Llanos,Male,2016,1690
+5,Llanos,Male,2017,1525
+5,Llanos,Male,2018,1555
+5,Llanos,Male,2019,1618
+5,Llanos,Male,2020,1814
+5,Llanos,Male,2021,2510
+6,Amazonía,Female,2015,358
+6,Amazonía,Female,2016,331
+6,Amazonía,Female,2017,395
+6,Amazonía,Female,2018,292
+6,Amazonía,Female,2019,330
+6,Amazonía,Female,2020,405
+6,Amazonía,Female,2021,482
+6,Amazonía,Male,2015,895
+6,Amazonía,Male,2016,876
+6,Amazonía,Male,2017,920
+6,Amazonía,Male,2018,963
+6,Amazonía,Male,2019,923
+6,Amazonía,Male,2020,1185
+6,Amazonía,Male,2021,1333
