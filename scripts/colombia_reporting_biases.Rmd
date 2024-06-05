@@ -1,0 +1,319 @@
+---
+title: "Colombia - reporting biases in death data"
+author: "Oliver Ratmann"
+#output: pdf_document 
+output: 
+  bookdown::html_document2:
+    toc: TRUE
+    toc_float: TRUE
+    highlight: tango
+  bookdown::pdf_book:
+    keep_tex: yes
+---
+
+<style type="text/css">
+h1{
+  font-size: 24pt;
+}
+h2{
+  font-size: 18pt;
+}
+body{
+  font-size: 12pt;
+}
+</style>
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  cache.lazy = FALSE,
+  comment = "#>"
+)
+```
+
+# Packages
+
+```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
+require(data.table) # data mangling
+require(ggplot2) #for general plotting
+require(ggsci) #for color palettes used by scientific journals
+require(rcartocolor)
+require(sf)
+require(spatstat)
+require(raster)
+require(spdep)
+require(patchwork)
+require(knitr)
+require(kableExtra)
+
+home.dir <- '/Users/or105/Library/CloudStorage/OneDrive-ImperialCollegeLondon/OR_Work/OCAY_Program'
+data.dir <- file.path(home.dir, 'Colombia_primary_data')
+out.dir <- file.path(home.dir, 'Colombia_analysis_reporting_bias_in_deaths')
+```
+
+# Read data
+```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
+dgeo <- as.data.table(read.csv(file.path(data.dir,'Files_Colombia/geo_info.csv')))
+dmap <- readRDS(file.path(data.dir,'Files_Colombia','colombia_map_municipality.RDS'))
+names(dmap)[1] <- 'mun' 
+
+tmp <- readRDS(file.path(data.dir,'Files_Colombia','EQUALIZED_RATES.RDS'))
+dm <- as.data.table(tmp$mortality_rates)
+db <- as.data.table(tmp$fertility_rates)
+
+# TODO check if this is full cartesian?
+
+setnames(dm, 'loc','mun')
+setnames(db, 'loc','mun')
+set(dm, NULL, 'mun', dm[, as.integer(as.character(mun))])
+set(db, NULL, 'mun', db[, as.integer(as.character(mun))])
+
+# TODO how were the death data compiled, this does not seem straightforward?
+```
+
+# Area data at municipality level
+```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
+# area from IGAC
+# https://www.esri.com/en-us/lg/industry/government/stories/igac-case-study
+# https://data.humdata.org/dataset/municipal-population-density/resource/f461a4bd-349e-4666-88b1-c6daf078f980
+tmp <- as.data.table(read.csv(file.path(data.dir,'Files_Colombia','densidad-municipios-de-colombia.csv')))
+tmp <- subset(tmp, !is.na(COD), select = -c(POB2010, DENSIDAD))
+setnames(tmp, c('COD','NAME','AREAKM2'),c('mun','mun_name_check','area'))
+set(tmp, NULL, 'area', tmp[, as.integer(gsub(',','',area))])
+cat("\nmunicipalities with no data on area: ", tmp[is.na(area),mun])
+dgeo <- merge(dgeo, tmp, by = 'mun', all.x = TRUE)
+cat("\nmunicipalities with no data on area in dgeo: ", dgeo[is.na(area),mun])
+
+tmp <- data.table(
+  mun = dmap$mun,
+  area_2 = as.double(units::set_units(st_area(dmap$geometry), km^2))
+)
+dgeo <- merge(dgeo, tmp, by = 'mun')
+
+tmp <- dgeo[, which(is.na(area))]
+set(dgeo, tmp, 'area', dgeo[tmp, area_2])
+
+tmp <- subset(dgeo, abs(log(area/area_2)) > log(1.2))
+cat("\nThere are municipalities where km2 calculated from the shape file differs from IGAC resources by more than 20%, n=", nrow(tmp))
+write.csv(tmp, file = file.path(out.dir, 'comparison_of_municipality_area_IGAC_vs_shapefile.csv'))
+```
+
+# Demographics in census year 2018
+
+Population density, proportion of men, proportion of people aged <30 years:
+
+```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
+# calculate standardized mortality rates
+da <- dm[year == 2018,
+         list(pop_t = sum(population)),
+         by = c('mun','year')]
+
+# add geo info
+da <- merge(da, dgeo, by = 'mun', all.x = TRUE)
+cat("\nfound municipalities in death data that are not in geo : ", da[is.na(mun_name),mun])
+da <- subset(da, !is.na(mun_name))
+
+# calculate population densities
+da[, pop_r := pop_t / area_2]
+da[, pop_r_disc := cut(
+  pop_r, breaks = c(0, 5, 25, 50, 100, 250, 100e3), 
+  labels = c('0-4','5-24','25-49','50-99','100-249','250+'), 
+  right = FALSE)
+  ]
+
+# plot population density
+tmp <- data.table(mun = dmap$mun)
+tmp[, id := 1:nrow(tmp)]
+tmp <- merge(tmp, subset(da, select = c(mun, pop_r_disc)))
+setkey(tmp, id)
+tmp2 <- copy(dmap)
+tmp2[['value']] <- tmp$pop_r_disc
+p <- ggplot() +
+    geom_sf(data = tmp2, 
+            aes(geometry = geometry, 
+                fill = value
+                ), 
+            color = "black") +
+    scale_fill_carto_d(name = "Population per km2", palette = "Burg", direction = 1) +
+    theme_bw() +
+    theme(legend.position = "right",
+          text = element_text(size = 14),
+          plot.title = element_text(size = 16),
+          legend.title = element_text(size = 11),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.border = element_blank(),
+          panel.background = element_blank(),
+          axis.title = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank()) +
+    guides(fill = guide_legend(order = 1))
+ggsave(p, file = file.path(out.dir, 'Colombia_pop_density_2018.pdf'), w = 10, h = 10)
+
+
+# calculate proportion of female population in selected ages 10-59 (women), 10-69 (men)
+tmp <- dm[year == 2018 & gender == 'Female',
+         list(pop_female_n = sum(population)),
+         by = c('mun','year')]
+da <- merge(da, tmp, by = c('mun','year'))
+da[, pop_female_p := pop_female_n/pop_t]
+
+# plot population density
+tmp <- data.table(mun = dmap$mun)
+tmp[, id := 1:nrow(tmp)]
+tmp <- merge(tmp, subset(da, select = c(mun, pop_female_p)))
+tmp[, pop_female_p_disc := cut(pop_female_p, breaks = c(0,0.4,1.0))]
+setkey(tmp, id)
+tmp2 <- copy(dmap)
+tmp2[['value']] <- tmp$pop_female_p_disc
+p <- ggplot() +
+    geom_sf(data = tmp2, 
+            aes(geometry = geometry, 
+                fill = value
+                ), 
+            color = "black") +
+    scale_fill_carto_d(name = "Proportion of women in population (%)", palette = "Teal", direction = -1) +
+    theme_bw() +
+    theme(legend.position = "right",
+          text = element_text(size = 14),
+          plot.title = element_text(size = 16),
+          legend.title = element_text(size = 11),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.border = element_blank(),
+          panel.background = element_blank(),
+          axis.title = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank()) +
+    guides(fill = guide_legend(order = 1))
+ggsave(p, file = file.path(out.dir, 'Colombia_proportion_women_2018.pdf'), w = 10, h = 10)
+
+# TODO check municipalities with <40% women!
+tmp <- subset(da, pop_female_p < 0.4 | pop_female_p > 0.6)
+write.csv(tmp, file = file.path(out.dir, 'Colombia_proportion_women_2018_odd.csv'))
+
+# calculate proportion of population in ages 10-29 in selected age range
+tmp <- dm[year == 2018 & age %in% c("10-14","15-19","20-24","25-29"),
+         list(pop_10_29_n = sum(population)),
+         by = c('mun','year')]
+da <- merge(da, tmp, by = c('mun','year'))
+da[, pop_10_29_p := pop_female_n/pop_t]
+
+# plot proportion of population in ages 10-29 in selected age range
+tmp <- data.table(mun = dmap$mun)
+tmp[, id := 1:nrow(tmp)]
+tmp <- merge(tmp, subset(da, select = c(mun, pop_10_29_p)))
+tmp[, pop_10_29_p_disc := cut(pop_10_29_p, breaks = c(0,0.4,1.0))]
+setkey(tmp, id)
+tmp2 <- copy(dmap)
+tmp2[['value']] <- tmp$pop_10_29_p_disc
+p <- ggplot() +
+    geom_sf(data = tmp2, 
+            aes(geometry = geometry, 
+                fill = value
+                ), 
+            color = "black") +
+    scale_fill_carto_d(name = "Proportion of people aged 10-29 in population (%)", palette = "Peach", direction = -1) +
+    theme_bw() +
+    theme(legend.position = "right",
+          text = element_text(size = 14),
+          plot.title = element_text(size = 16),
+          legend.title = element_text(size = 11),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.border = element_blank(),
+          panel.background = element_blank(),
+          axis.title = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank()) +
+    guides(fill = guide_legend(order = 1))
+ggsave(p, file = file.path(out.dir, 'Colombia_proportion_people_10_29_2018.pdf'), w = 10, h = 10)
+
+
+tmp <- subset(da, pop_10_29_p < 0.4 | pop_10_29_p > 0.6)
+write.csv(tmp, file = file.path(out.dir, 'Colombia_proportion_people_10_29_2018_odd.csv'))
+# TODO check municipalities with <40% young people!
+
+```
+
+# Mortality rates in census year 2018
+
+Standardized mortality rates in census year 2018, ignoring women aged >67 and men aged >77:
+
+```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
+# prepare national reference population
+dref <- dm[ year == 2018, 
+            list(natl_pop_n = sum(population)),
+            by = c('gender','age')]
+dref[, natl_pop_t := sum(natl_pop_n)]
+dref[, natl_pop_p := natl_pop_n / natl_pop_t]
+
+
+# TODO does the entire pop for 2018 in our data add up to what is reported online?
+
+# calculate age/sex death rates per municipality
+da <- subset(dm, year == 2018, select = -c(mod, death_rate))
+da[, mun_death_r_2018 := deaths/population]
+tmp <- da[, which(population == 0L)]
+set(da, tmp, 'mun_death_r_2018', 0.)
+#tmp <- da[, list(mun_pop_t = sum(population)), by = c('mun','year')]
+#da <- merge(da, tmp, by = c('mun','year'))
+#da[, mun_pop_p := population / mun_pop_t]
+
+# merge national reference population weights
+da <- merge(da, dref, by = c('gender','age'), all.x = TRUE)
+
+# calculate standardized mortality rates
+da <- da[,
+         list(pop_n = sum(population),
+              deaths = sum(deaths),
+              death_r = sum(deaths)/sum(population),
+              death_r_std = sum(mun_death_r_2018 * natl_pop_n) / natl_pop_t[1] 
+              ),
+         by = c('mun','year')]
+
+# add geo info
+da <- merge(da, dgeo, by = 'mun', all.x = TRUE)
+cat("\nfound municipalities in death data that are not in geo : ", da[is.na(mun_name),mun])
+da <- subset(da, !is.na(mun_name))
+
+# calculate population densities
+da[, pop_r := pop_n / area_2]
+da[, pop_r_disc := cut(
+  pop_r, breaks = c(0, 5, 25, 50, 100, 250, 100e3), 
+  labels = c('0-4','5-24','25-49','50-99','100-249','250+'), 
+  right = FALSE)
+  ]
+
+# plot population density
+tmp <- data.table(mun = dmap$mun)
+tmp[, id := 1:nrow(tmp)]
+tmp <- merge(tmp, subset(da, select = c(mun, pop_r_disc)))
+setkey(tmp, id)
+tmp2 <- copy(dmap)
+tmp2[['value']] <- tmp$pop_r_disc
+p <- ggplot() +
+    geom_sf(data = tmp2, 
+            aes(geometry = geometry, 
+                fill = value
+                ), 
+            color = "black") +
+    scale_fill_carto_d(name = "Population per km2", palette = "Burg", direction = 1) +
+    theme_bw() +
+    theme(legend.position = "right",
+          text = element_text(size = 14),
+          plot.title = element_text(size = 16),
+          legend.title = element_text(size = 11),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.border = element_blank(),
+          panel.background = element_blank(),
+          axis.title = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank()) +
+    guides(fill = guide_legend(order = 1))
+ggsave(p, file = file.path(out.dir, 'Colombia_pop_density_2018.pdf'), w = 10, h = 10)
+
+# plot population density
+ggplot(da, aes(x= death_r, y= death_r_std)) + geom_point()
+```
