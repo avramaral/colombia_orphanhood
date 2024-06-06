@@ -58,6 +58,25 @@ dgeo <- as.data.table(read.csv(file.path(data.dir,'Files_Colombia/geo_info.csv')
 dmap <- readRDS(file.path(data.dir,'Files_Colombia','colombia_map_municipality.RDS'))
 names(dmap)[1] <- 'mun' 
 
+# add capitals to Departments
+dgeo[, capital := mun == dep*1e3 + 1]
+# subset(dgeo, capital)
+# TODO 25001 Cundinamarca  Agua De Dios is this correct?
+
+# GBP data from https://www.dane.gov.co/index.php/en/statistics-by-topic-1/national-accounts/departmental-national-accounts
+dgbp <- read.csv(file.path(data.dir,'Files_Colombia/anexo-2019-preliminar-PIB-total-por-departamento.csv'),
+                 skip = 8, 
+                 nrow = 34,
+                 header = TRUE)
+dgbp <- as.data.table(dgbp)
+setnames(dgbp, 1:2, c('dep','dep_name'))
+set(dgbp, NULL, c('X','dep_name'), NULL)
+dgbp <- melt(dgbp, id.vars = c('dep'), value.name = 'gdp_per_capita', variable.name = 'year')
+dgbp <- subset(dgbp, !is.na(dep))
+set(dgbp, NULL, 'gdp_per_capita', dgbp[, as.integer(gsub(',','',gdp_per_capita))])
+set(dgbp, NULL, 'year', dgbp[, as.integer(gsub('X|pr|p','',year))])
+
+
 dpop <- as.data.table(readRDS(file.path(data.dir,'Population_DANE','pop_all.RDS')))
 dpop_cut_age <- as.data.table(readRDS(file.path(data.dir,'Population_DANE','pop_gender.RDS')))
 set(dpop, NULL, 'mun', dpop[, as.integer(as.character(mun))])
@@ -297,7 +316,7 @@ write.csv(tmp, file = file.path(out.dir, paste0('Colombia_proportion_people_10_2
 
 ```
 
-# Mortality rates in census year 2018
+# Standardized mortality rates in census year 2018
 
 Standardized mortality rates in census year 2018, ignoring women aged >67 and men aged >77:
 
@@ -308,9 +327,6 @@ dref <- dm[ year == 2018,
             by = c('gender','age')]
 dref[, natl_pop_t := sum(natl_pop_n)]
 dref[, natl_pop_p := natl_pop_n / natl_pop_t]
-
-
-# TODO does the entire pop for 2018 in our data add up to what is reported online?
 
 # calculate age/sex death rates per municipality
 da <- subset(dm, year == 2018, select = -c(mod, pop_PREPR))
@@ -334,6 +350,10 @@ da <- da[,
 da <- merge(da, dgeo, by = 'mun', all.x = TRUE)
 cat("\nfound municipalities in death data that are not in geo : ", da[is.na(mun_name),mun])
 da <- subset(da, !is.na(mun_name))
+
+# add GBP info
+da <- merge(da, dgbp, by = c('dep','year'), all.x = TRUE)
+
 
 # calculate population densities
 da[, pop_r := pop_n / area_2]
@@ -373,5 +393,94 @@ p <- ggplot() +
 ggsave(p, file = file.path(out.dir, paste0('Colombia_pop_density_2018_',stamp,'.pdf')), w = 10, h = 10)
 
 # plot population density
-#ggplot(da, aes(x= death_r, y= death_r_std)) + geom_point()
+#ggplot(da, aes(x= death_r, y= death_r_std)) + geom_point()\
+#
+
+# plot standardised death rates
+da[, death_r_std_disc := cut(
+  death_r_std, breaks = c(-1, 1e-7, 1e-3, 2e-3, 3e-3, 4e-3, 1), 
+  labels = c('0','<=1 per 1000','<=2 per 1000','<=3 per 1000','<=4 per 1000','>4 per 1000'), 
+  right = TRUE)
+  ]
+
+tmp <- data.table(mun = dmap$mun)
+tmp[, id := 1:nrow(tmp)]
+tmp <- merge(tmp, subset(da, select = c(mun, death_r_std_disc)))
+setkey(tmp, id)
+tmp2 <- copy(dmap)
+tmp2[['value']] <- tmp$death_r_std_disc
+p <- ggplot() +
+    geom_sf(data = tmp2, 
+            aes(geometry = geometry, 
+                fill = value
+                ), 
+            color = "black") +
+    scale_fill_carto_d(name = "Standardized mortality rate in 2018", palette = "Burg", direction = 1) +
+    theme_bw() +
+    theme(legend.position = "right",
+          text = element_text(size = 14),
+          plot.title = element_text(size = 16),
+          legend.title = element_text(size = 11),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.border = element_blank(),
+          panel.background = element_blank(),
+          axis.title = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank()) +
+    guides(fill = guide_legend(order = 1))
+ggsave(p, file = file.path(out.dir, paste0('Colombia_mortality_rate_2018_',stamp,'.pdf')), w = 10, h = 10)
+
+# are standardized death rates higher in capitals of departments?
+
+tmp <- unique(subset(da, select = c(dep_name, gdp_per_capita)))
+setkey(tmp, gdp_per_capita)
+tmp[, dep_name_gdp := factor(1:nrow(tmp), levels = 1:nrow(tmp), labels = dep_name) ]
+da <- merge(da, tmp, by = c('dep_name', 'gdp_per_capita'))
+p <- ggplot(da, aes(x = dep_name_gdp, y = death_r_std)) +
+  geom_boxplot() +
+  geom_point(data = subset(da, capital == TRUE), col = 'red') +
+  coord_flip() + 
+  theme_bw() +
+  ylab('standardized\nmortality rate') + 
+  xlab('Departments ordered by GBP')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_mortality_rate_2018_capital_vs_mun_ordered_by_gdp',stamp,'.png')), w = 10, h = 10)
+
+# GDP by Department
+p <- ggplot(data = unique(subset(da, select = c(dep_name_gdp, gdp_per_capita)))) +
+  geom_col(aes(x = dep_name_gdp, y = gdp_per_capita)) +
+  theme_bw() +
+  coord_flip() +
+  labs(y = "GDP per capita\n(million pesos)", x = 'Department')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Departments_by_gdp',stamp,'.png')), w = 10, h = 10)
+
+# can we try and work out some correction factor?
+
+dg <- subset(da, select = c(dep, dep_name_gdp, gdp_per_capita, mun, capital, death_r_std))
+tmp <- subset(dg, capital, select = c(dep, death_r_std))
+setnames(tmp, 'death_r_std', 'death_r_std_capital')
+dg <- merge(dg, tmp, by = 'dep')
+dg <- dg[, 
+         list(death_r_std_capital_quantile = mean(as.integer(death_r_std <= death_r_std_capital))), 
+         by = c('dep','dep_name_gdp','gdp_per_capita')
+         ]
+setorder(dg, -gdp_per_capita)
+dg <- subset(dg, dep != 11)
+dg[, death_r_std_capital_quantile_run := sapply( 1:nrow(dg), function(i){ mean(dg$death_r_std_capital_quantile[1:i]) })]
+
+p <- ggplot(dg) +
+  geom_line(aes( x = dep_name_gdp, y = death_r_std_capital_quantile_run, group = 1)) +
+  geom_point(aes( x = dep_name_gdp, y = death_r_std_capital_quantile)) +
+  scale_y_continuous( labels = scales::percent ) +
+  theme_bw() + 
+  coord_flip() +
+  labs(y = "proportion of standardized death rates\nbelow that in the capital", x = 'Departments (excl Bogota)\nordered by GDP')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_prop_below_capital_by_gdp',stamp,'.png')), w = 10, h = 10)
+
+# quantile for Putumayo is 66%
+subset(dg, dep_name_gdp == 'Putumayo')
+
+# adjust standardised death rates 
+
 ```
+
