@@ -57,18 +57,54 @@ dgeo <- as.data.table(read.csv(file.path(data.dir,'Files_Colombia/geo_info.csv')
 dmap <- readRDS(file.path(data.dir,'Files_Colombia','colombia_map_municipality.RDS'))
 names(dmap)[1] <- 'mun' 
 
+dpop <- as.data.table(readRDS(file.path(data.dir,'Population_DANE','pop_all.RDS')))
+dpop_cut_age <- as.data.table(readRDS(file.path(data.dir,'Population_DANE','pop_gender.RDS')))
+set(dpop, NULL, 'mun', dpop[, as.integer(as.character(mun))])
+set(dpop_cut_age, NULL, 'mun', dpop_cut_age[, as.integer(as.character(mun))])
+setnames(dpop, 'population','pop_DANE')
+setnames(dpop_cut_age, 'population','pop_DANE')
+
 tmp <- readRDS(file.path(data.dir,'Files_Colombia','EQUALIZED_RATES.RDS'))
 dm <- as.data.table(tmp$mortality_rates)
 db <- as.data.table(tmp$fertility_rates)
-
-# TODO check if this is full cartesian?
 
 setnames(dm, 'loc','mun')
 setnames(db, 'loc','mun')
 set(dm, NULL, 'mun', dm[, as.integer(as.character(mun))])
 set(db, NULL, 'mun', db[, as.integer(as.character(mun))])
+set(dm, NULL, 'death_rate', NULL)
+set(db, NULL, 'fertility_rate', NULL)
+setnames(dm, 'population','pop_PREPR')
+setnames(db, 'population','pop_PREPR')
 
-# TODO how were the death data compiled, this does not seem straightforward?
+# make sure we have all counts on the cartesian product of variables
+tmp <- expand.grid(mun = dpop_cut_age[, unique(mun)],
+                   gender = dpop_cut_age[, unique(gender)], 
+                   age = dpop_cut_age[, unique(age)],
+                   year = dpop_cut_age[, unique(year)]
+                   )
+tmp <- as.data.table(tmp)
+dpop_cut_age <- merge(tmp, dpop_cut_age, by = c('mun','gender','age','year'), all.x = TRUE)
+cat('\ndpop_cut_age: number of missing pop sizes, n=',nrow(subset(dpop_cut_age, is.na(pop_DANE))))
+
+dpop <- merge(tmp, dpop, by = c('mun','gender','age','year'), all.x = TRUE)
+cat('\ndpop: number of missing pop sizes, n=',nrow(subset(dpop, is.na(pop_DANE))))
+# TODO Andre why are there missing pop sizes?
+
+
+# hack for now:
+set(dpop, dpop[, which(is.na(pop_DANE))],'pop_DANE',0) 
+set(dpop_cut_age, dpop_cut_age[, which(is.na(pop_DANE))],'pop_DANE',0) 
+
+dm <- merge(tmp, dm, by = c('mun','gender','age','year'), all.x = TRUE)
+set(dm, dm[, which(is.na(deaths))], 'deaths', 0)
+
+db <- merge(tmp, db, by = c('mun','gender','age','year'), all.x = TRUE)
+set(db, db[, which(is.na(births))], 'births', 0)
+
+# TODO Andre presumably zero here means no recorded births/deaths. 
+# can you make the cartesian earlier in your code so this goes through all preprocessing too?
+
 ```
 
 # Area data at municipality level
@@ -96,21 +132,37 @@ set(dgeo, tmp, 'area', dgeo[tmp, area_2])
 tmp <- subset(dgeo, abs(log(area/area_2)) > log(1.2))
 cat("\nThere are municipalities where km2 calculated from the shape file differs from IGAC resources by more than 20%, n=", nrow(tmp))
 write.csv(tmp, file = file.path(out.dir, 'comparison_of_municipality_area_IGAC_vs_shapefile.csv'))
+
+# TODO Andres can you see if there is indeed an official shape file at the DANE website as 
+# Catalina advised in her email. I think there was a link in her email too.
 ```
 
 # Demographics in census year 2018
+
+Switch between population sizes:
+
+```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
+# switch pop sizes
+dm <- merge(dm, dpop_cut_age, by = c('mun','gender','age','year'))
+db <- merge(db, dpop_cut_age, by = c('mun','gender','age','year'))
+setnames(dm, 'pop_DANE', 'pop')
+setnames(db, 'pop_DANE', 'pop')
+```
 
 Population density, proportion of men, proportion of people aged <30 years:
 
 ```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
 # calculate standardized mortality rates
 da <- dm[year == 2018,
-         list(pop_t = sum(population)),
+         list(pop_t = sum(pop)),
          by = c('mun','year')]
 
 # add geo info
 da <- merge(da, dgeo, by = 'mun', all.x = TRUE)
-cat("\nfound municipalities in death data that are not in geo : ", da[is.na(mun_name),mun])
+if (any(da[is.na(mun_name),mun]))
+{
+  cat("\nfound municipalities in death data that are not in geo : ", da[is.na(mun_name),mun])
+}
 da <- subset(da, !is.na(mun_name))
 
 # calculate population densities
@@ -153,7 +205,7 @@ ggsave(p, file = file.path(out.dir, 'Colombia_pop_density_2018.pdf'), w = 10, h 
 
 # calculate proportion of female population in selected ages 10-59 (women), 10-69 (men)
 tmp <- dm[year == 2018 & gender == 'Female',
-         list(pop_female_n = sum(population)),
+         list(pop_female_n = sum(pop)),
          by = c('mun','year')]
 da <- merge(da, tmp, by = c('mun','year'))
 da[, pop_female_p := pop_female_n/pop_t]
@@ -194,7 +246,7 @@ write.csv(tmp, file = file.path(out.dir, 'Colombia_proportion_women_2018_odd.csv
 
 # calculate proportion of population in ages 10-29 in selected age range
 tmp <- dm[year == 2018 & age %in% c("10-14","15-19","20-24","25-29"),
-         list(pop_10_29_n = sum(population)),
+         list(pop_10_29_n = sum(pop)),
          by = c('mun','year')]
 da <- merge(da, tmp, by = c('mun','year'))
 da[, pop_10_29_p := pop_female_n/pop_t]
