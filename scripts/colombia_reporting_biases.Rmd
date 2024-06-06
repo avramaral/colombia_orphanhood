@@ -49,6 +49,7 @@ require(kableExtra)
 home.dir <- '/Users/or105/Library/CloudStorage/OneDrive-ImperialCollegeLondon/OR_Work/OCAY_Program'
 data.dir <- file.path(home.dir, 'Colombia_primary_data')
 out.dir <- file.path(home.dir, 'Colombia_analysis_reporting_bias_in_deaths')
+stamp <- gsub('-','',Sys.Date())
 ```
 
 # Read data
@@ -139,7 +140,7 @@ set(dgeo, tmp, 'area', dgeo[tmp, area_2])
 
 tmp <- subset(dgeo, abs(log(area/area_2)) > log(1.2))
 cat("\nThere are municipalities where km2 calculated from the shape file differs from IGAC resources by more than 20%, n=", nrow(tmp))
-write.csv(tmp, file = file.path(out.dir, 'comparison_of_municipality_area_IGAC_vs_shapefile.csv'))
+write.csv(tmp, file = file.path(out.dir, paste0('comparison_of_municipality_area_IGAC_vs_shapefile_',stamp,'.csv')))
 
 # TODO Andres can you see if there is indeed an official shape file at the DANE website as 
 # Catalina advised in her email. I think there was a link in her email too.
@@ -208,7 +209,7 @@ p <- ggplot() +
           axis.text = element_blank(),
           axis.ticks = element_blank()) +
     guides(fill = guide_legend(order = 1))
-ggsave(p, file = file.path(out.dir, 'Colombia_pop_density_2018.pdf'), w = 10, h = 10)
+ggsave(p, file = file.path(out.dir, paste0('Colombia_pop_density_2018_',stamp,'.pdf')), w = 10, h = 10)
 
 
 # calculate proportion of female population in selected ages 10-59 (women), 10-69 (men)
@@ -246,11 +247,11 @@ p <- ggplot() +
           axis.text = element_blank(),
           axis.ticks = element_blank()) +
     guides(fill = guide_legend(order = 1))
-ggsave(p, file = file.path(out.dir, 'Colombia_proportion_women_2018.pdf'), w = 10, h = 10)
+ggsave(p, file = file.path(out.dir, paste0('Colombia_proportion_women_2018_',stamp,'.pdf')), w = 10, h = 10)
 
 # TODO check municipalities with <40% women!
 tmp <- subset(da, pop_female_p < 0.4 | pop_female_p > 0.6)
-write.csv(tmp, file = file.path(out.dir, 'Colombia_proportion_women_2018_odd.csv'))
+write.csv(tmp, file = file.path(out.dir, paste0('Colombia_proportion_women_2018_odd_',stamp,'.csv')))
 
 # calculate proportion of population in ages 10-29 in selected age range
 tmp <- dm[year == 2018 & age %in% c("10-14","15-19","20-24","25-29"),
@@ -287,11 +288,11 @@ p <- ggplot() +
           axis.text = element_blank(),
           axis.ticks = element_blank()) +
     guides(fill = guide_legend(order = 1))
-ggsave(p, file = file.path(out.dir, 'Colombia_proportion_people_10_29_2018.pdf'), w = 10, h = 10)
+ggsave(p, file = file.path(out.dir, paste0('Colombia_proportion_people_10_29_2018_',stamp,'.pdf')), w = 10, h = 10)
 
 
 tmp <- subset(da, pop_10_29_p < 0.4 | pop_10_29_p > 0.6)
-write.csv(tmp, file = file.path(out.dir, 'Colombia_proportion_people_10_29_2018_odd.csv'))
+write.csv(tmp, file = file.path(out.dir, paste0('Colombia_proportion_people_10_29_2018_odd_',stamp,'.csv')))
 # TODO check municipalities with <40% young people!
 
 ```
@@ -302,10 +303,6 @@ Standardized mortality rates in census year 2018, ignoring women aged >67 and me
 
 ```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
 # prepare national reference population
-dm <- subset(dm, !(gender == 'Female' & age %in% c('50-54','55+')) &
-                 !(gender == 'Male' & age %in% c('50+'))
-             )
-
 dref <- dm[ year == 2018, 
             list(natl_pop_n = sum(pop)),
             by = c('gender','age')]
@@ -316,22 +313,19 @@ dref[, natl_pop_p := natl_pop_n / natl_pop_t]
 # TODO does the entire pop for 2018 in our data add up to what is reported online?
 
 # calculate age/sex death rates per municipality
-da <- subset(dm, year == 2018, select = -c(mod, death_rate))
-da[, mun_death_r_2018 := deaths/population]
-tmp <- da[, which(population == 0L)]
+da <- subset(dm, year == 2018, select = -c(mod, pop_PREPR))
+da[, mun_death_r_2018 := deaths/pop]
+tmp <- da[, which(pop == 0.)]
 set(da, tmp, 'mun_death_r_2018', 0.)
-#tmp <- da[, list(mun_pop_t = sum(population)), by = c('mun','year')]
-#da <- merge(da, tmp, by = c('mun','year'))
-#da[, mun_pop_p := population / mun_pop_t]
 
 # merge national reference population weights
 da <- merge(da, dref, by = c('gender','age'), all.x = TRUE)
 
 # calculate standardized mortality rates
 da <- da[,
-         list(pop_n = sum(population),
+         list(pop_n = sum(pop),
               deaths = sum(deaths),
-              death_r = sum(deaths)/sum(population),
+              death_r = sum(deaths)/sum(pop),
               death_r_std = sum(mun_death_r_2018 * natl_pop_n) / natl_pop_t[1] 
               ),
          by = c('mun','year')]
@@ -376,8 +370,8 @@ p <- ggplot() +
           axis.text = element_blank(),
           axis.ticks = element_blank()) +
     guides(fill = guide_legend(order = 1))
-ggsave(p, file = file.path(out.dir, 'Colombia_pop_density_2018.pdf'), w = 10, h = 10)
+ggsave(p, file = file.path(out.dir, paste0('Colombia_pop_density_2018_',stamp,'.pdf')), w = 10, h = 10)
 
 # plot population density
-ggplot(da, aes(x= death_r, y= death_r_std)) + geom_point()
+#ggplot(da, aes(x= death_r, y= death_r_std)) + geom_point()
 ```
