@@ -45,8 +45,10 @@ require(spdep)
 require(patchwork)
 require(knitr)
 require(kableExtra)
+require(tidyverse)
 
 home.dir <- '/Users/or105/Library/CloudStorage/OneDrive-ImperialCollegeLondon/OR_Work/OCAY_Program'
+home.dir <- '/Users/avramaral/Library/CloudStorage/OneDrive-SharedLibraries-ImperialCollegeLondon/Ratmann, Oliver - OCAY_Program/'
 data.dir <- file.path(home.dir, 'Colombia_primary_data')
 out.dir <- file.path(home.dir, 'Colombia_analysis_reporting_bias_in_deaths')
 stamp <- gsub('-','',Sys.Date())
@@ -59,7 +61,7 @@ dmap <- readRDS(file.path(data.dir,'Files_Colombia','colombia_map_municipality.R
 names(dmap)[1] <- 'mun' 
 
 # add capitals to Departments
-dgeo[, capital := mun == dep*1e3 + 1]
+dgeo[, capital := mun == dep*1e3 + 1] # Check "Cundinamarca" (capital is also "Bogotá")
 # subset(dgeo, capital)
 # TODO 25001 Cundinamarca  Agua De Dios is this correct?
 
@@ -76,6 +78,7 @@ dgbp <- subset(dgbp, !is.na(dep))
 set(dgbp, NULL, 'gdp_per_capita', dgbp[, as.integer(gsub(',','',gdp_per_capita))])
 set(dgbp, NULL, 'year', dgbp[, as.integer(gsub('X|pr|p','',year))])
 
+saveRDS(dplyr::as_tibble(dplyr::arrange(dgbp, dep)), paste(data.dir, "/summarised_data/gbp.RDS", sep = ""))
 
 dpop <- as.data.table(readRDS(file.path(data.dir,'Population_DANE','pop_all.RDS')))
 dpop_cut_age <- as.data.table(readRDS(file.path(data.dir,'Population_DANE','pop_gender.RDS')))
@@ -121,7 +124,7 @@ cat('\ndpop: number of missing pop sizes, n=',nrow(subset(dpop, is.na(pop_DANE))
 # qhat s the fix for dpop?
 
 
-# hack for now:
+# hack for now: # This just ignores elderly. Instead, use the object based on `pop_gender`; i.e., `dpop_cut_age`
 set(dpop, dpop[, which(is.na(pop_DANE))],'pop_DANE',0) 
 
 dm <- merge(tmp, dm, by = c('mun','gender','age','year'), all.x = TRUE)
@@ -175,6 +178,8 @@ dm <- merge(dm, dpop_cut_age, by = c('mun','gender','age','year'))
 db <- merge(db, dpop_cut_age, by = c('mun','gender','age','year'))
 setnames(dm, 'pop_DANE', 'pop')
 setnames(db, 'pop_DANE', 'pop')
+
+# The population count (check counts) includes all elderly individuals, whereas the birth and death count do not
 ```
 
 Population density, proportion of men, proportion of people aged <30 years:
@@ -315,6 +320,7 @@ write.csv(tmp, file = file.path(out.dir, paste0('Colombia_proportion_people_10_2
 # TODO check municipalities with <40% young people!
 
 ```
+
 
 # Standardized mortality rates in census year 2018
 
