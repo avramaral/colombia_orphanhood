@@ -48,7 +48,7 @@ require(kableExtra)
 require(tidyverse)
 
 home.dir <- '/Users/or105/Library/CloudStorage/OneDrive-ImperialCollegeLondon/OR_Work/OCAY_Program'
-home.dir <- '/Users/avramaral/Library/CloudStorage/OneDrive-SharedLibraries-ImperialCollegeLondon/Ratmann, Oliver - OCAY_Program/'
+#home.dir <- '/Users/avramaral/Library/CloudStorage/OneDrive-SharedLibraries-ImperialCollegeLondon/Ratmann, Oliver - OCAY_Program/'
 data.dir <- file.path(home.dir, 'Colombia_primary_data')
 out.dir <- file.path(home.dir, 'Colombia_analysis_reporting_bias_in_deaths')
 stamp <- gsub('-','',Sys.Date())
@@ -57,7 +57,8 @@ stamp <- gsub('-','',Sys.Date())
 # Read data
 ```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
 dgeo <- as.data.table(read.csv(file.path(data.dir,'Files_Colombia/geo_info.csv')))
-dmap <- readRDS(file.path(data.dir,'Files_Colombia','colombia_map_municipality.RDS'))
+#dmap <- readRDS(file.path(data.dir,'Files_Colombia','colombia_map_municipality.RDS'))
+dmap <- readRDS(file.path(data.dir,'summarised_data','official_colombia_map_municipality.RDS'))
 names(dmap)[1] <- 'mun' 
 
 # add capitals to Departments
@@ -65,7 +66,7 @@ dgeo[, capital := mun == dep*1e3 + 1] # Check "Cundinamarca" (capital is also "B
 # subset(dgeo, capital)
 # TODO 25001 Cundinamarca  Agua De Dios is this correct?
 
-# GBP data from https://www.dane.gov.co/index.php/en/statistics-by-topic-1/national-accounts/departmental-national-accounts
+# Departmental GBP data from https://www.dane.gov.co/index.php/en/statistics-by-topic-1/national-accounts/departmental-national-accounts
 dgbp <- read.csv(file.path(data.dir,'Files_Colombia/anexo-2019-preliminar-PIB-total-por-departamento.csv'),
                  skip = 8, 
                  nrow = 34,
@@ -77,9 +78,20 @@ dgbp <- melt(dgbp, id.vars = c('dep'), value.name = 'gdp_per_capita', variable.n
 dgbp <- subset(dgbp, !is.na(dep))
 set(dgbp, NULL, 'gdp_per_capita', dgbp[, as.integer(gsub(',','',gdp_per_capita))])
 set(dgbp, NULL, 'year', dgbp[, as.integer(gsub('X|pr|p','',year))])
-
 saveRDS(dplyr::as_tibble(dplyr::arrange(dgbp, dep)), paste(data.dir, "/summarised_data/gbp.RDS", sep = ""))
 
+# Municipal GBP data from https://www.dane.gov.co/files/investigaciones/pib/departamentales/B_2015/anexo-2018-provisional-valor-agregado-municipio-2011-2018.xlsx
+# in units of 1000 million pesos
+dgbpm <- read.csv(file.path(data.dir,'Files_Colombia','anexo-2018-provisional-valor-agregado-municipio-2011-2018_sheet9.csv'),
+                 nrow = 1122,
+                 header = TRUE)
+dgbpm <- as.data.table(dgbpm)
+setnames(dgbpm, 1:4, c('mun','mun_name','dep','dep_name'))
+setnames(dgbpm, 'X.Valor.agregado..', 'va')
+set(dgbpm, NULL, c(5L:7L,9L), NULL)
+set(dgbpm, NULL, 'va', dgbpm[, 1e3*as.integer(gsub(',','',va))])
+
+# Population sizes from DANE
 dpop <- as.data.table(readRDS(file.path(data.dir,'Population_DANE','pop_all.RDS')))
 dpop_cut_age <- as.data.table(readRDS(file.path(data.dir,'Population_DANE','pop_gender.RDS')))
 set(dpop, NULL, 'mun', dpop[, as.integer(as.character(mun))])
@@ -152,20 +164,14 @@ dgeo <- merge(dgeo, tmp, by = 'mun', all.x = TRUE)
 cat("\nmunicipalities with no data on area in dgeo: ", dgeo[is.na(area),mun])
 
 tmp <- data.table(
-  mun = dmap$mun,
+  mun = as.integer(as.character(dmap$mun)),
   area_2 = as.double(units::set_units(st_area(dmap$geometry), km^2))
 )
 dgeo <- merge(dgeo, tmp, by = 'mun')
 
-tmp <- dgeo[, which(is.na(area))]
-set(dgeo, tmp, 'area', dgeo[tmp, area_2])
-
 tmp <- subset(dgeo, abs(log(area/area_2)) > log(1.2))
 cat("\nThere are municipalities where km2 calculated from the shape file differs from IGAC resources by more than 20%, n=", nrow(tmp))
 write.csv(tmp, file = file.path(out.dir, paste0('comparison_of_municipality_area_IGAC_vs_shapefile_',stamp,'.csv')))
-
-# TODO Andres can you see if there is indeed an official shape file at the DANE website as 
-# Catalina advised in her email. I think there was a link in her email too.
 ```
 
 # Demographics in census year 2018
@@ -207,7 +213,7 @@ da[, pop_r_disc := cut(
   ]
 
 # plot population density
-tmp <- data.table(mun = dmap$mun)
+tmp <- data.table(mun = as.integer(as.character(dmap$mun)))
 tmp[, id := 1:nrow(tmp)]
 tmp <- merge(tmp, subset(da, select = c(mun, pop_r_disc)))
 setkey(tmp, id)
@@ -359,7 +365,8 @@ da <- subset(da, !is.na(mun_name))
 
 # add GBP info
 da <- merge(da, dgbp, by = c('dep','year'), all.x = TRUE)
-
+setnames(da, 'gdp_per_capita', 'dep_gdp_per_capita')
+da <- merge(da, subset(dgbpm, select = c(mun, gdp_per_capita)), by = c('mun'), all.x = TRUE)
 
 # calculate population densities
 da[, pop_r := pop_n / area_2]
@@ -438,7 +445,6 @@ p <- ggplot() +
 ggsave(p, file = file.path(out.dir, paste0('Colombia_mortality_rate_2018_',stamp,'.pdf')), w = 10, h = 10)
 
 # are standardized death rates higher in capitals of departments?
-
 tmp <- unique(subset(da, select = c(dep_name, gdp_per_capita)))
 setkey(tmp, gdp_per_capita)
 tmp[, dep_name_gdp := factor(1:nrow(tmp), levels = 1:nrow(tmp), labels = dep_name) ]
@@ -461,7 +467,6 @@ p <- ggplot(data = unique(subset(da, select = c(dep_name_gdp, gdp_per_capita))))
 ggsave(p, file = file.path(out.dir, paste0('Colombia_Departments_by_gdp',stamp,'.png')), w = 10, h = 10)
 
 # can we try and work out some correction factor?
-
 dg <- subset(da, select = c(dep, dep_name_gdp, gdp_per_capita, mun, capital, death_r_std))
 tmp <- subset(dg, capital, select = c(dep, death_r_std))
 setnames(tmp, 'death_r_std', 'death_r_std_capital')
@@ -485,8 +490,146 @@ ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_prop_be
 
 # quantile for Putumayo is 66%
 subset(dg, dep_name_gdp == 'Putumayo')
-
-# adjust standardised death rates 
-
 ```
 
+# Analyze standardised death reates vs GDP by municipality 
+
+```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
+# prepare national reference population
+dref <- dm[ year == 2018, 
+            list(natl_pop_n = sum(pop)),
+            by = c('gender','age')]
+dref[, natl_pop_t := sum(natl_pop_n)]
+dref[, natl_pop_p := natl_pop_n / natl_pop_t]
+
+# calculate age/sex death rates per municipality
+# smooth out deaths over 2017-2019
+# 
+da <- dm[year > 2016 & year < 2020, 
+         list(deaths = mean(deaths)), 
+         by = c('mun','gender','age')
+         ]
+tmp <- subset(dm, year == 2018, select = -c(deaths, mod, pop_PREPR))
+da <- merge(da, tmp, by = c('mun','gender','age'))
+#da <- subset(dm, year == 2018, select = -c(mod, pop_PREPR))
+da[, mun_death_r_2018 := deaths/pop]
+tmp <- da[, which(pop == 0.)]
+set(da, tmp, 'mun_death_r_2018', 0.)
+
+# merge national reference population weights
+da <- merge(da, dref, by = c('gender','age'), all.x = TRUE)
+
+# calculate standardized mortality rates
+da <- da[,
+         list(pop_n = sum(pop),
+              deaths = sum(deaths),
+              death_r = sum(deaths)/sum(pop),
+              death_r_std = sum(mun_death_r_2018 * natl_pop_n) / natl_pop_t[1] 
+              ),
+         by = c('mun','year')]
+
+# add geo info
+da <- merge(da, dgeo, by = 'mun', all.x = TRUE)
+cat("\nfound municipalities in death data that are not in geo : ", da[is.na(mun_name),mun])
+da <- subset(da, !is.na(mun_name))
+
+# add GBP info
+da <- merge(da, dgbp, by = c('dep','year'), all.x = TRUE)
+setnames(da, 'gdp_per_capita', 'dep_gdp_per_capita')
+da <- merge(da, subset(dgbpm, select = c(mun, va)), by = c('mun'), all.x = TRUE)
+da[, va_per_capita := va / pop_n]
+
+# reset Bogota as capital of Cundinamarca
+set(da, da[, which(dep == 11)], 'dep', 25L)
+set(da, da[, which(dep == 25)], 'dep_name', 'Cundinamarca\nincl Bogotá')
+set(da, da[, which(mun == 25001)], 'capital', FALSE)
+
+# add density info
+da[, pop_r := pop_n / area_2]
+da[, pop_r_disc := cut(
+  pop_r, breaks = c(0, 5, 25, 50, 100, 250, 100e3), 
+  labels = c('0-4','5-24','25-49','50-99','100-249','250+'), 
+  right = FALSE)
+  ]
+
+tmp <- da[, list(sum_mum_va_per_capita = sum(va_per_capita)), by = c('dep_name', 'dep_gdp_per_capita')]
+setorder(tmp, -dep_gdp_per_capita)
+
+p <- ggplot(da, aes(x = pop_r_disc)) +
+  geom_bar()
+
+
+p <- ggplot(da, aes(x = va, y = death_r_std, col = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other')))) +
+  geom_point(data = subset(da, capital == FALSE)) +
+  geom_point(data = subset(da, capital == TRUE)) +
+  labs(col = '') + 
+  scale_x_log10() +
+  scale_colour_carto_d(palette = "Vivid", direction = -1) +
+  theme_bw() +
+  labs(x = 'valore agregado', y = 'mean standardized death rates 2017-2019') +
+  facet_wrap(~dep_name, ncol = 6) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_by_va_',stamp,'.png')), w = 10, h = 10)
+
+
+p <- ggplot(da, aes(x = va, y = death_r_std, col = pop_r_disc)) +
+  geom_point() +
+  labs(col = '') + 
+  scale_x_log10() +
+  scale_colour_carto_d(palette = "Burg") +
+  theme_bw() +
+  labs(x = 'valore agregado', y = 'mean standardized death rates 2017-2019', colour = 'Population per km2') +
+  facet_wrap(~dep_name, ncol = 6) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_by_va2_',stamp,'.png')), w = 10, h = 10)
+
+
+p <- ggplot(da, aes(x = va, y = death_r_std)) +
+  geom_point(aes(col = pop_r_disc, 
+                 pch = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other')), 
+                 size = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other'))
+                 )) +
+  labs(col = '') + 
+  scale_x_log10() +
+  scale_size_manual(values = c(4,1)) +
+  scale_colour_carto_d(palette = "Burg") +
+  theme_bw() +
+  labs(x = 'valore agregado', y = 'mean standardized death rates 2017-2019', colour = 'Population per km2', size = '', pch = '') +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
+  geom_smooth(colour = 'black')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_by_va2_overall_',stamp,'.png')), w = 10, h = 10)
+
+
+p <- ggplot(da, aes(x = pop_r, y = death_r_std, col = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other')))) +
+  geom_point(data = subset(da, capital == FALSE)) +
+  geom_point(data = subset(da, capital == TRUE)) +
+  labs(col = '') + 
+  scale_x_log10() +
+  scale_colour_carto_d(palette = "Vivid", direction = -1) +
+  theme_bw() +
+  labs(x = 'Population density', y = 'mean standardized death rates 2017-2019') +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  geom_smooth(colour = 'black')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_by_popdensity_overall_',stamp,'.png')), w = 7, h = 7)
+
+
+p <- ggplot(da, aes(x = va, y = pop_n/area_2, col = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other')))) +
+  geom_point(data = subset(da, capital == FALSE)) +
+  geom_point(data = subset(da, capital == TRUE)) +
+  labs(col = '') + 
+  scale_x_log10() +
+  scale_y_log10() +
+  scale_colour_carto_d(palette = "Vivid", direction = -1) +
+  theme_bw() +
+  labs(x = 'valore agregado', y = 'population density 2018 per km2') +
+  facet_wrap(~dep_name, ncol = 6) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Pop_density_2018_by_va_',stamp,'.png')), w = 10, h = 10)
+
+library(splines)
+
+summary(lm(death_r_std ~ bs(va) + bs(pop_r), data = da))
+
+summary(lm(death_r_std ~ bs(va) + pop_r_disc, data = da))
+
+```
