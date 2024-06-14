@@ -46,6 +46,8 @@ require(patchwork)
 require(knitr)
 require(kableExtra)
 require(tidyverse)
+require(fitdistrplus)
+require(mgcv)
 
 home.dir <- '/Users/or105/Library/CloudStorage/OneDrive-ImperialCollegeLondon/OR_Work/OCAY_Program'
 #home.dir <- '/Users/avramaral/Library/CloudStorage/OneDrive-SharedLibraries-ImperialCollegeLondon/Ratmann, Oliver - OCAY_Program/'
@@ -60,6 +62,7 @@ dgeo <- as.data.table(read.csv(file.path(data.dir,'Files_Colombia/geo_info.csv')
 #dmap <- readRDS(file.path(data.dir,'Files_Colombia','colombia_map_municipality.RDS'))
 dmap <- readRDS(file.path(data.dir,'summarised_data','official_colombia_map_municipality.RDS'))
 names(dmap)[1] <- 'mun' 
+dmap$mun <- as.integer(as.character(dmap$mun))
 
 # add capitals to Departments
 dgeo[, capital := mun == dep*1e3 + 1] # Check "Cundinamarca" (capital is also "Bogotá")
@@ -213,7 +216,7 @@ da[, pop_r_disc := cut(
   ]
 
 # plot population density
-tmp <- data.table(mun = as.integer(as.character(dmap$mun)))
+tmp <- data.table(mun = dmap$mun)
 tmp[, id := 1:nrow(tmp)]
 tmp <- merge(tmp, subset(da, select = c(mun, pop_r_disc)))
 setkey(tmp, id)
@@ -366,7 +369,7 @@ da <- subset(da, !is.na(mun_name))
 # add GBP info
 da <- merge(da, dgbp, by = c('dep','year'), all.x = TRUE)
 setnames(da, 'gdp_per_capita', 'dep_gdp_per_capita')
-da <- merge(da, subset(dgbpm, select = c(mun, gdp_per_capita)), by = c('mun'), all.x = TRUE)
+da <- merge(da, subset(dgbpm, select = c(mun, va)), by = c('mun'), all.x = TRUE)
 
 # calculate population densities
 da[, pop_r := pop_n / area_2]
@@ -445,10 +448,10 @@ p <- ggplot() +
 ggsave(p, file = file.path(out.dir, paste0('Colombia_mortality_rate_2018_',stamp,'.pdf')), w = 10, h = 10)
 
 # are standardized death rates higher in capitals of departments?
-tmp <- unique(subset(da, select = c(dep_name, gdp_per_capita)))
-setkey(tmp, gdp_per_capita)
+tmp <- unique(subset(da, select = c(dep_name, dep_gdp_per_capita)))
+setkey(tmp, dep_gdp_per_capita)
 tmp[, dep_name_gdp := factor(1:nrow(tmp), levels = 1:nrow(tmp), labels = dep_name) ]
-da <- merge(da, tmp, by = c('dep_name', 'gdp_per_capita'))
+da <- merge(da, tmp, by = c('dep_name', 'dep_gdp_per_capita'))
 p <- ggplot(da, aes(x = dep_name_gdp, y = death_r_std)) +
   geom_boxplot() +
   geom_point(data = subset(da, capital == TRUE), col = 'red') +
@@ -459,23 +462,23 @@ p <- ggplot(da, aes(x = dep_name_gdp, y = death_r_std)) +
 ggsave(p, file = file.path(out.dir, paste0('Colombia_mortality_rate_2018_capital_vs_mun_ordered_by_gdp',stamp,'.png')), w = 10, h = 10)
 
 # GDP by Department
-p <- ggplot(data = unique(subset(da, select = c(dep_name_gdp, gdp_per_capita)))) +
-  geom_col(aes(x = dep_name_gdp, y = gdp_per_capita)) +
+p <- ggplot(data = unique(subset(da, select = c(dep_name_gdp, dep_gdp_per_capita)))) +
+  geom_col(aes(x = dep_name_gdp, y = dep_gdp_per_capita)) +
   theme_bw() +
   coord_flip() +
   labs(y = "GDP per capita\n(million pesos)", x = 'Department')
 ggsave(p, file = file.path(out.dir, paste0('Colombia_Departments_by_gdp',stamp,'.png')), w = 10, h = 10)
 
 # can we try and work out some correction factor?
-dg <- subset(da, select = c(dep, dep_name_gdp, gdp_per_capita, mun, capital, death_r_std))
+dg <- subset(da, select = c(dep, dep_name_gdp, dep_gdp_per_capita, mun, capital, death_r_std))
 tmp <- subset(dg, capital, select = c(dep, death_r_std))
 setnames(tmp, 'death_r_std', 'death_r_std_capital')
 dg <- merge(dg, tmp, by = 'dep')
 dg <- dg[, 
          list(death_r_std_capital_quantile = mean(as.integer(death_r_std <= death_r_std_capital))), 
-         by = c('dep','dep_name_gdp','gdp_per_capita')
+         by = c('dep','dep_name_gdp','dep_gdp_per_capita')
          ]
-setorder(dg, -gdp_per_capita)
+setorder(dg, -dep_gdp_per_capita)
 dg <- subset(dg, dep != 11)
 dg[, death_r_std_capital_quantile_run := sapply( 1:nrow(dg), function(i){ mean(dg$death_r_std_capital_quantile[1:i]) })]
 
@@ -596,7 +599,8 @@ p <- ggplot(da, aes(x = va, y = death_r_std)) +
   theme_bw() +
   labs(x = 'valore agregado', y = 'mean standardized death rates 2017-2019', colour = 'Population per km2', size = '', pch = '') +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
-  geom_smooth(colour = 'black')
+  geom_smooth(colour = 'black') +
+  geom_smooth(data = subset(da, capital), colour = 'black', lty = 'dotted', method = 'lm') 
 ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_by_va2_overall_',stamp,'.png')), w = 10, h = 10)
 
 
@@ -627,9 +631,199 @@ p <- ggplot(da, aes(x = va, y = pop_n/area_2, col = factor(capital, levels = c(T
 ggsave(p, file = file.path(out.dir, paste0('Colombia_Pop_density_2018_by_va_',stamp,'.png')), w = 10, h = 10)
 
 library(splines)
-
 summary(lm(death_r_std ~ bs(va) + bs(pop_r), data = da))
-
 summary(lm(death_r_std ~ bs(va) + pop_r_disc, data = da))
 
+```
+
+# Under-reporting corrections for standardised death reates with gam
+
+```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
+# prepare national reference population
+dref <- dm[ year == 2018, 
+            list(natl_pop_n = sum(pop)),
+            by = c('gender','age')]
+dref[, natl_pop_t := sum(natl_pop_n)]
+dref[, natl_pop_p := natl_pop_n / natl_pop_t]
+
+# calculate age/sex death rates per municipality
+# smooth out deaths over 2017-2019
+# 
+da <- dm[year > 2016 & year < 2020, 
+         list(deaths = mean(deaths)), 
+         by = c('mun','gender','age')
+         ]
+tmp <- subset(dm, year == 2018, select = -c(deaths, mod, pop_PREPR))
+da <- merge(da, tmp, by = c('mun','gender','age'))
+#da <- subset(dm, year == 2018, select = -c(mod, pop_PREPR))
+da[, mun_death_r_2018 := deaths/pop]
+tmp <- da[, which(pop == 0.)]
+set(da, tmp, 'mun_death_r_2018', 0.)
+
+# merge national reference population weights
+da <- merge(da, dref, by = c('gender','age'), all.x = TRUE)
+
+# calculate standardized mortality rates
+da <- da[,
+         list(pop_n = sum(pop),
+              deaths = sum(deaths),
+              death_r = sum(deaths)/sum(pop),
+              death_r_std = sum(mun_death_r_2018 * natl_pop_n) / natl_pop_t[1] 
+              ),
+         by = c('mun','year')]
+
+# add geo info
+da <- merge(da, dgeo, by = 'mun', all.x = TRUE)
+cat("\nfound municipalities in death data that are not in geo : ", da[is.na(mun_name),mun])
+da <- subset(da, !is.na(mun_name))
+
+# add GBP info
+da <- merge(da, dgbp, by = c('dep','year'), all.x = TRUE)
+setnames(da, 'gdp_per_capita', 'dep_gdp_per_capita')
+da <- merge(da, subset(dgbpm, select = c(mun, va)), by = c('mun'), all.x = TRUE)
+da[, va_per_capita := va / pop_n]
+
+# reset Bogota as capital of Cundinamarca
+set(da, da[, which(dep == 11)], 'dep', 25L)
+set(da, da[, which(dep == 25)], 'dep_name', 'Cundinamarca\nincl Bogotá')
+set(da, da[, which(mun == 25001)], 'capital', FALSE)
+
+# add density info
+da[, pop_r := pop_n / area_2]
+da[, pop_r_disc := cut(
+  pop_r, breaks = c(0, 5, 25, 50, 100, 250, 100e3), 
+  labels = c('0-4','5-24','25-49','50-99','100-249','250+'), 
+  right = FALSE)
+  ]
+
+# determine best fit distribution to standardised death rates 
+das <- subset(da, va > 1e6)
+fln <- fitdist(das$death_r_std, "lnorm")
+fg <- fitdist(das$death_r_std, "gamma")
+fw <- fitdist(das$death_r_std, "weibull")
+cdfcomp(list(fln, fg, fw), legendtext = c('lognormal','gamma','weibull'))
+gofstat(list(fln, fg, fw), fitnames = c('lognormal','gamma','weibull'))
+# both AIC and BIC select Gamma
+
+# read quantiles of best fit
+dva6 <- unname(unlist(quantile(fg, prob = c(0.025, 0.5, 0.975))$quantiles))
+
+# determine average trend in standardised death rates by value added with gam
+tmp <- subset(da, select = c(mun, va, death_r_std))
+set(tmp, NULL, 'va', tmp[, log10(va)])
+fgam <- gam( death_r_std ~ s(va, bs = "cs"), data = tmp, method = "REML")
+dvaa <- data.table(va = seq(log10(min(da$va)), log10(max(da$va)), by = 0.01))
+dvaa[, death_r_std_fitted := unname(unlist(mgcv:::predict.gam(fgam, dvaa, type = 'response', se.fit = FALSE)))]
+set(dvaa, NULL, 'va', dvaa[, 10^va])
+
+# determine average trend in standardised death rates by value added with loess
+if (0)
+{
+  tmp <- subset(da, select = c(mun, va, death_r_std))
+  set(tmp, NULL, 'va', tmp[, log10(va)])
+  floess <- loess( death_r_std ~ va, data = tmp )
+  dvaa <- data.table(va = seq(log10(min(da$va)), log10(max(da$va)), by = 0.01))
+  dvaa[, death_r_std_fitted := unname(unlist(predict(floess, dvaa, type = 'response', se.fit = FALSE)))]
+  set(dvaa, NULL, 'va', dvaa[, 10^va])
+}
+
+
+p <- ggplot(da, aes(x = va, y = death_r_std)) +
+  geom_ribbon(aes(ymin = dva6[1], ymax = dva6[3]), fill = 'chocolate4', alpha = 0.2) +
+  geom_hline(yintercept = dva6[2], lty = 'dashed', col = 'black', lwd = .8 ) +
+  geom_point(aes(col = pop_r_disc, 
+                 pch = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other')), 
+                 size = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other'))
+                 )) +
+  labs(col = '') + 
+  scale_x_log10() +
+  scale_size_manual(values = c(4,1)) +
+  scale_colour_carto_d(palette = "Burg") +
+  theme_bw() +
+  labs(x = 'valore agregado', y = 'mean standardized death rates 2017-2019', colour = 'Population per km2', size = '', pch = '') +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
+  geom_line(data = dvaa, aes(x = va, y = death_r_std_fitted), colour = 'black', lwd = .8) 
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_by_va2_overall_gam_',stamp,'.png')), w = 10, h = 10)
+
+# work out adjustment multiplier
+
+
+dvaa <- subset(da, select = c(mun, va, death_r_std))
+set(dvaa, NULL, 'va', dvaa[, log10(va)])
+fgam <- gam( death_r_std ~ s(va, bs = "cs"), data = dvaa, method = "REML")
+dvaa[, death_r_std_fitted := unname(unlist(mgcv:::predict.gam(fgam, dvaa, type = 'response', se.fit = FALSE)))]
+set(dvaa, NULL, 'va', dvaa[, 10^va])
+
+tmp <- dvaa[, 
+            list(it = 1:1e3,
+                 death_r_std_adjust = rgamma(1e3, fg$estimate[1], fg$estimate[2])), 
+            by = c('mun','va')
+            ]
+dvaa <- merge(dvaa, tmp, by = c('mun','va'))
+
+tmp <- unique(subset(dvaa, select = -c(it, death_r_std_adjust)))
+tmp[, death_r_std_adjust := unname(unlist(quantile(fg, prob = c(0.5))$quantiles))]
+tmp[, it := 0L]
+
+dvaa <- rbind(tmp, dvaa)
+
+dvaa[, death_r_std_adjust_multiplier := pmax(1.0, death_r_std_adjust / death_r_std_fitted)]
+
+cat('saving adjustment factors to file=',file.path(out.dir, paste0('Colombia_reporting_bias_multiplier_gam_on_std_mortality_rate_vs_va_',stamp,'.rds')))
+saveRDS(dvaa, file = file.path(out.dir, paste0('Colombia_reporting_bias_multiplier_gam_on_std_mortality_rate_vs_va_',stamp,'.rds')))
+
+# apply adjustments and plot
+da <- merge(da, subset(dvaa, it == 0, select = c(mun, death_r_std_adjust_multiplier)), by = c('mun'))
+da[, death_r_std_adj := death_r_std * death_r_std_adjust_multiplier]
+da[, death_r_std_adj_disc := cut(
+  death_r_std_adj, breaks = c(-1, 1e-7, 1e-3, 2e-3, 3e-3, 4e-3, 1), 
+  labels = c('0','<=1 per 1000','<=2 per 1000','<=3 per 1000','<=4 per 1000','>4 per 1000'), 
+  right = TRUE)
+  ]
+
+tmp <- data.table(mun = dmap$mun)
+tmp[, id := 1:nrow(tmp)]
+tmp <- merge(tmp, subset(da, select = c(mun, death_r_std_adj_disc)))
+setkey(tmp, id)
+tmp2 <- copy(dmap)
+tmp2[['value']] <- tmp$death_r_std_adj_disc
+p <- ggplot() +
+    geom_sf(data = tmp2, 
+            aes(geometry = geometry, 
+                fill = value
+                ), 
+            color = "black") +
+    scale_fill_carto_d(name = "Standardized mortality rate in 2018\nadjusted for under-reporting using the GAM model", palette = "Burg", direction = 1) +
+    theme_bw() +
+    theme(legend.position = "right",
+          text = element_text(size = 14),
+          plot.title = element_text(size = 16),
+          legend.title = element_text(size = 11),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.border = element_blank(),
+          panel.background = element_blank(),
+          axis.title = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank()) +
+    guides(fill = guide_legend(order = 1))
+ggsave(p, file = file.path(out.dir, paste0('Colombia_mortality_rate_2018_adj_gam_on_std_mortality_rate_vs_va_',stamp,'.pdf')), w = 10, h = 10)
+
+
+p <- ggplot(da, aes(x = va, y = death_r_std_adj)) +
+  geom_ribbon(aes(ymin = dva6[1], ymax = dva6[3]), fill = 'chocolate4', alpha = 0.2) +
+  #geom_hline(yintercept = dva6[2], lty = 'dashed', col = 'black', lwd = .8 ) +
+  geom_point(aes(col = pop_r_disc, 
+                 pch = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other')), 
+                 size = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other'))
+                 )) +
+  labs(col = '') + 
+  scale_x_log10() +
+  scale_size_manual(values = c(4,1)) +
+  scale_colour_carto_d(palette = "Burg") +
+  theme_bw() +
+  labs(x = 'valore agregado', y = 'adjusted standardized death rates', colour = 'Population per km2', size = '', pch = '') +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
+  geom_smooth(colour = 'black')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_adj_gam_on_std_mortality_rate_vs_va_overall_',stamp,'.png')), w = 10, h = 10)
 ```
