@@ -102,6 +102,15 @@ set(dpop_cut_age, NULL, 'mun', dpop_cut_age[, as.integer(as.character(mun))])
 setnames(dpop, 'population','pop_DANE')
 setnames(dpop_cut_age, 'population','pop_DANE')
 
+# MPI by municipality
+dmpi <- read.csv(file.path(data.dir,'COLOMBIA COVID and POP Datasets','multidimensional poverty','CNPV-2018_PobrezaMultidimensional_Municipal_IPM.csv'),
+                 skip = 11,
+                 nrow = 1122,
+                 header = TRUE)[,1:6]
+dmpi <- as.data.table(dmpi)
+setnames(dmpi, 1:6, c('dep','mun','mun_name','mpi','mpi_cabeceras','mpi_centros'))
+
+
 tmp <- readRDS(file.path(data.dir,'Files_Colombia','EQUALIZED_RATES.RDS'))
 dm <- as.data.table(tmp$mortality_rates)
 db <- as.data.table(tmp$fertility_rates)
@@ -826,4 +835,308 @@ p <- ggplot(da, aes(x = va, y = death_r_std_adj)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
   geom_smooth(colour = 'black')
 ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_adj_gam_on_std_mortality_rate_vs_va_overall_',stamp,'.png')), w = 10, h = 10)
+```
+
+# Examine log-linear trends in age-specific deaths
+
+
+Standardized mortality rates in census year 2018, ignoring women aged >67 and men aged >77:
+
+```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
+# prepare national reference population
+dref <- dm[ age != '0-9' & year > 2011 & year < 2022, 
+            list(natl_pop_n = sum(pop),
+                 natl_death_n = sum(deaths)
+                 ),
+            by = c('gender','age','year')]
+dref[, natl_death_r := natl_death_n / natl_pop_n]
+dref[, natl_death_r_log := log( natl_death_n / natl_pop_n )]
+
+#determine age midpoints
+tmp <- unique(subset(dref, select = c(gender, age)))
+tmp[, age2 := age]
+set(tmp, tmp[, which(age == '50+' & gender == 'Female')], 'age2', '50-67')
+set(tmp, tmp[, which(age == '55+' & gender == 'Male')], 'age2', '55-77')
+tmp[, age_from := as.integer(gsub('([0-9]+)-([0-9]+)','\\1', age2))]
+tmp[, age_to := as.integer(gsub('([0-9]+)-([0-9]+)','\\2', age2))]
+tmp[, age_mid := (age_from + age_to + 1L)/2]
+dref <- merge(dref, 
+              subset(tmp, select = c(age, gender, age_from, age_to, age_mid)), 
+              by = c('age','gender')
+              )
+
+# fit spline to age trends in log death rates over continuous age mid points
+tmp <- dref[,
+            {
+              d <- list( natl_death_r_log = natl_death_r_log, age_mid = age_mid)
+              f <- gam( natl_death_r_log ~ s(age_mid, bs = "cs", k = 5), 
+                        data = d, 
+                        method = "REML"
+                        )
+              z <- mgcv:::predict.gam(f, d, type = 'response', se.fit = TRUE)
+              list(natl_death_r_log_fitted = as.numeric(z$fit),
+                   natl_death_r_log_fitted_se = as.numeric(z$se.fit),
+                   age_mid = age_mid)
+            },
+            by = c('gender','year')]
+dref <- merge(dref, tmp, by = c('year','gender','age_mid'))
+
+# fit spline to age trends in death rates over continuous age mid points
+tmp <- dref[,
+            {
+              d <- list( natl_death_r = natl_death_r, age_mid = age_mid)
+              f <- gam( natl_death_r ~ s(age_mid, bs = "cs", k = 7), 
+                        data = d, 
+                        method = "REML"
+                        )
+              z <- mgcv:::predict.gam(f, d, type = 'response', se.fit = TRUE)
+              list(natl_death_r_fitted = as.numeric(z$fit),
+                   natl_death_r_fitted_se = as.numeric(z$se.fit),
+                   age_mid = age_mid)
+            },
+            by = c('gender','year')]
+dref <- merge(dref, tmp, by = c('year','gender','age_mid'))
+
+
+# plot on log scale
+p <- ggplot(dref, aes(x = age_mid, y = natl_death_r_log, colour = gender)) +
+  geom_point() +
+  scale_colour_carto_d(palette = "Vivid") +
+  geom_smooth(method = 'lm') +
+  theme_bw() +
+  facet_wrap(~year, ncol = 3) +
+  labs(y = 'national log death rate')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Log_Mortality_rate_curves_2011-2021_',stamp,'.png')), w = 10, h = 10)
+
+p <- ggplot(dref, aes(x = age_mid, colour = factor(year), group = interaction(year, gender))) +
+  geom_point(aes(y = natl_death_r_log)) +
+  ggsci::scale_color_npg() +
+  geom_line(aes(y = natl_death_r_log_fitted)) +
+  #geom_smooth(method = 'gam', formula = y ~ s(x, k=5, bs = "cs"), se = FALSE) +
+  theme_bw() +
+  facet_grid(~gender) +
+  labs(y = 'national log death rate')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Log_Mortality_rate_curves_2011-2021_gamfits_',stamp,'.png')), w = 10, h = 10)
+
+# plot on natural scale
+p <- ggplot(dref, aes(x = age_mid, colour = factor(year), group = interaction(year, gender))) +
+  geom_point(aes(y = natl_death_r)) +
+  ggsci::scale_color_npg() +
+  geom_line(aes(y = natl_death_r_fitted)) +
+  #geom_smooth(method = 'gam', formula = y ~ s(x, k=5, bs = "cs"), se = FALSE) +
+  theme_bw() +
+  facet_grid(~gender) +
+  labs(y = 'national death rate')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_curves_2011-2021_gamfits_',stamp,'.png')), w = 10, h = 10)
+
+
+# plot age curves by municipality against national age curve
+da <- dm[year > 2016 & year < 2020, 
+         list(deaths = mean(deaths)), 
+         by = c('mun','gender','age')
+         ]
+tmp <- subset(dm, year == 2018, select = -c(deaths, mod, pop_PREPR))
+da <- merge(da, tmp, by = c('mun','gender','age'))
+da[, mun_death_r_2018 := deaths/pop]
+tmp <- da[, which(pop == 0.)]
+set(da, tmp, 'mun_death_r_2018', 0.)
+da <- subset(da, age != '0-9')
+da[, mun_death_r_2018_log := log(mun_death_r_2018)]
+
+# merge national reference population weights
+tmp <- subset(dref, 
+              year == 2018, 
+              select = c(gender, age, age_mid, natl_death_r_log_fitted, 
+                         natl_death_r_log_fitted_se, natl_death_r_fitted, 
+                         natl_death_r_fitted_se) 
+              )
+da <- merge(da, tmp, by = c('gender','age'), all.x = TRUE)
+
+# add geo info
+da <- merge(da, dgeo, by = 'mun', all.x = TRUE)
+
+# add value added info
+tmp <- subset(dgbpm, select = c(mun, va))
+setorder(tmp, va)
+tmp[, mun_rnk := 1:nrow(tmp)]
+da <- merge(da, tmp, by = c('mun'), all.x = TRUE)
+
+# reset Bogota as capital of Cundinamarca
+set(da, da[, which(dep == 11)], 'dep', 25L)
+set(da, da[, which(dep == 25)], 'dep_name', 'Cundinamarca\nincl Bogotá')
+set(da, da[, which(mun == 25001)], 'capital', FALSE)
+
+# high economic output
+tmp <- subset(da, floor( (max(mun_rnk) - mun_rnk + 1L) / 30 ) == 0 )
+p <- ggplot(tmp, aes(x = age_mid, colour = va, group = interaction(mun, gender))) +
+  geom_line(aes(y = mun_death_r_2018)) +
+  geom_line(aes(age_mid, y = natl_death_r_fitted), colour = 'black', lwd = 1.25) +
+  scale_colour_viridis_c(begin = 0.4, end = 0.8) +
+  theme_bw() +
+  facet_grid(~gender) +
+  labs(y = 'log death rates\n in 30 municipalities with highest VA')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Log_Mortality_rate_curves_2011-2021_mun_richest_',stamp,'.png')), w = 10, h = 10)
+# --> essentially as expected around national curve
+
+
+# low economic output
+tmp <- subset(da, floor( mun_rnk / 30 ) == 0 )
+p <- ggplot(tmp, aes(x = age_mid, colour = va, group = interaction(mun, gender))) +
+  geom_line(aes(y = mun_death_r_2018)) +
+  geom_line(aes(age_mid, y = natl_death_r_fitted), colour = 'black', lwd = 1.25) +
+  scale_colour_viridis_c(option = 'magma', begin = 0.4, end = 0.8) +
+  theme_bw() +
+  facet_grid(~gender) +
+  labs(y = 'log death rates\n in 30 municipalities with lowest VA')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Log_Mortality_rate_curves_2011-2021_mun_poorest_',stamp,'.png')), w = 10, h = 10)
+# too many zeros, very sparse, so cannot see if below the national curve
+
+
+da[, va_disc := cut(
+  va, breaks = c(-1, 1e5, 5e5, 1e6, 1e10), 
+  labels = c('<100,000','100,000-500,000','500,000-1,000,000','>1,000,000'), 
+  right = FALSE)
+  ]
+
+#
+p <- ggplot(da, aes(x = age_mid)) +
+  geom_boxplot(aes(x = age_mid, y = mun_death_r_2018, group = age, colour = va_disc)) +
+  geom_line(aes(age_mid, y = natl_death_r_fitted), colour = 'black', lwd = 1.25) +
+  scale_y_sqrt() +
+  scale_colour_carto_d(palette = "Burg") +
+  theme_bw() +
+  facet_grid(va_disc~gender) +
+  labs(y = 'municipal log death rate', colour = 'valure aggregado\n in million pesos')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_curves_2011-2021_mun_by_va_',stamp,'.png')), w = 10, h = 10)
+# clearly below on average
+
+# Department capitals
+tmp <- subset(da, capital )
+p <- ggplot(tmp, aes(x = age_mid, colour = mun_name, group = interaction(mun, gender))) +
+  geom_line(aes(y = mun_death_r_2018_log)) +
+  geom_line(aes(age_mid, y = natl_death_r_log_fitted), colour = 'black', lwd = 1.25) +
+  theme_bw() +
+  facet_grid(~gender) +
+  labs(y = 'municipal log death rate')
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Log_Mortality_rate_curves_2011-2021_mun_richest_',stamp,'.png')), w = 10, h = 10)
+```
+
+# Analyze standardised death reates vs MPI by municipality 
+
+```{r, include=TRUE, eval=TRUE, message=FALSE, echo=TRUE, warning=FALSE, tidy=TRUE}
+# prepare national reference population
+dref <- dm[ year == 2018, 
+            list(natl_pop_n = sum(pop)),
+            by = c('gender','age')]
+dref[, natl_pop_t := sum(natl_pop_n)]
+dref[, natl_pop_p := natl_pop_n / natl_pop_t]
+
+# calculate age/sex death rates per municipality
+# smooth out deaths over 2017-2019
+# 
+da <- dm[year > 2016 & year < 2020, 
+         list(deaths = mean(deaths)), 
+         by = c('mun','gender','age')
+         ]
+tmp <- subset(dm, year == 2018, select = -c(deaths, mod, pop_PREPR))
+da <- merge(da, tmp, by = c('mun','gender','age'))
+#da <- subset(dm, year == 2018, select = -c(mod, pop_PREPR))
+da[, mun_death_r_2018 := deaths/pop]
+tmp <- da[, which(pop == 0.)]
+set(da, tmp, 'mun_death_r_2018', 0.)
+
+# merge national reference population weights
+da <- merge(da, dref, by = c('gender','age'), all.x = TRUE)
+
+# calculate standardized mortality rates
+da <- da[,
+         list(pop_n = sum(pop),
+              deaths = sum(deaths),
+              death_r = sum(deaths)/sum(pop),
+              death_r_std = sum(mun_death_r_2018 * natl_pop_n) / natl_pop_t[1] 
+              ),
+         by = c('mun','year')]
+
+# add geo info
+da <- merge(da, dgeo, by = 'mun', all.x = TRUE)
+cat("\nfound municipalities in death data that are not in geo : ", da[is.na(mun_name),mun])
+da <- subset(da, !is.na(mun_name))
+
+# add MPI info
+da <- merge(da, subset(dmpi, select = c(mun, mpi)), by = c('mun'), all.x = TRUE)
+
+# reset Bogota as capital of Cundinamarca
+set(da, da[, which(dep == 11)], 'dep', 25L)
+set(da, da[, which(dep == 25)], 'dep_name', 'Cundinamarca\nincl Bogotá')
+set(da, da[, which(mun == 25001)], 'capital', FALSE)
+
+# add density info
+da[, pop_r := pop_n / area_2]
+da[, pop_r_disc := cut(
+  pop_r, breaks = c(0, 5, 25, 50, 100, 250, 100e3), 
+  labels = c('0-4','5-24','25-49','50-99','100-249','250+'), 
+  right = FALSE)
+  ]
+
+
+p <- ggplot(da, aes(x = mpi, y = death_r_std, col = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other')))) +
+  geom_point(data = subset(da, capital == FALSE)) +
+  geom_point(data = subset(da, capital == TRUE)) +
+  labs(col = '') + 
+  scale_x_log10() +
+  scale_colour_carto_d(palette = "Vivid", direction = -1) +
+  theme_bw() +
+  labs(x = 'multidimensional poverty index', y = 'mean standardized death rates 2017-2019') +
+  facet_wrap(~dep_name, ncol = 6) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_by_mpi_',stamp,'.png')), w = 10, h = 10)
+
+
+p <- ggplot(da, aes(x = mpi, y = death_r_std, col = pop_r_disc)) +
+  geom_point() +
+  labs(col = '') + 
+  scale_x_log10() +
+  scale_colour_carto_d(palette = "Burg") +
+  theme_bw() +
+  labs(x = 'multidimensional poverty index', y = 'mean standardized death rates 2017-2019', colour = 'Population per km2') +
+  facet_wrap(~dep_name, ncol = 6) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_by_mpi2_',stamp,'.png')), w = 10, h = 10)
+
+
+p <- ggplot(da, aes(x = mpi, y = death_r_std)) +
+  geom_point(aes(col = pop_r_disc, 
+                 pch = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other')), 
+                 size = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other'))
+                 )) +
+  labs(col = '') + 
+  scale_x_log10() +
+  scale_size_manual(values = c(4,1)) +
+  scale_colour_carto_d(palette = "Burg") +
+  theme_bw() +
+  labs(x = 'multidimensional poverty index', y = 'mean standardized death rates 2017-2019', colour = 'Population per km2', size = '', pch = '') +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
+  geom_smooth(colour = 'black') +
+  geom_smooth(data = subset(da, capital), colour = 'black', lty = 'dotted', method = 'lm') 
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Mortality_rate_2018_by_mpi2_overall_',stamp,'.png')), w = 10, h = 10)
+
+
+
+p <- ggplot(da, aes(x = mpi, y = pop_n/area_2, col = factor(capital, levels = c(TRUE,FALSE), labels = c('state capital','other')))) +
+  geom_point(data = subset(da, capital == FALSE)) +
+  geom_point(data = subset(da, capital == TRUE)) +
+  labs(col = '') + 
+  scale_x_log10() +
+  scale_y_log10() +
+  scale_colour_carto_d(palette = "Vivid", direction = -1) +
+  theme_bw() +
+  labs(x = 'multidimensional poverty index', y = 'population density 2018 per km2') +
+  facet_wrap(~dep_name, ncol = 6) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+ggsave(p, file = file.path(out.dir, paste0('Colombia_Pop_density_2018_by_mpi_',stamp,'.png')), w = 10, h = 10)
+
+library(splines)
+summary(lm(death_r_std ~ bs(mpi) + bs(pop_r), data = da))
+summary(lm(death_r_std ~ bs(mpi) + pop_r_disc, data = da))
+
 ```
